@@ -2,6 +2,8 @@
 
     <!-- Base application theme. -->
     <style name="ChecksAndBalances" parent="Theme.MaterialComponents.DayNight">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorOnSecondary">@color/colorOnSecondary</item>

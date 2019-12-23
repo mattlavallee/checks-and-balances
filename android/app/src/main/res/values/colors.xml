@@ -6,4 +6,5 @@
     <color name="colorSecondary">#FFFFFF</color>
     <color name="colorOnSecondary">#4CAF50</color>
     <color name="colorControlNormal">#2D2D2D</color>
+    <color name="colorIconTint">#737373</color>
 </resources>
