@@ -20,16 +20,20 @@
         app:maxImageSize="32dp"
         app:fabSize="normal"
         app:layout_anchor="@id/navigation_app_bar" />
+
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/navigation_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:popupTheme="@style/Theme.MaterialComponents.DayNight"
-        app:theme="@style/Theme.MaterialComponents.DayNight"
-        app:fabAnimationMode="slide"
+        app:backgroundTint="@color/colorSecondary"
         app:fabAlignmentMode="center"
-        />
+        app:fabAnimationMode="slide"
+        app:menu="@menu/bottom_nav_menu"
+        app:navigationContentDescription="Home"
+        app:navigationIcon="?attr/navigationIcon"
+        app:popupTheme="@style/Theme.MaterialComponents.DayNight"
+        app:theme="@style/Theme.MaterialComponents.DayNight" />
 <!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
 <!--        android:id="@+id/nav_view"-->
 <!--        android:layout_width="0dp"-->

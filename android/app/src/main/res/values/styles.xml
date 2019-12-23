@@ -8,8 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorOnSecondary">@color/colorOnSecondary</item>
+        <item name="colorControlNormal">@color/colorControlNormal</item>
+        <item name="actionMenuTextColor">@color/colorControlNormal</item>
         <item name="android:statusBarColor">?android:colorBackground</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="navigationIcon">@drawable/ic_menu_light_24dp</item>
     </style>
 
 </resources>
