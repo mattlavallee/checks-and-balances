@@ -4,16 +4,20 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import io.github.mattlavallee.checksandbalances.core.Preferences
 import io.github.mattlavallee.checksandbalances.navigation.NavigationBottomSheet
 import io.github.mattlavallee.checksandbalances.navigation.SettingsBottomSheet
 
 class MainActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val preferences = Preferences(this)
+        AppCompatDelegate.setDefaultNightMode(preferences.getTheme())
 
         val bottomAppBar: BottomAppBar = findViewById(R.id.navigation_app_bar)
         setSupportActionBar(bottomAppBar)
