@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="none">
+    </group>
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/home_create_account_menu_button"
+            android:icon="@drawable/ic_add_black_24dp"
+            android:title="@string/home_create_account" />
+        <item
+            android:id="@+id/home_create_transaction_menu_button"
+            android:icon="@drawable/ic_add_black_24dp"
+            android:title="@string/home_create_transaction" />
+    </group>
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/home_help_feedback_menu_button"
+            android:icon="@drawable/ic_help_outline_black_24dp"
+            android:title="@string/home_feedback" />
+    </group>
+</menu>

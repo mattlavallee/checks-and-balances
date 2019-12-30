@@ -8,11 +8,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:paddingStart="8dp"
+        android:paddingStart="0dp"
         android:paddingTop="8dp"
         android:paddingEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/settings_drawer_menu"/>
+        app:menu="@menu/settings_drawer_menu"
+        app:itemBackground="@drawable/menu_item_background" />
 </androidx.constraintlayout.widget.ConstraintLayout>

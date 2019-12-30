@@ -2,9 +2,9 @@
 
     <!-- Base application theme. -->
     <style name="ChecksAndBalances" parent="Theme.MaterialComponents.DayNight">
-        <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -14,7 +14,10 @@
         <item name="actionMenuTextColor">@color/colorControlNormal</item>
         <item name="android:statusBarColor">?android:colorBackground</item>
         <item name="android:windowLightStatusBar">true</item>
+
         <item name="navigationIcon">@drawable/ic_menu_light_24dp</item>
+        <item name="colorControlHighlight">@color/menu_item_color</item>
+        <item name="selectableItemBackground">@android:color/transparent</item>
     </style>
 
 </resources>

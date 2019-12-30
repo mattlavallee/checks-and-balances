@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#4CAF50</color>
     <color name="colorSecondary">#2D2D2D</color>
     <color name="colorOnSecondary">#A5D6A7</color>
+    <color name="colorOnSecondaryAlpha">#96A5D6A7</color>
     <color name="colorControlNormal">#D9D3B8</color>
+    <color name="colorMenuItemNormal">#FFFFFF</color>
     <color name="colorIconTint">#BFBFBF</color>
 </resources>
