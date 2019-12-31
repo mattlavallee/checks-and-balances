@@ -1,4 +1,4 @@
-package io.github.mattlavallee.checksandbalances.ui.dashboard
+package io.github.mattlavallee.checksandbalances.ui.account
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,22 +10,21 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import io.github.mattlavallee.checksandbalances.R
 
-class DashboardFragment : Fragment() {
-
-    private lateinit var dashboardViewModel: DashboardViewModel
+class AccountFragment: Fragment() {
+    private lateinit var accountViewModel: AccountViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel =
-            ViewModelProviders.of(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        dashboardViewModel.text.observe(this, Observer {
+        accountViewModel = ViewModelProviders.of(this).get(AccountViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_account, container, false)
+        val textView: TextView = root.findViewById(R.id.text_account)
+        accountViewModel.text.observe(this, Observer {
             textView.text = it
         })
+
         return root
     }
 }

@@ -18,6 +18,12 @@
         <item name="navigationIcon">@drawable/ic_menu_dark_24dp</item>
         <item name="colorControlHighlight">@color/menu_item_color</item>
         <item name="selectableItemBackground">@android:color/transparent</item>
+
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="fontFamily">sans-serif-light</item>
+        <item name="android:textViewStyle">@style/RobotoThinTextView</item>
+        <item name="buttonStyle">@style/RobotoThinTextView</item>
+        <item name="android:editTextStyle">@style/RobotoThinTextView</item>
     </style>
 
 </resources>

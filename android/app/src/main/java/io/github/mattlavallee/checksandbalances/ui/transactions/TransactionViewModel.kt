@@ -1,13 +1,12 @@
-package io.github.mattlavallee.checksandbalances.ui.dashboard
+package io.github.mattlavallee.checksandbalances.ui.transactions
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class DashboardViewModel : ViewModel() {
-
+class TransactionViewModel: ViewModel() {
     private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+        value = "Transaction Fragment"
     }
     val text: LiveData<String> = _text
 }

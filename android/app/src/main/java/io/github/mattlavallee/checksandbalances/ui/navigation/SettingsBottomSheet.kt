@@ -1,4 +1,4 @@
-package io.github.mattlavallee.checksandbalances.navigation
+package io.github.mattlavallee.checksandbalances.ui.navigation
 
 import android.os.Bundle
 import android.view.LayoutInflater

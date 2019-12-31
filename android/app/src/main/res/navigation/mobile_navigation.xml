@@ -3,23 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_accounts">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="io.github.mattlavallee.checksandbalances.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
-
+        android:id="@+id/navigation_accounts"
+        android:name="io.github.mattlavallee.checksandbalances.ui.account.AccountFragment"
+        android:label="Accounts"
+        tools:layout="@layout/fragment_account" />
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="io.github.mattlavallee.checksandbalances.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
-
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="io.github.mattlavallee.checksandbalances.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_transactions"
+        android:name="io.github.mattlavallee.checksandbalances.ui.transactions.TransactionFragment"
+        android:label="Transactions"
+        tools:layout="@layout/fragment_transaction" />
 </navigation>

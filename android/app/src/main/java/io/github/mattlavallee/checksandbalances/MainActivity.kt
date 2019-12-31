@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.github.mattlavallee.checksandbalances.core.Preferences
-import io.github.mattlavallee.checksandbalances.navigation.NavigationBottomSheet
-import io.github.mattlavallee.checksandbalances.navigation.SettingsBottomSheet
+import io.github.mattlavallee.checksandbalances.ui.navigation.NavigationBottomSheet
+import io.github.mattlavallee.checksandbalances.ui.navigation.SettingsBottomSheet
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,13 +23,15 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(bottomAppBar)
         bottomAppBar.replaceMenu(R.menu.bottom_nav_menu)
         bottomAppBar.setNavigationOnClickListener {
-            val navigationBottomSheetMenu = NavigationBottomSheet()
+            val navigationBottomSheetMenu =
+                NavigationBottomSheet()
             navigationBottomSheetMenu.show(supportFragmentManager, navigationBottomSheetMenu.tag)
         }
 
         bottomAppBar.setOnMenuItemClickListener {
             if (it!!.itemId == R.id.navigation_settings) {
-                val settingsBottomSheetMenu = SettingsBottomSheet()
+                val settingsBottomSheetMenu =
+                    SettingsBottomSheet()
                 settingsBottomSheetMenu.show(supportFragmentManager, settingsBottomSheetMenu.tag)
             }
             true

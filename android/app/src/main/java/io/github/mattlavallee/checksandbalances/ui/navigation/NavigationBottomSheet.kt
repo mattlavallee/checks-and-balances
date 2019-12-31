@@ -1,4 +1,4 @@
-package io.github.mattlavallee.checksandbalances.navigation
+package io.github.mattlavallee.checksandbalances.ui.navigation
 
 import android.content.Context
 import android.os.Bundle
