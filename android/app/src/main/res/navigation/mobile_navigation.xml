@@ -9,10 +9,25 @@
         android:id="@+id/navigation_accounts"
         android:name="io.github.mattlavallee.checksandbalances.ui.account.AccountFragment"
         android:label="Accounts"
-        tools:layout="@layout/fragment_account" />
+        tools:layout="@layout/fragment_account" >
+    </fragment>
+
     <fragment
         android:id="@+id/navigation_transactions"
         android:name="io.github.mattlavallee.checksandbalances.ui.transactions.TransactionFragment"
         android:label="Transactions"
-        tools:layout="@layout/fragment_transaction" />
+        tools:layout="@layout/fragment_transaction" >
+    </fragment>
+
+    <dialog
+        android:id="@+id/navigation_home_bottomsheet"
+        android:name="io.github.mattlavallee.checksandbalances.ui.navigation.NavigationBottomSheet"
+        android:label="Home Menu"
+        tools:layout="@layout/layout_home_bottomsheet" />
+
+    <dialog
+        android:id="@+id/navigation_settings_bottomsheet"
+        android:name="io.github.mattlavallee.checksandbalances.ui.navigation.SettingsBottomSheet"
+        android:label="Settings"
+        tools:layout="@layout/layout_settings_bottomsheet" />
 </navigation>

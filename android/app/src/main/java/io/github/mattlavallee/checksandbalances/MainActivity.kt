@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import io.github.mattlavallee.checksandbalances.core.Constants
 import io.github.mattlavallee.checksandbalances.core.Preferences
 import io.github.mattlavallee.checksandbalances.ui.navigation.NavigationBottomSheet
 import io.github.mattlavallee.checksandbalances.ui.navigation.SettingsBottomSheet
@@ -23,16 +24,18 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(bottomAppBar)
         bottomAppBar.replaceMenu(R.menu.bottom_nav_menu)
         bottomAppBar.setNavigationOnClickListener {
-            val navigationBottomSheetMenu =
-                NavigationBottomSheet()
-            navigationBottomSheetMenu.show(supportFragmentManager, navigationBottomSheetMenu.tag)
+            val navigationBottomSheetMenu: NavigationBottomSheet =
+                supportFragmentManager.findFragmentByTag(Constants.homeMenuTag) as NavigationBottomSheet?
+                    ?: NavigationBottomSheet()
+            navigationBottomSheetMenu.show(supportFragmentManager, Constants.homeMenuTag)
         }
 
         bottomAppBar.setOnMenuItemClickListener {
             if (it!!.itemId == R.id.navigation_settings) {
-                val settingsBottomSheetMenu =
-                    SettingsBottomSheet()
-                settingsBottomSheetMenu.show(supportFragmentManager, settingsBottomSheetMenu.tag)
+                val settingsBottomSheetMenu: SettingsBottomSheet =
+                    supportFragmentManager.findFragmentByTag(Constants.settingsMenuTag) as SettingsBottomSheet?
+                        ?: SettingsBottomSheet()
+                settingsBottomSheetMenu.show(supportFragmentManager, Constants.settingsMenuTag)
             }
             true
         }
