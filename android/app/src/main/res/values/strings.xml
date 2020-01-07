@@ -5,6 +5,8 @@
     <string name="home_create_transaction">Add Transaction</string>
     <string name="home_feedback">Help &amp; Feedback</string>
 
+    <string name="fragment_account_title">Accounts Overview</string>
+
     <string name="settings_sort_by">Sort By</string>
     <string name="settings_theme">Theme</string>
 
