@@ -9,6 +9,8 @@ import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.navigation.NavigationView
 import io.github.mattlavallee.checksandbalances.R
+import io.github.mattlavallee.checksandbalances.core.Constants
+import io.github.mattlavallee.checksandbalances.ui.forms.AccountBottomSheet
 
 class NavigationBottomSheet: BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -17,7 +19,12 @@ class NavigationBottomSheet: BottomSheetDialogFragment() {
         val navigationView: NavigationView = homeView.findViewById(R.id.home_navigation_view)
         navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.home_create_account_menu_button -> toast(activity!!.applicationContext, "Create Account")
+                R.id.home_create_account_menu_button -> {
+                    val accountForm: AccountBottomSheet =
+                        activity!!.supportFragmentManager.findFragmentByTag(Constants.accountFormTag) as AccountBottomSheet?
+                            ?: AccountBottomSheet()
+                    accountForm.show(activity!!.supportFragmentManager, Constants.accountFormTag)
+                }
                 R.id.home_create_transaction_menu_button -> toast(activity!!.applicationContext, "Create Transaction")
                 R.id.home_help_feedback_menu_button -> toast(activity!!.applicationContext, "Help me Rhonda")
             }
