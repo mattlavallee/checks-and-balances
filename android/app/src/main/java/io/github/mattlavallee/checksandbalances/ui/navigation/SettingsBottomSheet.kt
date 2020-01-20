@@ -1,12 +1,12 @@
 package io.github.mattlavallee.checksandbalances.ui.navigation
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.textview.MaterialTextView
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.core.Preferences
 
@@ -26,6 +26,10 @@ class SettingsBottomSheet: BottomSheetDialogFragment() {
             true
         }
 
+        val themeActionLayout: LinearLayout = navigationView.menu.findItem(R.id.settings_theme).actionView as LinearLayout
+        val currThemeView: MaterialTextView = themeActionLayout.findViewById(R.id.settings_current_theme_name)
+        val currTheme = if (appPreferences.getTheme() === AppCompatDelegate.MODE_NIGHT_NO) "Light" else "Dark"
+        currThemeView.text = currTheme
         return settingsView
     }
 

@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <group android:checkableBehavior="none">
         <item
             android:id="@+id/settings_sort"
-            android:icon="@android:drawable/ic_menu_sort_by_size"
-            android:title="@string/settings_sort_by" />
+            tools:ignore="MenuTitle"
+            app:actionLayout="@layout/layout_menu_item_sort_by" />
         <item
             android:id="@+id/settings_theme"
-            android:icon="@android:drawable/ic_menu_set_as"
-            android:title="@string/settings_theme" />
+            tools:ignore="MenuTitle"
+            app:actionLayout="@layout/layout_menu_item_theme" />
     </group>
 </menu>
