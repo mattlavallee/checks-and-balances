@@ -26,4 +26,10 @@
         <item name="android:editTextStyle">@style/RobotoThinTextView</item>
     </style>
 
+    <style name="CABBottomSheet" parent="Theme.MaterialComponents.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+
 </resources>

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="15dp"
+    android:background="@color/colorSecondary"
     android:tag="ACCOUNT_FORM">
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edit_account_name_wrapper"

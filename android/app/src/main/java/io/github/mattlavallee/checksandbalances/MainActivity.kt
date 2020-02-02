@@ -1,8 +1,10 @@
 package io.github.mattlavallee.checksandbalances
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.bottomappbar.BottomAppBar
