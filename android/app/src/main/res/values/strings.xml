@@ -15,5 +15,8 @@
     <string name="title_notifications">Notifications</string>
 
     <string name="account_name_hint">Account Name</string>
-    <string name="account_description_hint">Description</string>
+    <string name="account_description_hint">Description (Optional)</string>
+    <string name="account_initial_balance">Starting Balance (Optional)</string>
+
+    <string name="save_button">Save</string>
 </resources>
