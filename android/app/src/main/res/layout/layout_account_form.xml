@@ -11,6 +11,9 @@
         android:id="@+id/edit_account_name_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="@string/account_name_hint"
+        app:hintTextColor="@color/colorPrimaryDark"
+        app:boxStrokeColor="@color/colorPrimaryDark"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -21,11 +24,10 @@
             android:layout_height="wrap_content"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:hint="@string/account_name_hint"
-            android:textColorHint="@color/colorSecondary"
             android:backgroundTint="@color/colorSecondary"
             android:imeOptions="actionNext"
             android:maxLines="1"
+            android:textCursorDrawable="@drawable/text_cursor_primary_dark"
             android:inputType="textCapWords">
             <requestFocus />
         </com.google.android.material.textfield.TextInputEditText>
@@ -34,6 +36,10 @@
         android:id="@+id/edit_account_description_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:theme="@style/RobotoThinTextBox"
+        android:hint="@string/account_description_hint"
+        app:hintTextColor="@color/colorPrimaryDark"
+        app:boxStrokeColor="@color/colorPrimaryDark"
         app:layout_constraintTop_toBottomOf="@id/edit_account_name_wrapper"
         app:layout_constraintBottom_toTopOf="@+id/edit_account_starting_balance_wrapper"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -42,17 +48,20 @@
             android:id="@+id/edit_account_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/account_description_hint"
-            android:textColorHint="@color/colorSecondary"
             android:backgroundTint="@color/colorSecondary"
             android:imeOptions="actionNext"
             android:maxLines="1"
+            android:textCursorDrawable="@drawable/text_cursor_primary_dark"
             android:inputType="textCapSentences" />
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edit_account_starting_balance_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:theme="@style/RobotoThinTextBox"
+        android:hint="@string/account_initial_balance"
+        app:hintTextColor="@color/colorPrimaryDark"
+        app:boxStrokeColor="@color/colorPrimaryDark"
         app:layout_constraintTop_toBottomOf="@id/edit_account_description_wrapper"
         app:layout_constraintBottom_toTopOf="@id/edit_account_save_button"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -61,11 +70,10 @@
             android:id="@+id/edit_account_initial_balance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/account_initial_balance"
-            android:textColorHint="@color/colorSecondary"
             android:backgroundTint="@color/colorSecondary"
             android:imeOptions="actionDone"
             android:maxLines="1"
+            android:textCursorDrawable="@drawable/text_cursor_primary_dark"
             android:inputType="number|numberDecimal|numberSigned" />
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.button.MaterialButton
@@ -75,6 +83,8 @@
         android:text="@string/save_button"
         android:textAlignment="center"
         android:gravity="right|center_vertical"
+        android:backgroundTint="@color/colorOnSecondary"
+        android:theme="@style/RobotoThinButton"
         app:layout_constraintTop_toBottomOf="@id/edit_account_starting_balance_wrapper"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

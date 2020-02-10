@@ -21,9 +21,9 @@
 
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="fontFamily">sans-serif-light</item>
-        <item name="android:textViewStyle">@style/RobotoThinTextView</item>
-        <item name="buttonStyle">@style/RobotoThinButton</item>
-        <item name="android:editTextStyle">@style/RobotoThinTextView</item>
+<!--        <item name="android:textViewStyle">@style/RobotoThinTextView</item>-->
+<!--        <item name="buttonStyle">@style/RobotoThinButton</item>-->
+<!--        <item name="android:editTextStyle">@style/RobotoThinTextView</item>-->
     </style>
 
     <style name="CABBottomSheet" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
@@ -35,6 +35,12 @@
     <style name="RobotoThinTextView" parent="Widget.MaterialComponents.TextView">
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="RobotoThinTextBox" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="hintTextColor">@color/colorPrimaryDark</item>
+        <item name="boxStrokeColor">@color/colorPrimaryDark</item>
     </style>
 
     <style name="RobotoThinButton" parent="Widget.MaterialComponents.Button">
