@@ -35,18 +35,6 @@ class AccountFragment: Fragment() {
         recyclerView.setHasFixedSize(true)
 
         val accounts = ArrayList<Account>()
-        accounts.add(Account(1, "Bank of America", 0.0, true))
-        accounts.add(Account(2, "Capital One", 0.0, true))
-        accounts.add(Account(3, "American Express", 0.0, true))
-        accounts.add(Account(4, "Discover", 0.0, true))
-        accounts.add(Account(5, "Macy's", 0.0, true))
-        accounts.add(Account(6, "Visa", 0.0, true))
-        accounts.add(Account(7, "Mastercard", 0.0, true))
-        accounts.add(Account(8, "Amazon Card", 0.0, true))
-        accounts.add(Account(9, "Party Planning", 0.0, true))
-        accounts.add(Account(10, "Gifts", 0.0, true))
-        accounts.add(Account(11, "IOU's", 0.0, true))
-
         val accountAdapter = AccountAdapter(accounts)
         recyclerView.adapter = accountAdapter
 
