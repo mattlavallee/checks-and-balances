@@ -5,9 +5,9 @@ import java.io.Serializable
 class Account: Serializable {
     var id: Int
     var name: String
-    private var description: String
-    private var startingBalance: Double
-    private var isActive: Boolean
+    var description: String
+    var startingBalance: Double
+    var isActive: Boolean
 
     constructor() {
         this.id = -1

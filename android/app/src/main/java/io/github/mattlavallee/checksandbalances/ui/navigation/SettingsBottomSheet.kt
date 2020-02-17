@@ -28,7 +28,7 @@ class SettingsBottomSheet: BottomSheetDialogFragment() {
 
         val themeActionLayout: LinearLayout = navigationView.menu.findItem(R.id.settings_theme).actionView as LinearLayout
         val currThemeView: MaterialTextView = themeActionLayout.findViewById(R.id.settings_current_theme_name)
-        val currTheme = if (appPreferences.getTheme() === AppCompatDelegate.MODE_NIGHT_NO) "Light" else "Dark"
+        val currTheme = if (appPreferences.getTheme() == AppCompatDelegate.MODE_NIGHT_NO) "Light" else "Dark"
         currThemeView.text = currTheme
         return settingsView
     }

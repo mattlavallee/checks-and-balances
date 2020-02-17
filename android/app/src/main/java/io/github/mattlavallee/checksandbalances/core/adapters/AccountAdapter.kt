@@ -24,7 +24,6 @@ class AccountAdapter(allAccounts: ArrayList<Account>): RecyclerView.Adapter<Acco
     }
 
     fun updateData(data: ArrayList<Account>) {
-        accounts.clear()
         accounts = data
         notifyDataSetChanged()
     }

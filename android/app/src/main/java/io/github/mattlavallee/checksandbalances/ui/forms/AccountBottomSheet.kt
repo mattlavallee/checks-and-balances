@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
@@ -19,12 +19,7 @@ import io.github.mattlavallee.checksandbalances.core.models.Account
 import io.github.mattlavallee.checksandbalances.ui.account.AccountViewModel
 
 class AccountBottomSheet: BottomSheetDialogFragment() {
-    private lateinit var accountViewModel: AccountViewModel
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        accountViewModel = ViewModelProviders.of(this).get(AccountViewModel::class.java)
-        return super.onCreateDialog(savedInstanceState)
-    }
+    private val accountViewModel: AccountViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +58,8 @@ class AccountBottomSheet: BottomSheetDialogFragment() {
                 if (balance == null) {
                     balance = 0.0
                 }
-                this.accountViewModel.save(Account(-1, name, description, balance, true))
+                this.accountViewModel.save(Account(0, name, description, balance, true))
+                super.dismiss()
             }
         }
 

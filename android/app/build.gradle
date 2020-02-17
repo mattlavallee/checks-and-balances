@@ -19,6 +19,12 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         archivesBaseName = "${applicationId}-v${versionName}(${versionCode})"
         setProperty("archivesBaseName", "${applicationId}-v${versionName}(${versionCode})")
+
+        kapt {
+            arguments{
+                 arg("room.schemaLocation", "$projectDir/schemas".toString())
+            }
+        }
     }
     buildTypes {
         release {

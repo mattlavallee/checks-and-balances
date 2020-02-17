@@ -1,0 +1,42 @@
+package io.github.mattlavallee.checksandbalances.database
+
+import android.content.Context
+import android.os.AsyncTask
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import io.github.mattlavallee.checksandbalances.database.dao.AccountDao
+import io.github.mattlavallee.checksandbalances.database.entities.Account
+
+@Database(entities = [Account::class], version = 1)
+abstract class ChecksAndBalancesDatabase : RoomDatabase() {
+    abstract fun accountDao(): AccountDao
+
+    fun insert(account: Account) {
+        InsertAccountAsyncTask(accountDao()).execute(account)
+    }
+
+    private class InsertAccountAsyncTask(accountDao: AccountDao) : AsyncTask<Account, Unit, Unit>() {
+        val accountDao = accountDao
+
+        override fun doInBackground(vararg p0: Account?) {
+            accountDao.insertAccount(p0[0]!!)
+        }
+    }
+
+    companion object {
+        private var instance: ChecksAndBalancesDatabase? = null
+
+        fun getInstance(context: Context): ChecksAndBalancesDatabase {
+            if (instance == null) {
+                instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    ChecksAndBalancesDatabase::class.java,
+                    "checks-and-balances"
+                ).fallbackToDestructiveMigration().build()
+            }
+
+            return instance as ChecksAndBalancesDatabase
+        }
+    }
+}
