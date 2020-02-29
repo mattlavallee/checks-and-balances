@@ -24,4 +24,10 @@ class Account: Serializable {
         this.startingBalance = balance
         this.isActive = isActive
     }
+
+    fun hasSameContents(item: Account): Boolean {
+        return this.name == item.name &&
+               this.description == item.description &&
+               this.startingBalance == item.startingBalance
+    }
 }

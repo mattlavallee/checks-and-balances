@@ -3,14 +3,15 @@ package io.github.mattlavallee.checksandbalances.core.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textview.MaterialTextView
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.core.models.Account
 
-class AccountAdapter(allAccounts: ArrayList<Account>): RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
-    private var accounts: ArrayList<Account> = allAccounts
+class AccountAdapter: RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
+    private var accounts: ArrayList<Account> = ArrayList()
 
     class AccountViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var cardView: MaterialCardView = itemView.findViewById(R.id.account_card_view)
@@ -23,9 +24,12 @@ class AccountAdapter(allAccounts: ArrayList<Account>): RecyclerView.Adapter<Acco
         return AccountViewHolder(view)
     }
 
-    fun updateData(data: ArrayList<Account>) {
-        accounts = data
-        notifyDataSetChanged()
+    fun setData(data: ArrayList<Account>) {
+        val diffCallback = AccountDiffCallback(accounts, data)
+        val result = DiffUtil.calculateDiff(diffCallback)
+        accounts.clear()
+        accounts.addAll(data)
+        result.dispatchUpdatesTo(this)
     }
 
     override fun onBindViewHolder(holder: AccountViewHolder, position: Int) {

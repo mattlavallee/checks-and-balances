@@ -9,7 +9,7 @@ import io.github.mattlavallee.checksandbalances.database.entities.Account
 
 @Dao
 interface AccountDao {
-    @Query("SELECT * FROM accounts")
+    @Query("SELECT * FROM accounts WHERE is_active = 1")
     fun getAll(): LiveData<List<Account>>
 
     @Query("SELECT * FROM accounts WHERE id = :accountId")

@@ -17,9 +17,7 @@ import io.github.mattlavallee.checksandbalances.core.models.Account
 
 class AccountFragment: Fragment() {
     private val accountViewModel: AccountViewModel by activityViewModels()
-
-    private var accounts: ArrayList<Account> = ArrayList()
-    private var accountAdapter: AccountAdapter = AccountAdapter(accounts)
+    private var accountAdapter: AccountAdapter = AccountAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,8 +27,9 @@ class AccountFragment: Fragment() {
         val root = inflater.inflate(R.layout.fragment_account, container, false)
 
         accountViewModel.getAllAccounts().observe(this, Observer {itList ->
+            var accounts: ArrayList<Account> = ArrayList()
             itList.mapTo(accounts) {Account(it.id, it.name, it.description?: "", it.startingBalance, it.isActive)}
-            accountAdapter.updateData(accounts)
+            accountAdapter.setData(accounts)
         })
 
         val recyclerView: RecyclerView = root.findViewById(R.id.account_recycler_view)

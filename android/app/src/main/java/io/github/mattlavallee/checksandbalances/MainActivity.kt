@@ -3,16 +3,23 @@ package io.github.mattlavallee.checksandbalances
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.github.mattlavallee.checksandbalances.core.Constants
 import io.github.mattlavallee.checksandbalances.core.Preferences
+import io.github.mattlavallee.checksandbalances.database.entities.Account
+import io.github.mattlavallee.checksandbalances.ui.account.AccountViewModel
+import io.github.mattlavallee.checksandbalances.ui.navigation.FormDispatcher
 import io.github.mattlavallee.checksandbalances.ui.navigation.NavigationBottomSheet
 import io.github.mattlavallee.checksandbalances.ui.navigation.SettingsBottomSheet
 
 class MainActivity : AppCompatActivity() {
+    private val accountViewModel: AccountViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -42,7 +49,9 @@ class MainActivity : AppCompatActivity() {
 
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener {
-            Log.i("CAB", "I'll do something eventually")
+            val accounts: List<Account>? = accountViewModel.getAllAccounts().value
+            val tag: String = if (accounts != null && accounts.isNotEmpty()) Constants.transactionFormTag else Constants.accountFormTag
+            FormDispatcher.launch(supportFragmentManager, tag)
         }
     }
 
