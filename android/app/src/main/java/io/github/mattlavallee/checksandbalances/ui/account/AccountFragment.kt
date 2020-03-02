@@ -14,9 +14,11 @@ import androidx.recyclerview.widget.RecyclerView
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.core.adapters.AccountAdapter
 import io.github.mattlavallee.checksandbalances.core.models.Account
+import io.github.mattlavallee.checksandbalances.databinding.FragmentAccountBinding
 
 class AccountFragment: Fragment() {
     private val accountViewModel: AccountViewModel by activityViewModels()
+    private lateinit var binding: FragmentAccountBinding
     private var accountAdapter: AccountAdapter = AccountAdapter()
 
     override fun onCreateView(
@@ -25,17 +27,17 @@ class AccountFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_account, container, false)
+        binding = FragmentAccountBinding.bind(root)
 
-        accountViewModel.getAllAccounts().observe(this, Observer {itList ->
+        accountViewModel.getAllAccounts().observe(viewLifecycleOwner, Observer {itList ->
             var accounts: ArrayList<Account> = ArrayList()
             itList.mapTo(accounts) {Account(it.id, it.name, it.description?: "", it.startingBalance, it.isActive)}
             accountAdapter.setData(accounts)
         })
 
-        val recyclerView: RecyclerView = root.findViewById(R.id.account_recycler_view)
-        recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.adapter = accountAdapter
+        binding.accountRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        binding.accountRecyclerView.setHasFixedSize(true)
+        binding.accountRecyclerView.adapter = accountAdapter
 
         return root
     }

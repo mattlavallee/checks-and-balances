@@ -21,7 +21,7 @@ class TransactionFragment: Fragment() {
         val root = inflater.inflate(R.layout.fragment_transaction, container, false)
         val textView: TextView = root.findViewById(R.id.text_transaction)
 
-        transactionViewModel.text.observe(this, Observer {
+        transactionViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
 
