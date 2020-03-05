@@ -16,10 +16,12 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.core.models.Account
+import io.github.mattlavallee.checksandbalances.databinding.LayoutAccountFormBinding
 import io.github.mattlavallee.checksandbalances.ui.account.AccountViewModel
 
 class AccountBottomSheet: BottomSheetDialogFragment() {
     private val accountViewModel: AccountViewModel by activityViewModels()
+    private lateinit var binding: LayoutAccountFormBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,27 +34,22 @@ class AccountBottomSheet: BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val accountView = inflater.inflate(R.layout.layout_account_form, container, false)
+        binding = LayoutAccountFormBinding.bind(accountView)
 
-        val accountNameWrapper: TextInputLayout = accountView.findViewById(R.id.edit_account_name_wrapper)
-        val accountNameEditText: TextInputEditText = accountView.findViewById(R.id.edit_account_name)
-        val accountDescriptionEditText: TextInputEditText = accountView.findViewById(R.id.edit_account_description)
-        val accountInitialBalance: TextInputEditText = accountView.findViewById(R.id.edit_account_initial_balance)
-        val saveButton: MaterialButton = accountView.findViewById(R.id.edit_account_save_button)
-
-        accountNameEditText.requestFocus()
-        accountNameEditText.addTextChangedListener {
-            this.checkForValidAccountName(it.toString(), accountNameWrapper, false)
+        binding.editAccountName.requestFocus()
+        binding.editAccountName.addTextChangedListener {
+            this.checkForValidAccountName(it.toString(), binding.editAccountNameWrapper, false)
         }
 
         val inputMethodManager: InputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
 
-        saveButton.setOnClickListener {
-            val name = accountNameEditText.text.toString()
-            val description = accountDescriptionEditText.text.toString()
-            var balance = accountInitialBalance.text.toString().toDoubleOrNull()
+        binding.editAccountSaveButton.setOnClickListener {
+            val name = binding.editAccountName.text.toString()
+            val description = binding.editAccountDescription.text.toString()
+            var balance = binding.editAccountInitialBalance.text.toString().toDoubleOrNull()
 
-            val hasError = this.checkForValidAccountName(name, accountNameWrapper, true)
+            val hasError = this.checkForValidAccountName(name, binding.editAccountNameWrapper, true)
             if(!hasError) {
                 inputMethodManager.hideSoftInputFromWindow(accountView.windowToken, 0)
                 if (balance == null) {

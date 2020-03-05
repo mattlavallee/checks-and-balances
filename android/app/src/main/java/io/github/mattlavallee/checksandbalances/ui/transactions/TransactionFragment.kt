@@ -4,14 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import io.github.mattlavallee.checksandbalances.R
+import io.github.mattlavallee.checksandbalances.databinding.FragmentTransactionBinding
 
 class TransactionFragment: Fragment() {
     private val transactionViewModel: TransactionViewModel by activityViewModels()
+    private lateinit var binding: FragmentTransactionBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,10 +20,10 @@ class TransactionFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_transaction, container, false)
-        val textView: TextView = root.findViewById(R.id.text_transaction)
+        binding = FragmentTransactionBinding.bind(root)
 
         transactionViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+            binding.textTransaction.text = it
         })
 
         return root

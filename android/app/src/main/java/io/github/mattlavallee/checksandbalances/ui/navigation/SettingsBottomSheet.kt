@@ -9,16 +9,18 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.textview.MaterialTextView
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.core.Preferences
+import io.github.mattlavallee.checksandbalances.databinding.LayoutSettingsBottomsheetBinding
 
 class SettingsBottomSheet: BottomSheetDialogFragment() {
     private lateinit var appPreferences: Preferences
+    private lateinit var binding: LayoutSettingsBottomsheetBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val settingsView = inflater.inflate(R.layout.layout_settings_bottomsheet, container, false)
+        binding = LayoutSettingsBottomsheetBinding.bind(settingsView)
         appPreferences = Preferences(activity!!)
 
-        val navigationView: NavigationView = settingsView.findViewById(R.id.settings_navigation_view)
-        navigationView.setNavigationItemSelectedListener {
+        binding.settingsNavigationView.setNavigationItemSelectedListener {
             if (it.itemId == R.id.settings_theme) {
                 this.setAndSaveTheme()
                 super.dismiss()
@@ -26,7 +28,7 @@ class SettingsBottomSheet: BottomSheetDialogFragment() {
             true
         }
 
-        val themeActionLayout: LinearLayout = navigationView.menu.findItem(R.id.settings_theme).actionView as LinearLayout
+        val themeActionLayout: LinearLayout = binding.settingsNavigationView.menu.findItem(R.id.settings_theme).actionView as LinearLayout
         val currThemeView: MaterialTextView = themeActionLayout.findViewById(R.id.settings_current_theme_name)
         val currTheme = if (appPreferences.getTheme() == AppCompatDelegate.MODE_NIGHT_NO) "Light" else "Dark"
         currThemeView.text = currTheme

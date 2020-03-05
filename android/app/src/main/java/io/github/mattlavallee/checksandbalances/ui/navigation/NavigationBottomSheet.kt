@@ -10,13 +10,15 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.navigation.NavigationView
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.core.Constants
+import io.github.mattlavallee.checksandbalances.databinding.LayoutHomeBottomsheetBinding
 
 class NavigationBottomSheet: BottomSheetDialogFragment() {
+    private lateinit var binding: LayoutHomeBottomsheetBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val homeView = inflater.inflate(R.layout.layout_home_bottomsheet, container, false)
+        binding = LayoutHomeBottomsheetBinding.bind(homeView)
 
-        val navigationView: NavigationView = homeView.findViewById(R.id.home_navigation_view)
-        navigationView.setNavigationItemSelectedListener {
+        binding.homeNavigationView.setNavigationItemSelectedListener {
             val fragmentManager = activity!!.supportFragmentManager
             when (it.itemId) {
                 R.id.home_create_account_menu_button -> FormDispatcher.launch(fragmentManager, Constants.accountFormTag)
