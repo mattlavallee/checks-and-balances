@@ -19,7 +19,7 @@ import io.github.mattlavallee.checksandbalances.databinding.FragmentAccountBindi
 class AccountFragment: Fragment() {
     private val accountViewModel: AccountViewModel by activityViewModels()
     private lateinit var binding: FragmentAccountBinding
-    private var accountAdapter: AccountAdapter = AccountAdapter()
+    private var accountAdapter: AccountAdapter = AccountAdapter(::onEditAccount, ::onDeleteAccount)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,5 +40,13 @@ class AccountFragment: Fragment() {
         binding.accountRecyclerView.adapter = accountAdapter
 
         return root
+    }
+
+    private fun onEditAccount(accountId: Int): Unit {
+
+    }
+
+    private fun onDeleteAccount(accountId: Int): Unit {
+        accountViewModel.delete(accountId)
     }
 }

@@ -44,7 +44,7 @@
             card_view:layout_constraintTop_toTopOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent" />
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/account_card_veiew_options_button"
+            android:id="@+id/account_card_view_options_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/vertical_ellipsis"

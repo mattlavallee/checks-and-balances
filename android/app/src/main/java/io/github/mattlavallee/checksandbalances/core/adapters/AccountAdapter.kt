@@ -3,15 +3,16 @@ package io.github.mattlavallee.checksandbalances.core.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textview.MaterialTextView
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.core.models.Account
-import io.github.mattlavallee.checksandbalances.databinding.RecyclerAccountRowBinding
 
-class AccountAdapter: RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
+typealias Callback = (Int) -> Unit
+class AccountAdapter(val onEdit: Callback, val onDelete: Callback): RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
     private var accounts: ArrayList<Account> = ArrayList()
 
     class AccountViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -19,6 +20,7 @@ class AccountAdapter: RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
         val accountName: MaterialTextView = itemView.findViewById(R.id.account_card_view_name)
         val accountTotal: MaterialTextView = itemView.findViewById(R.id.account_card_view_transaction_total)
         val accountDescription: MaterialTextView = itemView.findViewById(R.id.account_card_view_description)
+        val accountOverflow: MaterialTextView = itemView.findViewById(R.id.account_card_view_options_button)
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, index: Int): AccountViewHolder {
@@ -41,8 +43,25 @@ class AccountAdapter: RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
         holder.accountName.text = account.name
         holder.accountName.tag = account.id
         holder.accountDescription.text = account.description
-
         holder.accountTotal.text = "$1000"
+
+        holder.accountOverflow.tag = account.id
+        holder.accountOverflow.setOnClickListener {
+            val popupMenu = PopupMenu(it.context, it)
+            val accountId: Int = it.tag as Int
+
+            popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                if (menuItem.itemId == R.id.action_popup_edit) {
+                    this.onEdit(accountId)
+                } else if (menuItem.itemId == R.id.action_popup_delete) {
+                    this.onDelete(accountId)
+                }
+
+                false
+            }
+            popupMenu.show()
+        }
     }
 
     override fun getItemCount(): Int {
