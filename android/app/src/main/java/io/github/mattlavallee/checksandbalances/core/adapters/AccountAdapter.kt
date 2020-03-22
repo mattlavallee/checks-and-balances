@@ -9,14 +9,16 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textview.MaterialTextView
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.core.models.Account
+import io.github.mattlavallee.checksandbalances.databinding.RecyclerAccountRowBinding
 
 class AccountAdapter: RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
     private var accounts: ArrayList<Account> = ArrayList()
 
     class AccountViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        var cardView: MaterialCardView = itemView.findViewById(R.id.account_card_view)
-        var accountName: MaterialTextView = itemView.findViewById(R.id.account_card_view_name)
-        var accountTotal: MaterialTextView = itemView.findViewById(R.id.account_card_view_transaction_total)
+        val cardView: MaterialCardView = itemView.findViewById(R.id.account_card_view)
+        val accountName: MaterialTextView = itemView.findViewById(R.id.account_card_view_name)
+        val accountTotal: MaterialTextView = itemView.findViewById(R.id.account_card_view_transaction_total)
+        val accountDescription: MaterialTextView = itemView.findViewById(R.id.account_card_view_description)
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, index: Int): AccountViewHolder {
@@ -38,8 +40,9 @@ class AccountAdapter: RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
 
         holder.accountName.text = account.name
         holder.accountName.tag = account.id
+        holder.accountDescription.text = account.description
 
-        holder.accountTotal.text = "1000"
+        holder.accountTotal.text = "$1000"
     }
 
     override fun getItemCount(): Int {

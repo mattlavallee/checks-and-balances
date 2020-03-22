@@ -17,23 +17,40 @@
             android:id="@+id/account_card_view_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24dp"
+            android:textSize="24sp"
             android:maxLines="1"
             android:ellipsize="end"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"
             card_view:layout_constraintLeft_toLeftOf="parent"
-            card_view:layout_constraintRight_toRightOf="parent"
-            card_view:layout_constraintBottom_toTopOf="@id/account_card_view_transaction_total" />
+            card_view:layout_constraintBottom_toTopOf="@id/account_card_view_description" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/account_card_view_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            android:maxLines="2"
+            android:ellipsize="end"
+            card_view:layout_constraintTop_toBottomOf="@id/account_card_view_name"
+            card_view:layout_constraintLeft_toLeftOf="parent"
+            card_view:layout_constraintBottom_toBottomOf="parent" />
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/account_card_view_transaction_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24dp"
-            card_view:layout_constraintTop_toBottomOf="@id/account_card_view_name"
-            card_view:layout_constraintLeft_toLeftOf="parent"
+            android:textSize="24sp"
             card_view:layout_constraintRight_toRightOf="parent"
-            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/account_card_veiew_options_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/vertical_ellipsis"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            card_view:layout_constraintRight_toRightOf="parent"
+            card_view:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -19,4 +19,6 @@
     <string name="account_initial_balance">Starting Balance (Optional)</string>
 
     <string name="save_button">Save</string>
+
+    <string name="vertical_ellipsis">&#8942;</string>
 </resources>
