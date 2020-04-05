@@ -1,6 +1,5 @@
 package io.github.mattlavallee.checksandbalances.ui.forms
 
-import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,14 +9,14 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.core.models.Account
 import io.github.mattlavallee.checksandbalances.databinding.LayoutAccountFormBinding
 import io.github.mattlavallee.checksandbalances.ui.account.AccountViewModel
+import java.text.DecimalFormat
 
 class AccountBottomSheet: BottomSheetDialogFragment() {
     private val accountViewModel: AccountViewModel by activityViewModels()
@@ -35,6 +34,11 @@ class AccountBottomSheet: BottomSheetDialogFragment() {
     ): View? {
         val accountView = inflater.inflate(R.layout.layout_account_form, container, false)
         binding = LayoutAccountFormBinding.bind(accountView)
+
+        val accountId = arguments?.getInt("accountId")
+        if (accountId != null) {
+            this.populateForm(accountId)
+        }
 
         binding.editAccountName.requestFocus()
         binding.editAccountName.addTextChangedListener {
@@ -55,7 +59,11 @@ class AccountBottomSheet: BottomSheetDialogFragment() {
                 if (balance == null) {
                     balance = 0.0
                 }
-                this.accountViewModel.save(Account(0, name, description, balance, true))
+                if (accountId != null) {
+                    this.accountViewModel.update(Account(accountId, name, description, balance, true))
+                } else {
+                    this.accountViewModel.save(Account(0, name, description, balance, true))
+                }
                 super.dismiss()
             }
         }
@@ -74,5 +82,18 @@ class AccountBottomSheet: BottomSheetDialogFragment() {
             return true
         }
         return false
+    }
+
+    private fun populateForm(accountId: Int) {
+        accountViewModel.getAllAccounts().observe(viewLifecycleOwner, Observer { itList ->
+            val currAccount = itList.find { it.id == accountId }
+            binding.editAccountName.setText(currAccount?.name)
+            binding.editAccountDescription.setText(currAccount?.description)
+            var startingBalanceString = ""
+            if (currAccount?.startingBalance != null && currAccount?.startingBalance > 0) {
+                startingBalanceString = DecimalFormat("#.00").format(currAccount?.startingBalance)
+            }
+            binding.editAccountInitialBalance.setText(startingBalanceString)
+        })
     }
 }

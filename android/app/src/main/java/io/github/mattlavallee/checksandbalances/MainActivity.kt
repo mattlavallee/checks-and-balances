@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         binding.fab.setOnClickListener {
             val accounts: List<Account>? = accountViewModel.getAllAccounts().value
             val tag: String = if (accounts != null && accounts.isNotEmpty()) Constants.transactionFormTag else Constants.accountFormTag
-            FormDispatcher.launch(supportFragmentManager, tag)
+            FormDispatcher.launch(supportFragmentManager, tag, null)
         }
     }
 

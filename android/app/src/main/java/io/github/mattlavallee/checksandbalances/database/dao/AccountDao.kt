@@ -1,10 +1,7 @@
 package io.github.mattlavallee.checksandbalances.database.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import io.github.mattlavallee.checksandbalances.database.entities.Account
 
 @Dao
@@ -20,6 +17,9 @@ interface AccountDao {
 
     @Insert
     fun insertAccount(vararg account: Account)
+
+    @Update
+    fun updateAccount(vararg account: Account)
 
     @Delete
     fun delete(account: Account)

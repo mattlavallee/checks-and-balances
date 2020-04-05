@@ -1,10 +1,8 @@
 package io.github.mattlavallee.checksandbalances.ui.account
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import io.github.mattlavallee.checksandbalances.core.models.Account
 import io.github.mattlavallee.checksandbalances.database.ChecksAndBalancesDatabase
 
@@ -24,6 +22,18 @@ class AccountViewModel(application: Application): AndroidViewModel(application) 
                 newAccount.description,
                 newAccount.startingBalance,
                 newAccount.isActive
+            )
+        )
+    }
+
+    fun update(updatedAccount: Account) {
+        repository.update(
+            io.github.mattlavallee.checksandbalances.database.entities.Account(
+                updatedAccount.id,
+                updatedAccount.name,
+                updatedAccount.description,
+                updatedAccount.startingBalance,
+                updatedAccount.isActive
             )
         )
     }

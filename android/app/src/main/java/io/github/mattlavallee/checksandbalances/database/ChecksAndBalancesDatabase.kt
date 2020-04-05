@@ -16,6 +16,10 @@ abstract class ChecksAndBalancesDatabase : RoomDatabase() {
         InsertAccountAsyncTask(accountDao()).execute(account)
     }
 
+    fun update(account: Account) {
+        UpdateAccountAsyncTask(accountDao()).execute(account)
+    }
+
     fun delete(id: Int) {
         DeleteAccountAsyncTask(accountDao()).execute(id)
     }
@@ -23,8 +27,16 @@ abstract class ChecksAndBalancesDatabase : RoomDatabase() {
     private class InsertAccountAsyncTask(accountDao: AccountDao) : AsyncTask<Account, Unit, Unit>() {
         val accountDao = accountDao
 
-        override fun doInBackground(vararg p0: Account?) {
-            accountDao.insertAccount(p0[0]!!)
+        override fun doInBackground(vararg params: Account?) {
+            accountDao.insertAccount(params[0]!!)
+        }
+    }
+
+    private class UpdateAccountAsyncTask(accountDao: AccountDao): AsyncTask<Account, Unit, Unit>() {
+        val accountDao = accountDao
+
+        override fun doInBackground(vararg params: Account?) {
+            accountDao.updateAccount(params[0]!!)
         }
     }
 

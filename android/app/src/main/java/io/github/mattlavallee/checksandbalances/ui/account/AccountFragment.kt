@@ -12,9 +12,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.github.mattlavallee.checksandbalances.R
+import io.github.mattlavallee.checksandbalances.core.Constants
 import io.github.mattlavallee.checksandbalances.core.adapters.AccountAdapter
 import io.github.mattlavallee.checksandbalances.core.models.Account
 import io.github.mattlavallee.checksandbalances.databinding.FragmentAccountBinding
+import io.github.mattlavallee.checksandbalances.ui.navigation.FormDispatcher
 
 class AccountFragment: Fragment() {
     private val accountViewModel: AccountViewModel by activityViewModels()
@@ -43,7 +45,10 @@ class AccountFragment: Fragment() {
     }
 
     private fun onEditAccount(accountId: Int): Unit {
+        val bundle = Bundle()
+        bundle.putInt("accountId", accountId)
 
+        FormDispatcher.launch(activity!!.supportFragmentManager, Constants.accountFormTag, bundle)
     }
 
     private fun onDeleteAccount(accountId: Int): Unit {

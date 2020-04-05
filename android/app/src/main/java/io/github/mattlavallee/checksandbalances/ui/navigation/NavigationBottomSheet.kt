@@ -21,8 +21,8 @@ class NavigationBottomSheet: BottomSheetDialogFragment() {
         binding.homeNavigationView.setNavigationItemSelectedListener {
             val fragmentManager = activity!!.supportFragmentManager
             when (it.itemId) {
-                R.id.home_create_account_menu_button -> FormDispatcher.launch(fragmentManager, Constants.accountFormTag)
-                R.id.home_create_transaction_menu_button -> FormDispatcher.launch(fragmentManager, Constants.transactionFormTag)
+                R.id.home_create_account_menu_button -> FormDispatcher.launch(fragmentManager, Constants.accountFormTag, null)
+                R.id.home_create_transaction_menu_button -> FormDispatcher.launch(fragmentManager, Constants.transactionFormTag, null)
                 R.id.home_help_feedback_menu_button -> toast(activity!!.applicationContext, "Help me Rhonda")
             }
 
