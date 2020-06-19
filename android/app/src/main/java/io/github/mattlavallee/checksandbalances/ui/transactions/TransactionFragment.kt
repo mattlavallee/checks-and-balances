@@ -22,8 +22,9 @@ class TransactionFragment: Fragment() {
         val root = inflater.inflate(R.layout.fragment_transaction, container, false)
         binding = FragmentTransactionBinding.bind(root)
 
-        transactionViewModel.text.observe(viewLifecycleOwner, Observer {
-            binding.textTransaction.text = it
+        val accountId = arguments?.getInt("accountId")
+        transactionViewModel.getAccount(accountId!!).observe(viewLifecycleOwner, Observer {
+            binding.transactionAcountName.text = it.name
         })
 
         return root

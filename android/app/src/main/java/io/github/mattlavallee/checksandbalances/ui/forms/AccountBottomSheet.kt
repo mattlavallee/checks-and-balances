@@ -90,8 +90,8 @@ class AccountBottomSheet: BottomSheetDialogFragment() {
             binding.editAccountName.setText(currAccount?.name)
             binding.editAccountDescription.setText(currAccount?.description)
             var startingBalanceString = ""
-            if (currAccount?.startingBalance != null && currAccount?.startingBalance > 0) {
-                startingBalanceString = DecimalFormat("#.00").format(currAccount?.startingBalance)
+            if (currAccount?.startingBalance != null && currAccount.startingBalance > 0) {
+                startingBalanceString = DecimalFormat("#.00").format(currAccount.startingBalance)
             }
             binding.editAccountInitialBalance.setText(startingBalanceString)
         })

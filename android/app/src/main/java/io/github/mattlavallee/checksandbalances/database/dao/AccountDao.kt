@@ -10,6 +10,9 @@ interface AccountDao {
     fun getAll(): LiveData<List<Account>>
 
     @Query("SELECT * FROM accounts WHERE id = :accountId")
+    fun getLiveAccountById(accountId: Int): LiveData<Account>
+
+    @Query("SELECT * FROM accounts WHERE id = :accountId")
     fun getAccountById(accountId: Int): Account
 
     @Query("UPDATE accounts SET is_active = 0 WHERE id = :accountId")

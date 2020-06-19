@@ -47,7 +47,7 @@ class AccountAdapter(
         holder.accountName.text = account.name
         holder.accountName.tag = account.id
         holder.accountDescription.text = account.description
-        holder.accountTotal.text = "$" + DecimalFormat("0.00").format(account?.startingBalance)
+        holder.accountTotal.text = "$" + DecimalFormat("0.00").format(account.startingBalance)
 
         holder.accountOverflow.tag = account.id
         holder.accountOverflow.setOnClickListener {

@@ -1,12 +1,14 @@
 package io.github.mattlavallee.checksandbalances.ui.transactions
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import io.github.mattlavallee.checksandbalances.database.ChecksAndBalancesDatabase
 
-class TransactionViewModel: ViewModel() {
-    private val _text = MutableLiveData<String>().apply {
-        value = "Transaction Fragment"
+class TransactionViewModel(application: Application): AndroidViewModel(application) {
+    private var repository: ChecksAndBalancesDatabase = ChecksAndBalancesDatabase.getInstance(application.applicationContext)
+
+    fun getAccount(accountId: Int): LiveData<io.github.mattlavallee.checksandbalances.database.entities.Account> {
+        return repository.accountDao().getLiveAccountById(accountId)
     }
-    val text: LiveData<String> = _text
 }
