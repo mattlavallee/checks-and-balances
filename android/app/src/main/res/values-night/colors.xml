@@ -8,4 +8,5 @@
     <color name="colorControlNormal">#FFFFFF</color>
     <color name="colorMenuItemNormal">#FFFFFF</color>
     <color name="colorIconTint">#BFBFBF</color>
+    <color name="fragmentBackground">#121212</color>
 </resources>

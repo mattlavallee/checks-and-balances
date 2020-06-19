@@ -21,7 +21,7 @@ import io.github.mattlavallee.checksandbalances.ui.navigation.FormDispatcher
 class AccountFragment: Fragment() {
     private val accountViewModel: AccountViewModel by activityViewModels()
     private lateinit var binding: FragmentAccountBinding
-    private var accountAdapter: AccountAdapter = AccountAdapter(::onEditAccount, ::onDeleteAccount)
+    private var accountAdapter: AccountAdapter = AccountAdapter(::onEditAccount, ::onDeleteAccount, ::onDrillIntoAccount)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,14 +44,21 @@ class AccountFragment: Fragment() {
         return root
     }
 
-    private fun onEditAccount(accountId: Int): Unit {
+    private fun onEditAccount(accountId: Int) {
         val bundle = Bundle()
         bundle.putInt("accountId", accountId)
 
         FormDispatcher.launch(activity!!.supportFragmentManager, Constants.accountFormTag, bundle)
     }
 
-    private fun onDeleteAccount(accountId: Int): Unit {
+    private fun onDeleteAccount(accountId: Int) {
         accountViewModel.delete(accountId)
+    }
+
+    private fun onDrillIntoAccount(accountId: Int) {
+        val bundle = Bundle()
+        bundle.putInt("accountId", accountId)
+
+        FormDispatcher.launch(activity!!.supportFragmentManager, Constants.transactionViewTag, bundle)
     }
 }

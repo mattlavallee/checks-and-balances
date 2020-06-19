@@ -9,4 +9,5 @@
     <color name="colorControlNormal">#2D2D2D</color>
     <color name="colorMenuItemNormal">#2D2D2D</color>
     <color name="colorIconTint">#737373</color>
+    <color name="fragmentBackground">@color/colorSecondary</color>
 </resources>

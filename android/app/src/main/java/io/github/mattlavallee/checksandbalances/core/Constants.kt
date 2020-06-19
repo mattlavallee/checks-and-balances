@@ -5,4 +5,5 @@ object Constants {
     const val settingsMenuTag = "SETTINGS_BOTTOM_SHEET"
     const val accountFormTag = "ACCOUNT_FORM"
     const val transactionFormTag = "TRANSACTION_FORM"
+    const val transactionViewTag = "TRANSACTION_FRAGMENT"
 }

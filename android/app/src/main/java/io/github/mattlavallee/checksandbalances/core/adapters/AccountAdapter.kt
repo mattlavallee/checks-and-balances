@@ -10,9 +10,13 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textview.MaterialTextView
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.core.models.Account
+import java.text.DecimalFormat
 
 typealias Callback = (Int) -> Unit
-class AccountAdapter(val onEdit: Callback, val onDelete: Callback): RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
+class AccountAdapter(
+    val onEdit: Callback,
+    val onDelete: Callback,
+    val onDrill: Callback): RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
     private var accounts: ArrayList<Account> = ArrayList()
 
     class AccountViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -43,7 +47,7 @@ class AccountAdapter(val onEdit: Callback, val onDelete: Callback): RecyclerView
         holder.accountName.text = account.name
         holder.accountName.tag = account.id
         holder.accountDescription.text = account.description
-        holder.accountTotal.text = "$1000"
+        holder.accountTotal.text = "$" + DecimalFormat("0.00").format(account?.startingBalance)
 
         holder.accountOverflow.tag = account.id
         holder.accountOverflow.setOnClickListener {
@@ -61,6 +65,10 @@ class AccountAdapter(val onEdit: Callback, val onDelete: Callback): RecyclerView
                 false
             }
             popupMenu.show()
+        }
+
+        holder.cardView.setOnClickListener {
+            onDrill(account.id)
         }
     }
 
