@@ -6,46 +6,63 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import io.github.mattlavallee.checksandbalances.database.dao.AccountDao
+import io.github.mattlavallee.checksandbalances.database.dao.TransactionDao
 import io.github.mattlavallee.checksandbalances.database.entities.Account
+import io.github.mattlavallee.checksandbalances.database.entities.Transaction
 
-@Database(entities = [Account::class], version = 1)
+@Database(entities = [Account::class, Transaction::class], version = 2)
 abstract class ChecksAndBalancesDatabase : RoomDatabase() {
     abstract fun accountDao(): AccountDao
+    abstract fun transactionDao(): TransactionDao
 
     fun insert(account: Account) {
-        InsertAccountAsyncTask(accountDao()).execute(account)
+        ChecksAndBalancesAsyncTask<Account>(accountDao(), "insert").execute(account)
+    }
+
+    fun insert(transaction: Transaction) {
+        ChecksAndBalancesAsyncTask<Transaction>(transactionDao(), "insert").execute(transaction)
     }
 
     fun update(account: Account) {
-        UpdateAccountAsyncTask(accountDao()).execute(account)
+        ChecksAndBalancesAsyncTask<Account>(accountDao(), "update").execute(account)
     }
 
-    fun delete(id: Int) {
-        DeleteAccountAsyncTask(accountDao()).execute(id)
+    fun update(transaction: Transaction) {
+        ChecksAndBalancesAsyncTask<Transaction>(transactionDao(), "update").execute(transaction)
     }
 
-    private class InsertAccountAsyncTask(accountDao: AccountDao) : AsyncTask<Account, Unit, Unit>() {
-        val accountDao = accountDao
-
-        override fun doInBackground(vararg params: Account?) {
-            accountDao.insertAccount(params[0]!!)
-        }
+    fun deleteAccount(id: Int) {
+        ChecksAndBalancesAsyncTask<Int>(accountDao(), "delete").execute(id)
     }
 
-    private class UpdateAccountAsyncTask(accountDao: AccountDao): AsyncTask<Account, Unit, Unit>() {
-        val accountDao = accountDao
-
-        override fun doInBackground(vararg params: Account?) {
-            accountDao.updateAccount(params[0]!!)
-        }
+    fun deleteTransaction(id: Int) {
+        ChecksAndBalancesAsyncTask<Int>(transactionDao(), "delete").execute(id)
     }
 
-    private class DeleteAccountAsyncTask(accountDao: AccountDao) : AsyncTask<Int, Unit, Unit>() {
-        val accountDao = accountDao
+    private class ChecksAndBalancesAsyncTask<T>(dao: Any, type: String): AsyncTask<T, Unit, Unit>() {
+        val dao = dao
+        val actionType = type
 
-        override fun doInBackground(vararg params: Int?) {
-            val accountToDelete = accountDao.getAccountById(params[0]!!)
-            accountDao.delete(accountToDelete)
+        override fun doInBackground(vararg params: T?) {
+            if (dao is AccountDao) {
+                when (actionType) {
+                    "insert" -> dao.insertAccount(params[0]!! as Account)
+                    "update" -> dao.updateAccount(params[0]!! as Account)
+                    "delete" -> {
+                        val accountToDelete = dao.getAccountById(params[0]!! as Int)
+                        dao.delete(accountToDelete)
+                    }
+                }
+            } else if (dao is TransactionDao) {
+                when (actionType) {
+                    "insert" -> dao.insertTransaction(params[0]!! as Transaction)
+                    "update" -> dao.updateTransaction(params[0]!! as Transaction)
+                    "delete" -> {
+                        val transactionToDelete = dao.getTransactionById(params[0]!! as Int)
+                        dao.delete(transactionToDelete)
+                    }
+                }
+            }
         }
     }
 

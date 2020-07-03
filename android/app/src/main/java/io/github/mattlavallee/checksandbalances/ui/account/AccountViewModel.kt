@@ -39,6 +39,6 @@ class AccountViewModel(application: Application): AndroidViewModel(application) 
     }
 
     fun delete(accountId: Int) {
-        repository.delete(accountId)
+        repository.deleteAccount(accountId)
     }
 }
