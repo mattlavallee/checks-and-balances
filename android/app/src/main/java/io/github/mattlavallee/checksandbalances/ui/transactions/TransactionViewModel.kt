@@ -11,4 +11,8 @@ class TransactionViewModel(application: Application): AndroidViewModel(applicati
     fun getAccount(accountId: Int): LiveData<io.github.mattlavallee.checksandbalances.database.entities.Account> {
         return repository.accountDao().getLiveAccountById(accountId)
     }
+
+    fun getTransactionsForAccount(accountId: Int): LiveData<List<io.github.mattlavallee.checksandbalances.database.entities.Transaction>> {
+        return repository.transactionDao().getAllForAccount(accountId)
+    }
 }
