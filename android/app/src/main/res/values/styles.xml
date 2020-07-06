@@ -32,6 +32,14 @@
         <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
 
+    <style name="CABDialog" parent="ThemeOverlay.MaterialComponents.Dialog">
+        <item name="colorAccent">@color/colorPrimaryDark</item> <!-- header background -->
+        <item name="android:windowBackground">@color/colorSecondary</item> <!-- calendar background -->
+        <item name="android:colorControlActivated">@color/colorPrimary</item> <!-- selected day -->
+        <item name="android:textColorPrimary">@color/colorControlNormal</item> <!-- days of month -->
+        <item name="android:textColorSecondary">@color/colorControlNormal</item> <!-- days of week -->
+    </style>
+
     <style name="RobotoThinTextView" parent="Widget.MaterialComponents.TextView">
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="fontFamily">sans-serif-light</item>

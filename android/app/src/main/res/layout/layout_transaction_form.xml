@@ -81,7 +81,8 @@
         app:boxStrokeColor="@color/colorOnSecondary"
         app:layout_constraintTop_toBottomOf="@id/edit_transaction_amount_deduction"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/edit_transaction_datetime_wrapper">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_transaction_description"
             android:layout_width="match_parent"
@@ -93,5 +94,24 @@
             android:maxLines="1"
             android:textCursorDrawable="@drawable/text_cursor_primary_dark"
             android:inputType="textAutoComplete|textCapSentences|text" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_transaction_datetime_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/transaction_datetime_hint"
+        app:hintTextColor="@color/colorOnSecondary"
+        app:boxStrokeColor="@color/colorOnSecondary"
+        app:layout_constraintTop_toBottomOf="@id/edit_transaction_description_wrapper"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_transaction_datetime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="true"
+            android:backgroundTint="@color/colorSecondary"
+            android:imeOptions="actionNext" />
     </com.google.android.material.textfield.TextInputLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
