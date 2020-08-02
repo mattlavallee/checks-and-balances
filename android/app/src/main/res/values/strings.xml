@@ -23,6 +23,7 @@
     <string name="transaction_amount_deduction_hint">Apply transaction as a deduction</string>
     <string name="transaction_description_hint">Description</string>
     <string name="transaction_datetime_hint">Transaction Date</string>
+    <string name="account_prompt">Select an Account</string>
 
     <string name="save_button">Save</string>
 

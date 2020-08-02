@@ -7,6 +7,17 @@
     android:padding="15dp"
     android:background="@color/colorSecondary"
     android:tag="TRANSACTION_FORM">
+    <Spinner
+        android:id="@+id/edit_transaction_account_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center|center_vertical"
+        android:prompt="@string/account_prompt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/edit_transaction_title_wrapper"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edit_transaction_title_wrapper"
         android:layout_width="match_parent"
@@ -14,8 +25,7 @@
         android:hint="@string/transaction_title_hint"
         app:hintTextColor="@color/colorOnSecondary"
         app:boxStrokeColor="@color/colorOnSecondary"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_transaction_account_id"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/edit_transaction_amount_wrapper">
@@ -114,4 +124,17 @@
             android:backgroundTint="@color/colorSecondary"
             android:imeOptions="actionNext" />
     </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/edit_transaction_save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save_button"
+        android:textAlignment="center"
+        android:gravity="right|center_vertical"
+        android:backgroundTint="@color/colorOnSecondary"
+        android:theme="@style/RobotoThinButton"
+        app:layout_constraintTop_toBottomOf="@id/edit_transaction_datetime_wrapper"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
