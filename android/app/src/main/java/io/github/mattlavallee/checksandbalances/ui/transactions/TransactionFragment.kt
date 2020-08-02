@@ -24,7 +24,7 @@ class TransactionFragment: Fragment() {
 
         val accountId = arguments?.getInt("accountId")
         transactionViewModel.getAccount(accountId!!).observe(viewLifecycleOwner, Observer {
-            binding.transactionAcountName.text = it.name
+            binding.transactionAccountName.text = it.name
         })
 
         return root

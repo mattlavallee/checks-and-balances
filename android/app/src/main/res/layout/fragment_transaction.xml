@@ -6,15 +6,30 @@
     android:layout_height="match_parent"
     android:background="@color/fragmentBackground">
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/transaction_acount_name"
+        android:id="@+id/transaction_account_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:paddingLeft="5dp"
         android:textAlignment="center"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/transaction_recycler_view" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/transaction_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:clipToPadding="false"
+        android:paddingBottom="50dp"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/transaction_account_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
