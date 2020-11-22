@@ -54,18 +54,20 @@ class AccountBottomSheet: BottomSheetDialogFragment() {
             var balance = binding.editAccountInitialBalance.text.toString().toDoubleOrNull()
 
             val hasError = this.checkForValidAccountName(name, binding.editAccountNameWrapper, true)
-            if(!hasError) {
-                inputMethodManager.hideSoftInputFromWindow(accountView.windowToken, 0)
-                if (balance == null) {
-                    balance = 0.0
-                }
-                if (accountId != null) {
-                    this.accountViewModel.update(Account(accountId, name, description, balance, true))
-                } else {
-                    this.accountViewModel.save(Account(0, name, description, balance, true))
-                }
-                super.dismiss()
+            if (hasError) {
+                return@setOnClickListener
             }
+
+            inputMethodManager.hideSoftInputFromWindow(accountView.windowToken, 0)
+            if (balance == null) {
+                balance = 0.0
+            }
+            if (accountId != null) {
+                this.accountViewModel.update(Account(accountId, name, description, balance, true))
+            } else {
+                this.accountViewModel.save(Account(0, name, description, balance, true))
+            }
+            super.dismiss()
         }
 
         return accountView

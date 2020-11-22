@@ -10,6 +10,7 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textview.MaterialTextView
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.database.entities.Transaction
+import kotlinx.android.synthetic.main.recycler_transaction_row.view.*
 
 class TransactionAdapter(): RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
     private var transactions: ArrayList<Transaction> = ArrayList()
@@ -33,6 +34,7 @@ class TransactionAdapter(): RecyclerView.Adapter<TransactionAdapter.TransactionV
 
     override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
         val transaction = transactions[position]
+        holder.cardView.transactoin_card_view_title.text = transaction.title
         holder.cardView.tag = transaction.id
     }
 

@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import io.github.mattlavallee.checksandbalances.database.ChecksAndBalancesDatabase
+import io.github.mattlavallee.checksandbalances.database.entities.Transaction
 
 class TransactionViewModel(application: Application): AndroidViewModel(application) {
     private var repository: ChecksAndBalancesDatabase = ChecksAndBalancesDatabase.getInstance(application.applicationContext)
@@ -14,5 +15,27 @@ class TransactionViewModel(application: Application): AndroidViewModel(applicati
 
     fun getTransactionsForAccount(accountId: Int): LiveData<List<io.github.mattlavallee.checksandbalances.database.entities.Transaction>> {
         return repository.transactionDao().getAllForAccount(accountId)
+    }
+    
+    fun save(
+        id: Int,
+        accountId: Int,
+        title: String,
+        amount: Double,
+        description: String,
+        dateTime: Long
+    ) {
+        repository.insert(Transaction(id, accountId, title, amount, description, dateTime, true))
+    }
+
+    fun update(
+        id: Int,
+        accountId: Int,
+        title: String,
+        amount: Double,
+        description: String,
+        dateTime: Long
+    ) {
+        repository.update(Transaction(id, accountId, title, amount, description, dateTime, true))
     }
 }

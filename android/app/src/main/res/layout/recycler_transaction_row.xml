@@ -13,6 +13,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/transactoin_card_view_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:maxLines="1"
+            android:ellipsize="end" />
 <!--        <com.google.android.material.textview.MaterialTextView-->
 <!--            android:id="@+id/account_card_view_name"-->
 <!--            android:layout_width="wrap_content"-->

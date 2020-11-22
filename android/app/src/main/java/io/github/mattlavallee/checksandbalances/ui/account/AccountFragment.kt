@@ -32,7 +32,7 @@ class AccountFragment: Fragment() {
         binding = FragmentAccountBinding.bind(root)
 
         accountViewModel.getAllAccounts().observe(viewLifecycleOwner, Observer {itList ->
-            var accounts: ArrayList<Account> = ArrayList()
+            val accounts: ArrayList<Account> = ArrayList()
             itList.mapTo(accounts) {Account(it.id, it.name, it.description?: "", it.startingBalance, it.isActive)}
             accountAdapter.setData(accounts)
         })
