@@ -3,7 +3,6 @@ package io.github.mattlavallee.checksandbalances.ui.account
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import io.github.mattlavallee.checksandbalances.core.models.Account
 import io.github.mattlavallee.checksandbalances.database.ChecksAndBalancesDatabase
 
 class AccountViewModel(application: Application): AndroidViewModel(application) {
@@ -14,26 +13,26 @@ class AccountViewModel(application: Application): AndroidViewModel(application) 
         return this.accounts
     }
 
-    fun save(newAccount: Account) {
+    fun save(id: Int, name: String, description: String, startingBalance: Double) {
         repository.insert(
             io.github.mattlavallee.checksandbalances.database.entities.Account(
-                newAccount.id,
-                newAccount.name,
-                newAccount.description,
-                newAccount.startingBalance,
-                newAccount.isActive
+                id,
+                name,
+                description,
+                startingBalance,
+                true
             )
         )
     }
 
-    fun update(updatedAccount: Account) {
+    fun update(id: Int, name: String, description: String, startingBalance: Double, isActive: Boolean) {
         repository.update(
             io.github.mattlavallee.checksandbalances.database.entities.Account(
-                updatedAccount.id,
-                updatedAccount.name,
-                updatedAccount.description,
-                updatedAccount.startingBalance,
-                updatedAccount.isActive
+                id,
+                name,
+                description,
+                startingBalance,
+                isActive
             )
         )
     }

@@ -16,7 +16,7 @@ import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputLayout
 import io.github.mattlavallee.checksandbalances.R
-import io.github.mattlavallee.checksandbalances.core.models.Account
+import io.github.mattlavallee.checksandbalances.database.entities.Account
 import io.github.mattlavallee.checksandbalances.databinding.LayoutTransactionFormBinding
 import io.github.mattlavallee.checksandbalances.ui.account.AccountViewModel
 import io.github.mattlavallee.checksandbalances.ui.transactions.TransactionViewModel

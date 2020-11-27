@@ -1,7 +1,7 @@
 package io.github.mattlavallee.checksandbalances.core.adapters
 
 import androidx.recyclerview.widget.DiffUtil
-import io.github.mattlavallee.checksandbalances.core.models.Account
+import io.github.mattlavallee.checksandbalances.database.entities.Account
 
 class AccountDiffCallback(private val oldList: ArrayList<Account>, private val newList: ArrayList<Account>): DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldList.size
@@ -12,6 +12,8 @@ class AccountDiffCallback(private val oldList: ArrayList<Account>, private val n
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].hasSameContents(newList[newItemPosition])
+        return oldList[oldItemPosition].name == newList[newItemPosition].name &&
+                oldList[oldItemPosition].description == newList[newItemPosition].description &&
+                oldList[oldItemPosition].startingBalance == newList[newItemPosition].startingBalance
     }
 }

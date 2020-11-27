@@ -13,7 +13,6 @@ import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputLayout
 import io.github.mattlavallee.checksandbalances.R
-import io.github.mattlavallee.checksandbalances.core.models.Account
 import io.github.mattlavallee.checksandbalances.databinding.LayoutAccountFormBinding
 import io.github.mattlavallee.checksandbalances.ui.account.AccountViewModel
 import java.text.DecimalFormat
@@ -63,9 +62,9 @@ class AccountBottomSheet: BottomSheetDialogFragment() {
                 balance = 0.0
             }
             if (accountId != null) {
-                this.accountViewModel.update(Account(accountId, name, description, balance, true))
+                this.accountViewModel.update(accountId, name, description, balance, true)
             } else {
-                this.accountViewModel.save(Account(0, name, description, balance, true))
+                this.accountViewModel.save(0, name, description, balance)
             }
             super.dismiss()
         }

@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -14,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.core.Constants
 import io.github.mattlavallee.checksandbalances.core.adapters.AccountAdapter
-import io.github.mattlavallee.checksandbalances.core.models.Account
+import io.github.mattlavallee.checksandbalances.database.entities.Account
 import io.github.mattlavallee.checksandbalances.databinding.FragmentAccountBinding
 import io.github.mattlavallee.checksandbalances.ui.navigation.FormDispatcher
 
@@ -48,7 +46,7 @@ class AccountFragment: Fragment() {
         val bundle = Bundle()
         bundle.putInt("accountId", accountId)
 
-        FormDispatcher.launch(activity!!.supportFragmentManager, Constants.accountFormTag, bundle)
+        FormDispatcher.launch(requireActivity().supportFragmentManager, Constants.accountFormTag, bundle)
     }
 
     private fun onDeleteAccount(accountId: Int) {
@@ -59,6 +57,6 @@ class AccountFragment: Fragment() {
         val bundle = Bundle()
         bundle.putInt("accountId", accountId)
 
-        FormDispatcher.launch(activity!!.supportFragmentManager, Constants.transactionViewTag, bundle)
+        FormDispatcher.launch(requireActivity().supportFragmentManager, Constants.transactionViewTag, bundle)
     }
 }
