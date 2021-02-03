@@ -86,7 +86,7 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
 
             if (transactionId == null) {
                 transactionViewModel.save(
-                    -1,
+                    0,
                     accountId,
                     title,
                     amount,
