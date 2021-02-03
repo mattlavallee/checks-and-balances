@@ -5,7 +5,6 @@ import android.view.*
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.navigation.NavigationView
 import com.google.android.material.textview.MaterialTextView
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.core.Preferences
@@ -18,7 +17,7 @@ class SettingsBottomSheet: BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val settingsView = inflater.inflate(R.layout.layout_settings_bottomsheet, container, false)
         binding = LayoutSettingsBottomsheetBinding.bind(settingsView)
-        appPreferences = Preferences(activity!!)
+        appPreferences = Preferences(requireActivity())
 
         binding.settingsNavigationView.setNavigationItemSelectedListener {
             if (it.itemId == R.id.settings_theme) {
@@ -39,7 +38,7 @@ class SettingsBottomSheet: BottomSheetDialogFragment() {
         val currTheme = appPreferences.getTheme()
         val newTheme = if (currTheme == AppCompatDelegate.MODE_NIGHT_NO) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
 
-        AppCompatDelegate.setDefaultNightMode((newTheme))
+        AppCompatDelegate.setDefaultNightMode(newTheme)
         appPreferences.setTheme(newTheme)
     }
 }
