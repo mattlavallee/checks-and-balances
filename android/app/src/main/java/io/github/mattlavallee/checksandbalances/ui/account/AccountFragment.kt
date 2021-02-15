@@ -51,6 +51,7 @@ class AccountFragment: Fragment() {
 
     private fun onDeleteAccount(accountId: Int) {
         accountViewModel.delete(accountId)
+        //TODO: need to delete all associated transactions as well
     }
 
     private fun onDrillIntoAccount(accountId: Int) {

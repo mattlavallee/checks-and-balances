@@ -20,6 +20,7 @@ import io.github.mattlavallee.checksandbalances.database.entities.Account
 import io.github.mattlavallee.checksandbalances.databinding.LayoutTransactionFormBinding
 import io.github.mattlavallee.checksandbalances.ui.account.AccountViewModel
 import io.github.mattlavallee.checksandbalances.ui.transactions.TransactionViewModel
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import kotlin.collections.ArrayList
@@ -44,7 +45,7 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
         binding.editTransactionTitle.requestFocus()
         val inputMethodManager: InputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
-        this.initializeDateTimePicker()
+        this.initializeDateTimePicker(null)
 
         accountViewModel.getAllAccounts().observe(viewLifecycleOwner, Observer {itList ->
             val accountNames: ArrayList<String> = ArrayList()
@@ -114,9 +115,12 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
         return transactionView
     }
 
-    private fun initializeDateTimePicker() {
+    private fun initializeDateTimePicker(dateTime: Long?) {
         val dateFormat = SimpleDateFormat("MM/dd/yyyy")
-        transactionCalendar = Calendar.getInstance()
+        transactionCalendar = Calendar.getInstance()b
+        if (dateTime != null) {
+            transactionCalendar.timeInMillis = dateTime
+        }
         val dateListener: DatePickerDialog.OnDateSetListener = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
             transactionCalendar.set(Calendar.YEAR, year)
             transactionCalendar.set(Calendar.MONTH, monthOfYear)
@@ -140,7 +144,18 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
         }
     }
 
-    private fun populateForm(transactionId: Int) {}
+    private fun populateForm(transactionId: Int) {
+        transactionViewModel.getTransaction(transactionId).observe(viewLifecycleOwner, Observer {
+            binding.editTransactionTitle.setText(it.title)
+            binding.editTransactionDescription.setText(it.description)
+            binding.editTransactionAmount.setText(DecimalFormat("0.00").format(it.amount))
+            binding.editTransactionAmountDeduction.isChecked = it.amount < 0
+            this.initializeDateTimePicker(it.dateTimeModified)
+
+            val accountIdx = accounts.indexOfFirst { act -> act.id == it.accountId }
+            binding.editTransactionAccountId.setSelection(accountIdx, true)
+        })
+    }
 
     private fun checkForValidField(name: String, field: TextInputLayout, fieldName: String, checkForError: Boolean): Boolean {
         val hasError = if (fieldName == "Title") {

@@ -9,11 +9,15 @@ import io.github.mattlavallee.checksandbalances.database.entities.Transaction
 class TransactionViewModel(application: Application): AndroidViewModel(application) {
     private var repository: ChecksAndBalancesDatabase = ChecksAndBalancesDatabase.getInstance(application.applicationContext)
 
+    fun getTransaction(transactionId: Int): LiveData<Transaction> {
+        return repository.transactionDao().getLiveTransactionById(transactionId)
+    }
+
     fun getAccount(accountId: Int): LiveData<io.github.mattlavallee.checksandbalances.database.entities.Account> {
         return repository.accountDao().getLiveAccountById(accountId)
     }
 
-    fun getTransactionsForAccount(accountId: Int): LiveData<List<io.github.mattlavallee.checksandbalances.database.entities.Transaction>> {
+    fun getTransactionsForAccount(accountId: Int): LiveData<List<Transaction>> {
         return repository.transactionDao().getAllForAccount(accountId)
     }
     
@@ -34,8 +38,9 @@ class TransactionViewModel(application: Application): AndroidViewModel(applicati
         title: String,
         amount: Double,
         description: String,
-        dateTime: Long
+        dateTime: Long,
+        isActive: Boolean = true
     ) {
-        repository.update(Transaction(id, accountId, title, amount, description, dateTime, true))
+        repository.update(Transaction(id, accountId, title, amount, description, dateTime, isActive))
     }
 }
