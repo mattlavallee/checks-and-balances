@@ -86,15 +86,10 @@ class AccountBottomSheet: BottomSheetDialogFragment() {
     }
 
     private fun populateForm(accountId: Int) {
-        accountViewModel.getAllAccounts().observe(viewLifecycleOwner, Observer { itList ->
-            val currAccount = itList.find { it.id == accountId }
-            binding.editAccountName.setText(currAccount?.name)
-            binding.editAccountDescription.setText(currAccount?.description)
-            var startingBalanceString = ""
-            if (currAccount?.startingBalance != null && currAccount.startingBalance > 0) {
-                startingBalanceString = DecimalFormat("#.00").format(currAccount.startingBalance)
-            }
-            binding.editAccountInitialBalance.setText(startingBalanceString)
+        accountViewModel.getAccountById(accountId).observe(viewLifecycleOwner, Observer {
+            binding.editAccountName.setText(it.name)
+            binding.editAccountDescription.setText(it.description)
+            binding.editAccountInitialBalance.setText(DecimalFormat("#.00").format(it.startingBalance))
         })
     }
 }

@@ -117,7 +117,7 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
 
     private fun initializeDateTimePicker(dateTime: Long?) {
         val dateFormat = SimpleDateFormat("MM/dd/yyyy")
-        transactionCalendar = Calendar.getInstance()b
+        transactionCalendar = Calendar.getInstance()
         if (dateTime != null) {
             transactionCalendar.timeInMillis = dateTime
         }

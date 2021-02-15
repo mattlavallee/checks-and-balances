@@ -11,6 +11,9 @@ import com.google.android.material.textview.MaterialTextView
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.database.entities.Account
 import java.text.DecimalFormat
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 typealias Callback = (Int) -> Unit
 class AccountAdapter(
@@ -47,7 +50,10 @@ class AccountAdapter(
         holder.accountName.text = account.name
         holder.accountName.tag = account.id
         holder.accountDescription.text = account.description
-        holder.accountTotal.text = "$" + DecimalFormat("0.00").format(account.startingBalance)
+        val currencyFormat = NumberFormat.getCurrencyInstance()
+        currencyFormat.maximumFractionDigits = 2
+        currencyFormat.currency = Currency.getInstance("USD")
+        holder.accountTotal.text = currencyFormat.format(account.startingBalance)
 
         holder.accountOverflow.tag = account.id
         holder.accountOverflow.setOnClickListener {

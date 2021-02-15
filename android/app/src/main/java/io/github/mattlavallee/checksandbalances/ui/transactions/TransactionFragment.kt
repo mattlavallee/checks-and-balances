@@ -33,7 +33,7 @@ class TransactionFragment: Fragment() {
         transactionViewModel.getAccount(accountId!!).observe(viewLifecycleOwner, Observer {
             binding.transactionAccountName.text = it.name
         })
-        transactionViewModel.getTransactionsForAccount(accountId!!).observe(viewLifecycleOwner, Observer { itList ->
+        transactionViewModel.getTransactionsForAccount(accountId).observe(viewLifecycleOwner, Observer { itList ->
             val transactions: ArrayList<Transaction> = ArrayList()
             itList.mapTo(transactions) {
                 Transaction(it.id, it.accountId, it.title, it.amount, it.description, it.dateTimeModified, it.isActive)
