@@ -31,6 +31,7 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
     private val accounts: ArrayList<Account> = ArrayList()
     private var transactionCalendar: Calendar = Calendar.getInstance()
     private lateinit var binding: LayoutTransactionFormBinding
+    private var accountId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,7 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
         binding = LayoutTransactionFormBinding.bind(transactionView)
 
         val transactionId = arguments?.getInt("transactionId")
+        accountId = arguments?.getInt("accountId")
         binding.editTransactionTitle.requestFocus()
         val inputMethodManager: InputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
@@ -54,9 +56,11 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
 
             accounts.mapTo(accountNames) { it.name }
             binding.editTransactionAccountId.adapter = ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, accountNames)
-            if (transactionId == null) {
-                binding.editTransactionAccountId.setSelection(0, true)
+            var index = 0;
+            if (accountId != null) {
+                index = accounts.indexOfFirst { act -> act.id == accountId }
             }
+            binding.editTransactionAccountId.setSelection(index, true)
         })
 
         binding.editTransactionTitle.addTextChangedListener {

@@ -19,6 +19,7 @@ import io.github.mattlavallee.checksandbalances.ui.navigation.FormDispatcher
 class TransactionFragment: Fragment() {
     private val transactionViewModel: TransactionViewModel by activityViewModels()
     private lateinit var binding: FragmentTransactionBinding
+    private var accountId: Int? = null
     private var transactionAdapter: TransactionAdapter = TransactionAdapter(::onEditTransaction, ::onArchiveTransaction)
 
     override fun onCreateView(
@@ -29,11 +30,11 @@ class TransactionFragment: Fragment() {
         val root = inflater.inflate(R.layout.fragment_transaction, container, false)
         binding = FragmentTransactionBinding.bind(root)
 
-        val accountId = arguments?.getInt("accountId")
+        accountId = arguments?.getInt("accountId")
         transactionViewModel.getAccount(accountId!!).observe(viewLifecycleOwner, Observer {
             binding.transactionAccountName.text = it.name
         })
-        transactionViewModel.getTransactionsForAccount(accountId).observe(viewLifecycleOwner, Observer { itList ->
+        transactionViewModel.getTransactionsForAccount(accountId!!).observe(viewLifecycleOwner, Observer { itList ->
             val transactions: ArrayList<Transaction> = ArrayList()
             itList.mapTo(transactions) {
                 Transaction(it.id, it.accountId, it.title, it.amount, it.description, it.dateTimeModified, it.isActive)
@@ -51,6 +52,7 @@ class TransactionFragment: Fragment() {
     private fun onEditTransaction(transactionId: Int) {
         val bundle = Bundle()
         bundle.putInt("transactionId", transactionId)
+        bundle.putInt("accountId", accountId!!)
 
         FormDispatcher.launch(requireActivity().supportFragmentManager, Constants.transactionFormTag, bundle)
     }
