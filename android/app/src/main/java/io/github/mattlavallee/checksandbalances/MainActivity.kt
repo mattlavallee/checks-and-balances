@@ -1,10 +1,14 @@
 package io.github.mattlavallee.checksandbalances
 
+import android.content.Context
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.Menu
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.Observer
 import io.github.mattlavallee.checksandbalances.core.Constants
 import io.github.mattlavallee.checksandbalances.core.Preferences
 import io.github.mattlavallee.checksandbalances.database.entities.Account
@@ -45,9 +49,13 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+        var accountCount = 0
+        accountViewModel.getAllAccounts().observe(this, Observer {itList ->
+            accountCount = itList.size
+        })
+
         binding.fab.setOnClickListener {
-            val accounts: List<Account>? = accountViewModel.getAllAccounts().value
-            val tag: String = if (accounts != null && accounts.isNotEmpty()) Constants.transactionFormTag else Constants.accountFormTag
+            val tag: String = if (accountCount > 0) Constants.transactionFormTag else Constants.accountFormTag
             FormDispatcher.launch(supportFragmentManager, tag, null)
         }
     }

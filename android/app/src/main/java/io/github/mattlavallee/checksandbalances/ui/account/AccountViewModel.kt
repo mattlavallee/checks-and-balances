@@ -5,13 +5,17 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import io.github.mattlavallee.checksandbalances.database.ChecksAndBalancesDatabase
 import io.github.mattlavallee.checksandbalances.database.entities.Account
+import io.github.mattlavallee.checksandbalances.database.entities.AccountWithSum
 
 class AccountViewModel(application: Application): AndroidViewModel(application) {
     private var repository: ChecksAndBalancesDatabase = ChecksAndBalancesDatabase.getInstance(application.applicationContext)
-    private var accounts: LiveData<List<Account>> = repository.accountDao().getAll()
 
     fun getAllAccounts(): LiveData<List<Account>> {
-        return this.accounts
+        return repository.accountDao().getAll()
+    }
+
+    fun getAllAccountsWithSum(): LiveData<List<AccountWithSum>> {
+        return repository.accountDao().getAllWithTransactionTotal()
     }
 
     fun getAccountById(accountId: Int): LiveData<Account> {

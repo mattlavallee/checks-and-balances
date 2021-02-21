@@ -29,9 +29,12 @@ class AccountFragment: Fragment() {
         val root = inflater.inflate(R.layout.fragment_account, container, false)
         binding = FragmentAccountBinding.bind(root)
 
-        accountViewModel.getAllAccounts().observe(viewLifecycleOwner, Observer {itList ->
+        accountViewModel.getAllAccountsWithSum().observe(viewLifecycleOwner, Observer {itList ->
             val accounts: ArrayList<Account> = ArrayList()
-            itList.mapTo(accounts) {Account(it.id, it.name, it.description?: "", it.startingBalance, it.isActive)}
+            itList.mapTo(accounts) { it ->
+                val balance = it.starting_balance + it.sum
+                Account(it.id, it.name, it.description?: "", balance, it.is_active)
+            }
             accountAdapter.setData(accounts)
         })
 
