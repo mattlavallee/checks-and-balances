@@ -56,7 +56,14 @@ class MainActivity : AppCompatActivity() {
 
         binding.fab.setOnClickListener {
             val tag: String = if (accountCount > 0) Constants.transactionFormTag else Constants.accountFormTag
-            FormDispatcher.launch(supportFragmentManager, tag, null)
+            var bundle: Bundle? = null
+            if (accountViewModel.activeAccountId.value != null) {
+                bundle = Bundle()
+                bundle.putInt("transactionId", -1)
+                bundle.putInt("accountId", accountViewModel.activeAccountId.value!!)
+            }
+
+            FormDispatcher.launch(supportFragmentManager, tag, bundle)
         }
     }
 

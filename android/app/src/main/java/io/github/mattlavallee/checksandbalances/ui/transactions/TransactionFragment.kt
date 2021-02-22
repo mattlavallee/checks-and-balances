@@ -14,10 +14,12 @@ import io.github.mattlavallee.checksandbalances.core.Constants
 import io.github.mattlavallee.checksandbalances.core.adapters.TransactionAdapter
 import io.github.mattlavallee.checksandbalances.database.entities.Transaction
 import io.github.mattlavallee.checksandbalances.databinding.FragmentTransactionBinding
+import io.github.mattlavallee.checksandbalances.ui.account.AccountViewModel
 import io.github.mattlavallee.checksandbalances.ui.navigation.FormDispatcher
 
 class TransactionFragment: Fragment() {
     private val transactionViewModel: TransactionViewModel by activityViewModels()
+    private val accountViewModel: AccountViewModel by activityViewModels()
     private lateinit var binding: FragmentTransactionBinding
     private var accountId: Int? = null
     private var transactionAdapter: TransactionAdapter = TransactionAdapter(::onEditTransaction, ::onArchiveTransaction)
@@ -31,6 +33,7 @@ class TransactionFragment: Fragment() {
         binding = FragmentTransactionBinding.bind(root)
 
         accountId = arguments?.getInt("accountId")
+        accountViewModel.activeAccountId.value = accountId
         transactionViewModel.getAccount(accountId!!).observe(viewLifecycleOwner, Observer {
             binding.transactionAccountName.text = it.name
         })

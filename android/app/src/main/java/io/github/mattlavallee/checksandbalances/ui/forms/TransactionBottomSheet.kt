@@ -42,8 +42,12 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
         val transactionView = inflater.inflate(R.layout.layout_transaction_form, container, false)
         binding = LayoutTransactionFormBinding.bind(transactionView)
 
-        val transactionId = arguments?.getInt("transactionId")
+        var transactionId = arguments?.getInt("transactionId")
+        if (transactionId != null && transactionId < 0) {
+            transactionId = null
+        }
         accountId = arguments?.getInt("accountId")
+
         binding.editTransactionTitle.requestFocus()
         val inputMethodManager: InputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
