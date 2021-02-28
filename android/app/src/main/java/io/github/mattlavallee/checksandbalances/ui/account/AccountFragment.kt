@@ -19,7 +19,7 @@ import io.github.mattlavallee.checksandbalances.ui.navigation.FormDispatcher
 class AccountFragment: Fragment() {
     private val accountViewModel: AccountViewModel by activityViewModels()
     private lateinit var binding: FragmentAccountBinding
-    private var accountAdapter: AccountAdapter = AccountAdapter(::onEditAccount, ::onDeleteAccount, ::onDrillIntoAccount)
+    private var accountAdapter: AccountAdapter = AccountAdapter(::onEditAccount, ::onArchiveAccount, ::onDrillIntoAccount)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,9 +52,8 @@ class AccountFragment: Fragment() {
         FormDispatcher.launch(requireActivity().supportFragmentManager, Constants.accountFormTag, bundle)
     }
 
-    private fun onDeleteAccount(accountId: Int) {
-        accountViewModel.delete(accountId)
-        //TODO: need to delete all associated transactions as well
+    private fun onArchiveAccount(accountId: Int) {
+        accountViewModel.archive(accountId)
     }
 
     private fun onDrillIntoAccount(accountId: Int) {

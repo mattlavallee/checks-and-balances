@@ -18,6 +18,9 @@ interface TransactionDao {
     @Query("UPDATE transactions SET is_active = 0 WHERE id = :transactionId")
     fun archiveTransaction(transactionId: Int)
 
+    @Query("UPDATE transactions SET is_active = 0 where account_id = :accountId")
+    fun archiveTransactionsForAccount(accountId: Int)
+
     @Insert
     fun insertTransaction(vararg transaction: Transaction)
 

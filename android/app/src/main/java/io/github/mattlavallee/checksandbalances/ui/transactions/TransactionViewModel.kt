@@ -43,4 +43,8 @@ class TransactionViewModel(application: Application): AndroidViewModel(applicati
     ) {
         repository.update(Transaction(id, accountId, title, amount, description, dateTime, isActive))
     }
+
+    fun archive(id: Int) {
+        repository.archiveTransaction(id)
+    }
 }

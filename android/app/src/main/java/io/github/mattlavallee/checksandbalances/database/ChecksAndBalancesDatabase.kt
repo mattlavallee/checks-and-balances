@@ -31,12 +31,13 @@ abstract class ChecksAndBalancesDatabase : RoomDatabase() {
         ChecksAndBalancesAsyncTask<Transaction>(transactionDao(), "update").execute(transaction)
     }
 
-    fun deleteAccount(id: Int) {
-        ChecksAndBalancesAsyncTask<Int>(accountDao(), "delete").execute(id)
+    fun archive(accountId: Int) {
+        ChecksAndBalancesAsyncTask<Int>(accountDao(), "archive").execute(accountId)
+        ChecksAndBalancesAsyncTask<Int>(transactionDao(), "archiveAccount").execute(accountId)
     }
 
-    fun deleteTransaction(id: Int) {
-        ChecksAndBalancesAsyncTask<Int>(transactionDao(), "delete").execute(id)
+    fun archiveTransaction(transactionId: Int) {
+        ChecksAndBalancesAsyncTask<Int>(transactionDao(), "archive").execute(transactionId)
     }
 
     private class ChecksAndBalancesAsyncTask<T>(dao: Any, type: String): AsyncTask<T, Unit, Unit>() {
@@ -48,19 +49,14 @@ abstract class ChecksAndBalancesDatabase : RoomDatabase() {
                 when (actionType) {
                     "insert" -> dao.insertAccount(params[0]!! as Account)
                     "update" -> dao.updateAccount(params[0]!! as Account)
-                    "delete" -> {
-                        val accountToDelete = dao.getAccountById(params[0]!! as Int)
-                        dao.delete(accountToDelete)
-                    }
+                    "archive" -> dao.archiveAccount(params[0]!! as Int)
                 }
             } else if (dao is TransactionDao) {
                 when (actionType) {
                     "insert" -> dao.insertTransaction(params[0]!! as Transaction)
                     "update" -> dao.updateTransaction(params[0]!! as Transaction)
-                    "delete" -> {
-                        val transactionToDelete = dao.getTransactionById(params[0]!! as Int)
-                        dao.delete(transactionToDelete)
-                    }
+                    "archive" -> dao.archiveTransaction(params[0]!! as Int)
+                    "archiveAccount" -> dao.archiveTransactionsForAccount(params[0]!! as Int)
                 }
             }
         }

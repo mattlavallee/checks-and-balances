@@ -61,16 +61,6 @@ class TransactionFragment: Fragment() {
     }
 
     private fun onArchiveTransaction(transactionId: Int) {
-        transactionViewModel.getTransaction(transactionId).observe(viewLifecycleOwner, Observer {
-            transactionViewModel.update(
-                it.id,
-                it.accountId,
-                it.title,
-                it.amount,
-                it.description!!,
-                it.dateTimeModified,
-                false
-            )
-        })
+        transactionViewModel.archive(transactionId)
     }
 }

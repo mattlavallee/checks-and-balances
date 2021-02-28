@@ -35,7 +35,7 @@ class AccountViewModel(application: Application): AndroidViewModel(application) 
         repository.update(Account(id, name, description, startingBalance, isActive))
     }
 
-    fun delete(accountId: Int) {
-        repository.deleteAccount(accountId)
+    fun archive(id: Int) {
+        repository.archive(id)
     }
 }
