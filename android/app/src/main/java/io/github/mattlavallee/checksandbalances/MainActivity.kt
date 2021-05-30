@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import io.github.mattlavallee.checksandbalances.core.Constants
 import io.github.mattlavallee.checksandbalances.core.Preferences
-import io.github.mattlavallee.checksandbalances.database.entities.Account
 import io.github.mattlavallee.checksandbalances.databinding.ActivityMainBinding
 import io.github.mattlavallee.checksandbalances.ui.account.AccountViewModel
 import io.github.mattlavallee.checksandbalances.ui.navigation.FormDispatcher
@@ -44,6 +43,11 @@ class MainActivity : AppCompatActivity() {
                 val settingsBottomSheetMenu: SettingsBottomSheet =
                     supportFragmentManager.findFragmentByTag(Constants.settingsMenuTag) as SettingsBottomSheet?
                         ?: SettingsBottomSheet()
+                val stackCount = supportFragmentManager.backStackEntryCount
+                val currFragment = if (stackCount > 0) supportFragmentManager.getBackStackEntryAt(stackCount - 1) else null
+                val isTransactionFragment = currFragment?.name == Constants.transactionViewTag
+                settingsBottomSheetMenu.setIsTransactionViewVisible(isTransactionFragment)
+                settingsBottomSheetMenu.setSortByDisplayName()
                 settingsBottomSheetMenu.show(supportFragmentManager, Constants.settingsMenuTag)
             }
             true

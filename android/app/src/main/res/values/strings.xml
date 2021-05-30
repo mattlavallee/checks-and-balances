@@ -29,4 +29,17 @@
     <string name="save_button">Save</string>
 
     <string name="vertical_ellipsis">&#8942;</string>
+
+    <string-array name="app_settings_account_sortType">
+        <item>Name</item>
+        <item>Balance</item>
+    </string-array>
+
+    <string-array name="app_settings_transaction_sortType">
+        <item>Location</item>
+        <!--<item>Tag</item>-->
+        <item>Amount</item>
+        <item>Description</item>
+        <item>Date</item>
+    </string-array>
 </resources>

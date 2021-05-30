@@ -9,6 +9,6 @@
     <item
         android:id="@+id/action_popup_delete"
         android:orderInCategory="2"
-        android:title="Delete"
+        android:title="Archive"
         app:showAsAction="never" />
 </menu>

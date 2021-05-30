@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
+<androidx.preference.PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
     <Preference
         android:key="theme"
         android:title="Theme"
         android:summary="Light or Dark theme for the app" />
-</PreferenceScreen>
+    <Preference
+        android:key="accountSort"
+        android:title="Account Sort Field"
+        android:summary="Field to sort Accounts by" />
+    <Preference
+        android:key="transactionSort"
+        android:title="Transaction Sort Field"
+        android:summary="Field to sort Transactions by" />
+</androidx.preference.PreferenceScreen>

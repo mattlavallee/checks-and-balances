@@ -9,6 +9,8 @@ class Preferences {
     private val prefKey = "io.github.mattlavallee.checksandbalances.settings"
     private val defaultTheme = AppCompatDelegate.MODE_NIGHT_NO
     private val themeKey = "theme"
+    private val accountSortField = "accountSort"
+    private val transactionSortField = "transactionSort"
 
     private val preferences: SharedPreferences
 
@@ -23,6 +25,28 @@ class Preferences {
     fun setTheme(newTheme: Int) {
         with(preferences.edit()) {
             putInt(themeKey, newTheme)
+            apply()
+        }
+    }
+
+    fun getAccountSortField(): Int {
+        return preferences.getInt(accountSortField, AccountSortFields.Name.id)
+    }
+
+    fun setAccountSortField(sortField: Int) {
+        with(preferences.edit()) {
+            putInt(accountSortField, sortField)
+            apply()
+        }
+    }
+
+    fun getTransactionSortField(): Int {
+        return preferences.getInt(transactionSortField, TransactionSortFields.Date.id)
+    }
+
+    fun setTransactionSortField(sortField: Int) {
+        with(preferences.edit()) {
+            putInt(transactionSortField, sortField)
             apply()
         }
     }
