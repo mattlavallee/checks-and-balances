@@ -12,7 +12,7 @@ class Preferences {
     private val accountSortField = "accountSort"
     private val transactionSortField = "transactionSort"
 
-    private val preferences: SharedPreferences
+    val preferences: SharedPreferences
 
     constructor(activity: Activity) {
         preferences = activity.getSharedPreferences(prefKey, Context.MODE_PRIVATE)

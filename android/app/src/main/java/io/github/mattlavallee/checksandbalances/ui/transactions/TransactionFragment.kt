@@ -1,5 +1,6 @@
 package io.github.mattlavallee.checksandbalances.ui.transactions
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.core.Constants
+import io.github.mattlavallee.checksandbalances.core.Preferences
 import io.github.mattlavallee.checksandbalances.core.adapters.TransactionAdapter
 import io.github.mattlavallee.checksandbalances.database.entities.Transaction
 import io.github.mattlavallee.checksandbalances.databinding.FragmentTransactionBinding
@@ -21,8 +23,14 @@ class TransactionFragment: Fragment() {
     private val transactionViewModel: TransactionViewModel by activityViewModels()
     private val accountViewModel: AccountViewModel by activityViewModels()
     private lateinit var binding: FragmentTransactionBinding
+    private lateinit var preferences: Preferences
     private var accountId: Int? = null
     private var transactionAdapter: TransactionAdapter = TransactionAdapter(::onEditTransaction, ::onArchiveTransaction)
+    private val listener: SharedPreferences.OnSharedPreferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener {_, key ->
+        if (key == "transactionSort") {
+            transactionAdapter.setSortField(preferences.getTransactionSortField())
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,6 +39,7 @@ class TransactionFragment: Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_transaction, container, false)
         binding = FragmentTransactionBinding.bind(root)
+        preferences = Preferences(requireActivity())
 
         accountId = arguments?.getInt("accountId")
         accountViewModel.activeAccountId.value = accountId
@@ -43,6 +52,7 @@ class TransactionFragment: Fragment() {
                 Transaction(it.id, it.accountId, it.title, it.amount, it.description, it.dateTimeModified, it.isActive)
             }
             transactionAdapter.setData(transactions)
+            transactionAdapter.setSortField(preferences.getTransactionSortField())
         })
 
         binding.transactionRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -62,5 +72,15 @@ class TransactionFragment: Fragment() {
 
     private fun onArchiveTransaction(transactionId: Int) {
         transactionViewModel.archive(transactionId)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        preferences.preferences.registerOnSharedPreferenceChangeListener(listener)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        preferences.preferences.unregisterOnSharedPreferenceChangeListener(listener)
     }
 }

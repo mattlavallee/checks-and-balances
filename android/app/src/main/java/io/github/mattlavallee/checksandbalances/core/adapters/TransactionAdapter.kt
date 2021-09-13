@@ -6,6 +6,7 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import io.github.mattlavallee.checksandbalances.R
+import io.github.mattlavallee.checksandbalances.core.TransactionSortFields
 import io.github.mattlavallee.checksandbalances.database.entities.Transaction
 import io.github.mattlavallee.checksandbalances.databinding.RecyclerTransactionRowBinding
 import java.text.NumberFormat
@@ -24,6 +25,40 @@ class TransactionAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
         val binding = RecyclerTransactionRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TransactionViewHolder(binding)
+    }
+
+    fun setSortField(sortType: Int) {
+        val sortField = TransactionSortFields.fromInt(sortType)
+        transactions.sortWith { t1, t2 ->
+            if (sortField == TransactionSortFields.Amount) {
+                when {
+                    t1.amount > t2.amount -> 1
+                    t1.amount == t2.amount -> 0
+                    else -> -1
+                }
+            } else if (sortField == TransactionSortFields.Description) {
+                val t1desc = t1.description ?: ""
+                val t2desc = t2.description ?: ""
+                when {
+                    t1desc > t2desc -> 1
+                    t1desc == t2desc -> 0
+                    else -> -1
+                }
+            } else if (sortField == TransactionSortFields.Date) {
+                when {
+                    t1.dateTimeModified > t2.dateTimeModified -> 1
+                    t1.dateTimeModified == t2.dateTimeModified -> 0
+                    else -> -1
+                }
+            } else {
+                when {
+                    t1.title > t2.title -> 1
+                    t1.title == t2.title -> 0
+                    else -> -1
+                }
+            }
+        }
+        this.notifyDataSetChanged()
     }
 
     fun setData(data: ArrayList<Transaction>) {

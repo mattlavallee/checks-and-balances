@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textview.MaterialTextView
 import io.github.mattlavallee.checksandbalances.R
+import io.github.mattlavallee.checksandbalances.core.AccountSortFields
 import io.github.mattlavallee.checksandbalances.database.entities.Account
 import java.text.NumberFormat
 import java.util.*
@@ -32,6 +33,26 @@ class AccountAdapter(
     override fun onCreateViewHolder(viewGroup: ViewGroup, index: Int): AccountViewHolder {
         val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.recycler_account_row, viewGroup, false)
         return AccountViewHolder(view)
+    }
+
+    fun setSortField(sortType: Int) {
+        accounts.sortWith { a1, a2 ->
+            if (AccountSortFields.fromInt(sortType) == AccountSortFields.Name) {
+                when {
+                    a1.name > a2.name -> 1
+                    a1.name == a2.name -> 0
+                    else -> -1
+                }
+            } else {
+                //TODO: this should be total balance, not starting balance
+                when {
+                    a1.startingBalance > a2.startingBalance -> 1
+                    a1.startingBalance == a2.startingBalance -> 0
+                    else -> -1
+                }
+            }
+        }
+        this.notifyDataSetChanged()
     }
 
     fun setData(data: ArrayList<Account>) {
