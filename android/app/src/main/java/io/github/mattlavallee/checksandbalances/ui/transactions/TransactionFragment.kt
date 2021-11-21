@@ -18,6 +18,9 @@ import io.github.mattlavallee.checksandbalances.database.entities.Transaction
 import io.github.mattlavallee.checksandbalances.databinding.FragmentTransactionBinding
 import io.github.mattlavallee.checksandbalances.ui.account.AccountViewModel
 import io.github.mattlavallee.checksandbalances.ui.navigation.FormDispatcher
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TransactionFragment: Fragment() {
     private val transactionViewModel: TransactionViewModel by activityViewModels()
@@ -32,6 +35,10 @@ class TransactionFragment: Fragment() {
         }
     }
 
+    private var accountName: String = ""
+    private var totalBalance: Double = 0.0
+    private val currencyFormat = NumberFormat.getCurrencyInstance()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,11 +47,14 @@ class TransactionFragment: Fragment() {
         val root = inflater.inflate(R.layout.fragment_transaction, container, false)
         binding = FragmentTransactionBinding.bind(root)
         preferences = Preferences(requireActivity())
+        currencyFormat.maximumFractionDigits = 2
+        currencyFormat.currency = Currency.getInstance("USD")
 
         accountId = arguments?.getInt("accountId")
         accountViewModel.activeAccountId.value = accountId
         transactionViewModel.getAccount(accountId!!).observe(viewLifecycleOwner, Observer {
-            binding.transactionAccountName.text = it.name
+            this.accountName = it.name
+            binding.transactionAccountName.text = this.accountName + "  " + currencyFormat.format(this.totalBalance)
         })
         transactionViewModel.getTransactionsForAccount(accountId!!).observe(viewLifecycleOwner, Observer { itList ->
             val transactions: ArrayList<Transaction> = ArrayList()
@@ -53,6 +63,11 @@ class TransactionFragment: Fragment() {
             }
             transactionAdapter.setData(transactions)
             transactionAdapter.setSortField(preferences.getTransactionSortField())
+
+            this.totalBalance = 0.0
+            transactions.forEach { this.totalBalance += it.amount }
+
+            binding.transactionAccountName.text = this.accountName + "  " + currencyFormat.format(this.totalBalance)
         })
 
         binding.transactionRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
