@@ -72,7 +72,7 @@ class TransactionAdapter(
     override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
         val transaction = transactions[position]
         holder.binding.transactionCardViewTitle.text = transaction.title
-        holder.binding.transactionCardViewTitle.tag = transaction.id
+        holder.binding.transactionCardViewTitle.tag = transaction.transactionId
         val currencyFormat = NumberFormat.getCurrencyInstance()
         currencyFormat.maximumFractionDigits = 2
         currencyFormat.currency = Currency.getInstance("USD")
@@ -82,9 +82,9 @@ class TransactionAdapter(
             dateFormat.format(transaction.dateTimeModified),
             transaction.description
         )
-        holder.binding.transactionCardView.tag = transaction.id
+        holder.binding.transactionCardView.tag = transaction.transactionId
 
-        holder.binding.transactionCardViewOptionsButton.tag = transaction.id
+        holder.binding.transactionCardViewOptionsButton.tag = transaction.transactionId
         holder.binding.transactionCardViewOptionsButton.setOnClickListener {
             val popupMenu = PopupMenu(it.context, it)
             val transactionId: Int = it.tag as Int

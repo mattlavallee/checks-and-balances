@@ -154,13 +154,13 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
 
     private fun populateForm(transactionId: Int) {
         transactionViewModel.getTransaction(transactionId).observe(viewLifecycleOwner, Observer {
-            binding.editTransactionTitle.setText(it.title)
-            binding.editTransactionDescription.setText(it.description)
-            binding.editTransactionAmount.setText(DecimalFormat("0.00").format(it.amount))
-            binding.editTransactionAmountDeduction.isChecked = it.amount < 0
-            this.initializeDateTimePicker(it.dateTimeModified)
+            binding.editTransactionTitle.setText(it.transaction.title)
+            binding.editTransactionDescription.setText(it.transaction.description)
+            binding.editTransactionAmount.setText(DecimalFormat("0.00").format(it.transaction.amount))
+            binding.editTransactionAmountDeduction.isChecked = it.transaction.amount < 0
+            this.initializeDateTimePicker(it.transaction.dateTimeModified)
 
-            val accountIdx = accounts.indexOfFirst { act -> act.id == it.accountId }
+            val accountIdx = accounts.indexOfFirst { act -> act.id == it.transaction.accountId }
             binding.editTransactionAccountId.setSelection(accountIdx, true)
         })
     }

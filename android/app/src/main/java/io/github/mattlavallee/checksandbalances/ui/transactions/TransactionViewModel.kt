@@ -5,11 +5,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import io.github.mattlavallee.checksandbalances.database.ChecksAndBalancesDatabase
 import io.github.mattlavallee.checksandbalances.database.entities.Transaction
+import io.github.mattlavallee.checksandbalances.database.entities.TransactionWithTags
 
 class TransactionViewModel(application: Application): AndroidViewModel(application) {
     private var repository: ChecksAndBalancesDatabase = ChecksAndBalancesDatabase.getInstance(application.applicationContext)
 
-    fun getTransaction(transactionId: Int): LiveData<Transaction> {
+    fun getTransaction(transactionId: Int): LiveData<TransactionWithTags> {
         return repository.transactionDao().getLiveTransactionById(transactionId)
     }
 
@@ -17,7 +18,7 @@ class TransactionViewModel(application: Application): AndroidViewModel(applicati
         return repository.accountDao().getLiveAccountById(accountId)
     }
 
-    fun getTransactionsForAccount(accountId: Int): LiveData<List<Transaction>> {
+    fun getTransactionsForAccount(accountId: Int): LiveData<List<TransactionWithTags>> {
         return repository.transactionDao().getAllForAccount(accountId)
     }
     

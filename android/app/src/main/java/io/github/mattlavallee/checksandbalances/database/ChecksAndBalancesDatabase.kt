@@ -7,12 +7,14 @@ import androidx.room.RoomDatabase
 import io.github.mattlavallee.checksandbalances.database.dao.AccountDao
 import io.github.mattlavallee.checksandbalances.database.dao.TransactionDao
 import io.github.mattlavallee.checksandbalances.database.entities.Account
+import io.github.mattlavallee.checksandbalances.database.entities.Tag
 import io.github.mattlavallee.checksandbalances.database.entities.Transaction
+import io.github.mattlavallee.checksandbalances.database.entities.TransactionTagCrossRef
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [Account::class, Transaction::class], version = 2)
+@Database(entities = [Account::class, Transaction::class, Tag::class, TransactionTagCrossRef::class], version = 2)
 abstract class ChecksAndBalancesDatabase : RoomDatabase() {
     abstract fun accountDao(): AccountDao
     abstract fun transactionDao(): TransactionDao

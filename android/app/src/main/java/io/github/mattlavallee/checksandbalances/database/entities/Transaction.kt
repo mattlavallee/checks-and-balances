@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "transactions")
 class Transaction (
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey(autoGenerate = true) val transactionId: Int,
     @ColumnInfo(name = "account_id") val accountId: Int,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "amount") val amount: Double,

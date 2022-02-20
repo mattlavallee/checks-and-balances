@@ -59,7 +59,7 @@ class TransactionFragment: Fragment() {
         transactionViewModel.getTransactionsForAccount(accountId!!).observe(viewLifecycleOwner, Observer { itList ->
             val transactions: ArrayList<Transaction> = ArrayList()
             itList.mapTo(transactions) {
-                Transaction(it.id, it.accountId, it.title, it.amount, it.description, it.dateTimeModified, it.isActive)
+                Transaction(it.transaction.transactionId, it.transaction.accountId, it.transaction.title, it.transaction.amount, it.transaction.description, it.transaction.dateTimeModified, it.transaction.isActive)
             }
             transactionAdapter.setData(transactions)
             transactionAdapter.setSortField(preferences.getTransactionSortField())
