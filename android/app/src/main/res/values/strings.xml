@@ -21,7 +21,7 @@
 
     <string name="transaction_title_hint">Title</string>
     <string name="transaction_amount_hint">Amount</string>
-    <string name="transaction_amount_deduction_hint">Apply transaction as a deduction</string>
+    <string name="transaction_amount_deduction_hint">Apply as deduction</string>
     <string name="transaction_description_hint">Description (Optional)</string>
     <string name="transaction_datetime_hint">Transaction Date</string>
     <string name="transaction_display_datetime_description">%s:&#160;%s</string>
