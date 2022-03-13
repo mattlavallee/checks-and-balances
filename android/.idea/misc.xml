@@ -8,7 +8,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/matth/git/checks-and-balances/android/app/src/main/res/layout/layout_transaction_form.xml" value="0.1" />
+        <entry key="..\:/Users/matth/.gradle/caches/transforms-3/ab651a1cb0409fb45f470c8000971bbc/transformed/appcompat-1.4.1/res/layout/support_simple_spinner_dropdown_item.xml" value="0.2509057971014493" />
+        <entry key="..\:/Users/matth/git/checks-and-balances/android/app/src/main/res/drawable/chip_drawable.xml" value="0.1615" />
+        <entry key="..\:/Users/matth/git/checks-and-balances/android/app/src/main/res/drawable/chip_remove.xml" value="0.1545" />
+        <entry key="..\:/Users/matth/git/checks-and-balances/android/app/src/main/res/drawable/ic_add_32dp.xml" value="0.1" />
+        <entry key="..\:/Users/matth/git/checks-and-balances/android/app/src/main/res/drawable/ic_add_black_24dp.xml" value="0.1615" />
+        <entry key="..\:/Users/matth/git/checks-and-balances/android/app/src/main/res/drawable/ic_menu_dark_24dp.xml" value="0.1" />
+        <entry key="..\:/Users/matth/git/checks-and-balances/android/app/src/main/res/drawable/menu_item_background.xml" value="0.1" />
+        <entry key="..\:/Users/matth/git/checks-and-balances/android/app/src/main/res/drawable/menu_item_shape.xml" value="0.1615" />
+        <entry key="..\:/Users/matth/git/checks-and-balances/android/app/src/main/res/drawable/text_cursor_primary_dark.xml" value="0.1" />
+        <entry key="..\:/Users/matth/git/checks-and-balances/android/app/src/main/res/layout/layout_transaction_form.xml" value="0.264" />
+        <entry key="..\:/Users/matth/git/checks-and-balances/android/app/src/main/res/layout/tag_chip.xml" value="0.2509057971014493" />
       </map>
     </option>
   </component>
