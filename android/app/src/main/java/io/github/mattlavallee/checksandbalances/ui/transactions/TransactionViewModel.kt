@@ -93,7 +93,10 @@ class TransactionViewModel(application: Application): AndroidViewModel(applicati
                 }
             }
             existingTags.forEach { tagId ->
-                repository.insert(trans.transactionId, tagId)
+                val tagTransExists = existingTransactionTagIds.find { t -> t.tagId === tagId && t.transactionId === trans.transactionId }
+                if (tagTransExists == null) {
+                    repository.insert(trans.transactionId, tagId)
+                }
             }
             val deleteTags = existingTransactionTagIds.filter { transTag ->
                 newTagIds.indexOf(transTag.tagId) < 0 && existingTags.indexOf(transTag.tagId) < 0
