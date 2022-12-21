@@ -25,6 +25,7 @@
     <string name="transaction_description_hint">Description (Optional)</string>
     <string name="transaction_datetime_hint">Transaction Date</string>
     <string name="transaction_display_datetime_description">%s:&#160;%s</string>
+    <string name="transaction_tags_hint">Tags</string>
 
     <string name="save_button">Save</string>
 

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.core.TransactionSortFields
-import io.github.mattlavallee.checksandbalances.database.entities.Transaction
+import io.github.mattlavallee.checksandbalances.database.entities.TransactionWithTags
 import io.github.mattlavallee.checksandbalances.databinding.RecyclerTransactionRowBinding
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -17,7 +17,7 @@ import kotlin.collections.ArrayList
 class TransactionAdapter(
     val onEdit: Callback,
     val onDelete: Callback): RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
-    private var transactions: ArrayList<Transaction> = ArrayList()
+    private var transactions: ArrayList<TransactionWithTags> = ArrayList()
     private val dateFormat = SimpleDateFormat("MMM dd yyyy")
 
     inner class TransactionViewHolder(val binding: RecyclerTransactionRowBinding): RecyclerView.ViewHolder(binding.root)
@@ -32,13 +32,13 @@ class TransactionAdapter(
         transactions.sortWith { t1, t2 ->
             if (sortField == TransactionSortFields.Amount) {
                 when {
-                    t1.amount > t2.amount -> 1
-                    t1.amount == t2.amount -> 0
+                    t1.transaction.amount > t2.transaction.amount -> 1
+                    t1.transaction.amount == t2.transaction.amount -> 0
                     else -> -1
                 }
             } else if (sortField == TransactionSortFields.Description) {
-                val t1desc = t1.description ?: ""
-                val t2desc = t2.description ?: ""
+                val t1desc = t1.transaction.description ?: ""
+                val t2desc = t2.transaction.description ?: ""
                 when {
                     t1desc > t2desc -> 1
                     t1desc == t2desc -> 0
@@ -46,14 +46,14 @@ class TransactionAdapter(
                 }
             } else if (sortField == TransactionSortFields.Date) {
                 when {
-                    t1.dateTimeModified > t2.dateTimeModified -> 1
-                    t1.dateTimeModified == t2.dateTimeModified -> 0
+                    t1.transaction.dateTimeModified > t2.transaction.dateTimeModified -> 1
+                    t1.transaction.dateTimeModified == t2.transaction.dateTimeModified -> 0
                     else -> -1
                 }
             } else {
                 when {
-                    t1.title > t2.title -> 1
-                    t1.title == t2.title -> 0
+                    t1.transaction.title > t2.transaction.title -> 1
+                    t1.transaction.title == t2.transaction.title -> 0
                     else -> -1
                 }
             }
@@ -61,7 +61,7 @@ class TransactionAdapter(
         this.notifyDataSetChanged()
     }
 
-    fun setData(data: ArrayList<Transaction>) {
+    fun setData(data: ArrayList<TransactionWithTags>) {
         val diffCallback = TransactionDiffCallback(transactions, data)
         val result = DiffUtil.calculateDiff(diffCallback)
         transactions.clear()
@@ -70,21 +70,23 @@ class TransactionAdapter(
     }
 
     override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
-        val transaction = transactions[position]
-        holder.binding.transactionCardViewTitle.text = transaction.title
-        holder.binding.transactionCardViewTitle.tag = transaction.transactionId
+        val transWithTags = transactions[position]
+        holder.binding.transactionCardViewTitle.text = transWithTags.transaction.title
+        holder.binding.transactionCardViewTitle.tag = transWithTags.transaction.transactionId
         val currencyFormat = NumberFormat.getCurrencyInstance()
         currencyFormat.maximumFractionDigits = 2
         currencyFormat.currency = Currency.getInstance("USD")
-        holder.binding.transactionCardViewAmount.text = currencyFormat.format(transaction.amount)
+        holder.binding.transactionCardViewAmount.text = currencyFormat.format(transWithTags.transaction.amount)
+        //TODO: tags actually have to go someplace real
+        val tagNames = transWithTags.tags.joinToString(", ") { it -> it.name }
         holder.binding.transactionCardViewDateDescription.text = holder.itemView.context.getString(
             R.string.transaction_display_datetime_description,
-            dateFormat.format(transaction.dateTimeModified),
-            transaction.description
+            dateFormat.format(transWithTags.transaction.dateTimeModified),
+            transWithTags.transaction.description + " " + tagNames
         )
-        holder.binding.transactionCardView.tag = transaction.transactionId
+        holder.binding.transactionCardView.tag = transWithTags.transaction.transactionId
 
-        holder.binding.transactionCardViewOptionsButton.tag = transaction.transactionId
+        holder.binding.transactionCardViewOptionsButton.tag = transWithTags.transaction.transactionId
         holder.binding.transactionCardViewOptionsButton.setOnClickListener {
             val popupMenu = PopupMenu(it.context, it)
             val transactionId: Int = it.tag as Int

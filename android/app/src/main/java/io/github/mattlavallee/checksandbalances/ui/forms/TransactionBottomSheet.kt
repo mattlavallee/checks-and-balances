@@ -17,8 +17,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputLayout
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.database.entities.Account
+import io.github.mattlavallee.checksandbalances.database.entities.Tag
 import io.github.mattlavallee.checksandbalances.databinding.LayoutTransactionFormBinding
 import io.github.mattlavallee.checksandbalances.ui.account.AccountViewModel
+import io.github.mattlavallee.checksandbalances.ui.tags.TagViewModel
 import io.github.mattlavallee.checksandbalances.ui.transactions.TransactionViewModel
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -28,7 +30,9 @@ import kotlin.collections.ArrayList
 class TransactionBottomSheet: BottomSheetDialogFragment() {
     private val transactionViewModel: TransactionViewModel by activityViewModels()
     private val accountViewModel: AccountViewModel by activityViewModels()
+    private val tagViewModel: TagViewModel by activityViewModels()
     private val accounts: ArrayList<Account> = ArrayList()
+    private val tags: ArrayList<Tag> = ArrayList()
     private var transactionCalendar: Calendar = Calendar.getInstance()
     private lateinit var binding: LayoutTransactionFormBinding
     private var accountId: Int? = null
@@ -60,11 +64,18 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
 
             accounts.mapTo(accountNames) { it.name }
             binding.editTransactionAccountId.adapter = ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, accountNames)
-            var index = 0;
+            var index = 0
             if (accountId != null) {
                 index = accounts.indexOfFirst { act -> act.id == accountId }
             }
             binding.editTransactionAccountId.setSelection(index, true)
+        })
+
+        tagViewModel.getAllTags().observe(viewLifecycleOwner, Observer {itList ->
+            itList.mapTo(tags) { Tag(it.tagId, it.name, it.isActive) }.sortBy {it.name}
+            val tagNames: ArrayList<String> = ArrayList()
+            tags.mapTo(tagNames){it.name}
+            binding.editTransactionTags.adapter = ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, tagNames)
         })
 
         binding.editTransactionTitle.addTextChangedListener {
@@ -83,9 +94,30 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
             val description = binding.editTransactionDescription.text.toString()
             val titleError = this.checkForValidField(title, binding.editTransactionTitleWrapper, "Title", true)
             val amountError = this.checkForValidField(binding.editTransactionAmount.text.toString(), binding.editTransactionAmountWrapper, "Amount", true)
+            val tags = binding.editTransactionTags.text
+            val existingTagIds: ArrayList<Int> = ArrayList()
+            val missingTags: ArrayList<String> = ArrayList()
+            tags.forEachIndexed { _, str ->
+                val foundTag = this.tags.find { t -> t.name == str }
+                if (foundTag != null) {
+                    existingTagIds.add(foundTag.tagId)
+                } else {
+                    missingTags.add(str)
+                }
+            }
+            //TODO: insert tag relationships in database
 
             if (titleError || amountError) {
                 return@setOnClickListener
+            }
+
+            val tagsForTransaction = ArrayList<Tag>()
+            existingTagIds.forEach { eTagId ->
+                val existingTag = this.tags.find { t -> t.tagId == eTagId }
+                tagsForTransaction.add(Tag(eTagId, existingTag?.name ?: "", existingTag?.isActive ?: true))
+            }
+            missingTags.forEach { tagName ->
+                tagsForTransaction.add(Tag(0, tagName, true))
             }
 
             var amount = binding.editTransactionAmount.text.toString().toDouble()
@@ -100,7 +132,9 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
                     title,
                     amount,
                     description,
-                    transactionCalendar.time.time
+                    transactionCalendar.time.time,
+                    missingTags,
+                    existingTagIds
                 )
             } else {
                 transactionViewModel.update(
@@ -109,7 +143,9 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
                     title,
                     amount,
                     description,
-                    transactionCalendar.time.time
+                    transactionCalendar.time.time,
+                    missingTags,
+                    existingTagIds,
                 )
             }
             inputMethodManager.hideSoftInputFromWindow(transactionView.windowToken, 0)
@@ -174,7 +210,7 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
 
         if (hasError && checkForError) {
             field.error = "$fieldName is Required"
-            field.isErrorEnabled = true;
+            field.isErrorEnabled = true
             return true
         } else if (!hasError) {
             field.error = null

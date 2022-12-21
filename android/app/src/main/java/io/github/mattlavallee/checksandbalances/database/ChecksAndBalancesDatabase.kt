@@ -5,19 +5,20 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import io.github.mattlavallee.checksandbalances.database.dao.AccountDao
+import io.github.mattlavallee.checksandbalances.database.dao.TagDao
 import io.github.mattlavallee.checksandbalances.database.dao.TransactionDao
-import io.github.mattlavallee.checksandbalances.database.entities.Account
-import io.github.mattlavallee.checksandbalances.database.entities.Tag
-import io.github.mattlavallee.checksandbalances.database.entities.Transaction
-import io.github.mattlavallee.checksandbalances.database.entities.TransactionTagCrossRef
+import io.github.mattlavallee.checksandbalances.database.dao.TransactionTagDao
+import io.github.mattlavallee.checksandbalances.database.entities.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [Account::class, Transaction::class, Tag::class, TransactionTagCrossRef::class], version = 2)
+@Database(entities = [Account::class, Transaction::class, Tag::class, TransactionTagCrossRef::class], version = 3)
 abstract class ChecksAndBalancesDatabase : RoomDatabase() {
     abstract fun accountDao(): AccountDao
     abstract fun transactionDao(): TransactionDao
+    abstract fun tagDao(): TagDao
+    abstract fun transTagDao(): TransactionTagDao
 
     fun insert(account: Account) {
         dbAction(accountDao(), "insert", account)
@@ -25,6 +26,14 @@ abstract class ChecksAndBalancesDatabase : RoomDatabase() {
 
     fun insert(transaction: Transaction) {
         dbAction(transactionDao(), "insert", transaction)
+    }
+
+    fun insert(tag: Tag) {
+        dbAction(tagDao(), "insert", tag)
+    }
+
+    fun insert(transactionId: Int, tagId: Int) {
+        dbAction(transTagDao(), "insert", TransactionTagCrossRef(transactionId, tagId))
     }
 
     fun update(account: Account) {
@@ -35,6 +44,10 @@ abstract class ChecksAndBalancesDatabase : RoomDatabase() {
         dbAction(transactionDao(), "update", transaction)
     }
 
+    fun delete(transactionId: Int, tagId: Int) {
+        dbAction(transTagDao(), "delete", TransactionTagCrossRef(transactionId, tagId))
+    }
+
     fun archive(accountId: Int) {
         dbAction(accountDao(), "archive", accountId)
         dbAction(transactionDao(), "archiveAccount", accountId)
@@ -42,6 +55,14 @@ abstract class ChecksAndBalancesDatabase : RoomDatabase() {
 
     fun archiveTransaction(transactionId: Int) {
         dbAction(transactionDao(), "archive", transactionId)
+    }
+
+    fun archiveTag(tagId: Int) {
+        dbAction(tagDao(), "archive", tagId)
+    }
+
+    fun deleteTag(transactionId: Int, tagId: Int) {
+        dbAction(transTagDao(), "delete", TransactionTagCrossRef(transactionId, tagId))
     }
 
     private fun dbAction(dao: Any, type: String, item: Any) {
@@ -58,6 +79,16 @@ abstract class ChecksAndBalancesDatabase : RoomDatabase() {
                     "update" -> dao.updateTransaction(item as Transaction)
                     "archive" -> dao.archiveTransaction(item as Int)
                     "archiveAccount" -> dao.archiveTransactionsForAccount(item as Int)
+                }
+            } else if (dao is TagDao) {
+                when (type) {
+                    "insert" -> dao.insertTag(item as Tag)
+                    "archive" -> dao.archiveTag(item as Int)
+                }
+            } else if (dao is TransactionTagDao) {
+                when (type) {
+                    "insert" -> dao.insertTransactionTag(item as TransactionTagCrossRef)
+                    "delete" -> dao.deleteTransactionTag(item as TransactionTagCrossRef)
                 }
             }
         }

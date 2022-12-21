@@ -19,6 +19,10 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions WHERE transactionId = :transactionId")
     fun getTransactionById(transactionId: Int): TransactionWithTags
 
+    @androidx.room.Transaction
+    @Query("SELECT * FROM transactions WHERE account_id = :accountId AND title = :title AND description = :descr")
+    fun findTransaction(accountId: Int, title: String, descr: String): Transaction
+
     @Query("UPDATE transactions SET is_active = 0 WHERE transactionId = :transactionId")
     fun archiveTransaction(transactionId: Int)
 

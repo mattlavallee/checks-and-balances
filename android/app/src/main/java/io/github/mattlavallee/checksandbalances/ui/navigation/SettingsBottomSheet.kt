@@ -67,7 +67,7 @@ class SettingsBottomSheet: BottomSheetDialogFragment() {
             return
         }
         val sortMenuItem = binding.settingsNavigationView.menu.getItem(0)
-        val sortByFieldText = sortMenuItem.actionView.findViewById<MaterialTextView>(R.id.settings_current_sort_by_name)
+        val sortByFieldText = sortMenuItem.actionView?.findViewById<MaterialTextView>(R.id.settings_current_sort_by_name)
         val sortFieldId = if (this.isTransactionViewVisible) appPreferences.getTransactionSortField() else appPreferences.getAccountSortField()
 
         val text = if (this.isTransactionViewVisible) {
@@ -75,7 +75,7 @@ class SettingsBottomSheet: BottomSheetDialogFragment() {
         } else {
             AccountSortFields.fromInt(sortFieldId).toString()
         }
-        sortByFieldText.text = text
+        sortByFieldText?.text = text
     }
 
     private fun setAndSaveTheme() {

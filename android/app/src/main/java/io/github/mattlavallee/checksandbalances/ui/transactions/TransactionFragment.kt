@@ -14,7 +14,7 @@ import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.core.Constants
 import io.github.mattlavallee.checksandbalances.core.Preferences
 import io.github.mattlavallee.checksandbalances.core.adapters.TransactionAdapter
-import io.github.mattlavallee.checksandbalances.database.entities.Transaction
+import io.github.mattlavallee.checksandbalances.database.entities.TransactionWithTags
 import io.github.mattlavallee.checksandbalances.databinding.FragmentTransactionBinding
 import io.github.mattlavallee.checksandbalances.ui.account.AccountViewModel
 import io.github.mattlavallee.checksandbalances.ui.navigation.FormDispatcher
@@ -57,15 +57,15 @@ class TransactionFragment: Fragment() {
             binding.transactionAccountName.text = this.accountName + "  " + currencyFormat.format(this.totalBalance)
         })
         transactionViewModel.getTransactionsForAccount(accountId!!).observe(viewLifecycleOwner, Observer { itList ->
-            val transactions: ArrayList<Transaction> = ArrayList()
+            val transactions: ArrayList<TransactionWithTags> = ArrayList()
             itList.mapTo(transactions) {
-                Transaction(it.transaction.transactionId, it.transaction.accountId, it.transaction.title, it.transaction.amount, it.transaction.description, it.transaction.dateTimeModified, it.transaction.isActive)
+                TransactionWithTags(it.transaction, it.tags)
             }
             transactionAdapter.setData(transactions)
             transactionAdapter.setSortField(preferences.getTransactionSortField())
 
             this.totalBalance = 0.0
-            transactions.forEach { this.totalBalance += it.amount }
+            transactions.forEach { this.totalBalance += it.transaction.amount }
 
             binding.transactionAccountName.text = this.accountName + "  " + currencyFormat.format(this.totalBalance)
         })
