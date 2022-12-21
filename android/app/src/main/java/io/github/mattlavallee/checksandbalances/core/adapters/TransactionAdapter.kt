@@ -77,14 +77,16 @@ class TransactionAdapter(
         currencyFormat.maximumFractionDigits = 2
         currencyFormat.currency = Currency.getInstance("USD")
         holder.binding.transactionCardViewAmount.text = currencyFormat.format(transWithTags.transaction.amount)
-        //TODO: tags actually have to go someplace real
-        val tagNames = transWithTags.tags.joinToString(", ") { it -> it.name }
+
         holder.binding.transactionCardViewDateDescription.text = holder.itemView.context.getString(
             R.string.transaction_display_datetime_description,
             dateFormat.format(transWithTags.transaction.dateTimeModified),
-            transWithTags.transaction.description + " " + tagNames
+            transWithTags.transaction.description
         )
         holder.binding.transactionCardView.tag = transWithTags.transaction.transactionId
+
+        val tagNames = transWithTags.tags.sortedBy { it.name }.joinToString(", ") { it.name }
+        holder.binding.transactionCardViewTags.text = tagNames
 
         holder.binding.transactionCardViewOptionsButton.tag = transWithTags.transaction.transactionId
         holder.binding.transactionCardViewOptionsButton.setOnClickListener {

@@ -43,6 +43,20 @@
             card_view:layout_constraintLeft_toLeftOf="parent"
             card_view:layout_constraintRight_toRightOf="parent"/>
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/transaction_card_view_tags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:gravity="start"
+            android:textAlignment="viewStart"
+            android:drawableLeft="@drawable/ic_tag_14"
+            android:drawablePadding="3sp"
+            android:drawableTint="@color/colorIconTint"
+            card_view:layout_constraintTop_toBottomOf="@id/transaction_card_view_date_description"
+            card_view:layout_constraintLeft_toLeftOf="parent"
+            card_view:layout_constraintRight_toRightOf="parent"
+        />
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/transaction_card_view_options_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
