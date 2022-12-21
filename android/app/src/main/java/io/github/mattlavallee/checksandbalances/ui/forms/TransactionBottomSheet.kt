@@ -105,7 +105,6 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
                     missingTags.add(str)
                 }
             }
-            //TODO: insert tag relationships in database
 
             if (titleError || amountError) {
                 return@setOnClickListener
@@ -198,6 +197,9 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
 
             val accountIdx = accounts.indexOfFirst { act -> act.id == it.transaction.accountId }
             binding.editTransactionAccountId.setSelection(accountIdx, true)
+
+            val tagNames = it.tags.map { itTag -> itTag.name }.sorted()
+            binding.editTransactionTags.text = tagNames
         })
     }
 
