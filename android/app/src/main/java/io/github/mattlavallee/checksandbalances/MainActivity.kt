@@ -1,10 +1,7 @@
 package io.github.mattlavallee.checksandbalances
 
-import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
 import android.view.Menu
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate

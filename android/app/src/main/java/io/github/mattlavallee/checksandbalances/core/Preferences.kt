@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
 
-class Preferences {
+class Preferences(activity: Activity) {
     private val prefKey = "io.github.mattlavallee.checksandbalances.settings"
     private val defaultTheme = AppCompatDelegate.MODE_NIGHT_NO
     private val themeKey = "theme"
@@ -14,7 +14,7 @@ class Preferences {
 
     val preferences: SharedPreferences
 
-    constructor(activity: Activity) {
+    init {
         preferences = activity.getSharedPreferences(prefKey, Context.MODE_PRIVATE)
     }
 

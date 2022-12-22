@@ -45,7 +45,7 @@ class AccountBottomSheet: BottomSheetDialogFragment() {
         }
 
         val inputMethodManager: InputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
+        inputMethodManager.showSoftInput(binding.editAccountName, 0)
 
         binding.editAccountSaveButton.setOnClickListener {
             val name = binding.editAccountName.text.toString()
