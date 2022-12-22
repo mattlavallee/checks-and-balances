@@ -18,7 +18,7 @@ class TransactionAdapter(
     val onEdit: Callback,
     val onDelete: Callback): RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
     private var transactions: ArrayList<TransactionWithTags> = ArrayList()
-    private val dateFormat = SimpleDateFormat("MMM dd yyyy")
+    private val dateFormat = SimpleDateFormat("MMM dd yyyy", Locale.US)
 
     inner class TransactionViewHolder(val binding: RecyclerTransactionRowBinding): RecyclerView.ViewHolder(binding.root)
 

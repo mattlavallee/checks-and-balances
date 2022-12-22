@@ -43,4 +43,6 @@
         <item>Description</item>
         <item>Date</item>
     </string-array>
+
+    <string name="account_and_balance">%1$s %2$s</string>
 </resources>

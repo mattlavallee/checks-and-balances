@@ -24,7 +24,7 @@ import io.github.mattlavallee.checksandbalances.ui.tags.TagViewModel
 import io.github.mattlavallee.checksandbalances.ui.transactions.TransactionViewModel
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
-import java.util.Calendar
+import java.util.*
 import kotlin.collections.ArrayList
 
 class TransactionBottomSheet: BottomSheetDialogFragment() {
@@ -155,7 +155,7 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
     }
 
     private fun initializeDateTimePicker(dateTime: Long?) {
-        val dateFormat = SimpleDateFormat("MM/dd/yyyy")
+        val dateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.US)
         transactionCalendar = Calendar.getInstance()
         if (dateTime != null) {
             transactionCalendar.timeInMillis = dateTime
