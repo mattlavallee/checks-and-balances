@@ -28,14 +28,20 @@ class AccountViewModel(application: Application): AndroidViewModel(application) 
     }
 
     fun save(id: Int, name: String, description: String, startingBalance: Double) {
-        repository.insert(Account(id, name, description, startingBalance, true))
+        Thread {
+            repository.insert(Account(id, name, description, startingBalance, true))
+        }.start()
     }
 
     fun update(id: Int, name: String, description: String, startingBalance: Double, isActive: Boolean) {
-        repository.update(Account(id, name, description, startingBalance, isActive))
+        Thread {
+            repository.update(Account(id, name, description, startingBalance, isActive))
+        }.start()
     }
 
     fun archive(id: Int) {
-        repository.archive(id)
+        Thread {
+            repository.archive(id)
+        }.start()
     }
 }

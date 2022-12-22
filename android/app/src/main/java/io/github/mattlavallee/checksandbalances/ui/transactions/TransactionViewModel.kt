@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import io.github.mattlavallee.checksandbalances.database.ChecksAndBalancesDatabase
 import io.github.mattlavallee.checksandbalances.database.entities.Tag
 import io.github.mattlavallee.checksandbalances.database.entities.Transaction
+import io.github.mattlavallee.checksandbalances.database.entities.TransactionTagCrossRef
 import io.github.mattlavallee.checksandbalances.database.entities.TransactionWithTags
 
 class TransactionViewModel(application: Application): AndroidViewModel(application) {
@@ -30,36 +31,19 @@ class TransactionViewModel(application: Application): AndroidViewModel(applicati
         amount: Double,
         description: String,
         dateTime: Long,
-        newTags: ArrayList<String>,
-        existingTags: ArrayList<Int>
+        tags: ArrayList<Tag>
     ) {
         Thread {
-            newTags.forEach { tagName ->
-                repository.insert(Tag(0, tagName, true))
-            }
-            val tags = repository.tagDao().getTags()
-            repository.insert(
-                Transaction(
-                    id,
-                    accountId,
-                    title,
-                    amount,
-                    description,
-                    dateTime,
-                    true
-                )
-            )
-            val trans = repository.transactionDao().findTransaction(accountId, title, description)
-
-            newTags.forEach { tagName ->
-                val currTag = tags.find { t -> t.name === tagName }
-                if (currTag != null && trans != null) {
-                    repository.insert(trans.transactionId, currTag.tagId)
+            val newTags = tags.filter { it.tagId == 0 }
+            val tagIds = repository.insert(newTags)
+            val transId = repository.insert(Transaction(id, accountId, title, amount, description, dateTime, true))
+            val transTags = ArrayList(tagIds.map { TransactionTagCrossRef(transId.toInt(), it.toInt()) })
+            tags.forEach {
+                if (it.tagId > 0) {
+                    transTags.add(TransactionTagCrossRef(transId.toInt(), it.tagId))
                 }
             }
-            existingTags.forEach { tagId ->
-                repository.insert(trans.transactionId, tagId)
-            }
+            repository.insert(transTags)
         }.start()
     }
 
@@ -70,40 +54,25 @@ class TransactionViewModel(application: Application): AndroidViewModel(applicati
         amount: Double,
         description: String,
         dateTime: Long,
-        newTags: ArrayList<String>,
-        existingTags: ArrayList<Int>,
+        tagsToAdd: ArrayList<Tag>,
+        tagsToDelete: ArrayList<Tag>,
         isActive: Boolean = true
     ) {
         Thread {
-            var trans = repository.transactionDao().findTransaction(accountId, title, description)
-            val existingTransactionTagIds = repository.transTagDao().findTagsForTransaction(trans.transactionId)
-            newTags.forEach { tagName ->
-                repository.insert(Tag(0, tagName, true))
-            }
-            val tags = repository.tagDao().getTags()
             repository.update(Transaction(id, accountId, title, amount, description, dateTime, isActive))
-            trans = repository.transactionDao().findTransaction(accountId, title, description)
 
-            val newTagIds = ArrayList<Int>()
-            newTags.forEach { tagName ->
-                val currTag = tags.find { t -> t.name === tagName }
-                if (currTag != null && trans != null) {
-                    repository.insert(trans.transactionId, currTag.tagId)
-                    newTagIds.add(currTag.tagId)
+            val newTags = tagsToAdd.filter { it.tagId == 0 }
+            val tagIds = repository.insert(newTags)
+
+            val transTagsToAdd = ArrayList(tagIds.map { TransactionTagCrossRef(id, it.toInt())})
+            tagsToAdd.forEach {
+                if (it.tagId > 0) {
+                    transTagsToAdd.add(TransactionTagCrossRef(id, it.tagId))
                 }
             }
-            existingTags.forEach { tagId ->
-                val tagTransExists = existingTransactionTagIds.find { t -> t.tagId === tagId && t.transactionId === trans.transactionId }
-                if (tagTransExists == null) {
-                    repository.insert(trans.transactionId, tagId)
-                }
-            }
-            val deleteTags = existingTransactionTagIds.filter { transTag ->
-                newTagIds.indexOf(transTag.tagId) < 0 && existingTags.indexOf(transTag.tagId) < 0
-            }
-            deleteTags.forEach { tags ->
-                repository.delete(trans.transactionId, tags.tagId)
-            }
+            repository.insert(transTagsToAdd)
+
+            repository.delete(tagsToDelete.map { TransactionTagCrossRef(id, it.tagId) })
         }.start()
     }
 

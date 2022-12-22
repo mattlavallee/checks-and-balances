@@ -9,9 +9,6 @@ import io.github.mattlavallee.checksandbalances.database.dao.TagDao
 import io.github.mattlavallee.checksandbalances.database.dao.TransactionDao
 import io.github.mattlavallee.checksandbalances.database.dao.TransactionTagDao
 import io.github.mattlavallee.checksandbalances.database.entities.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @Database(entities = [Account::class, Transaction::class, Tag::class, TransactionTagCrossRef::class], version = 3)
 abstract class ChecksAndBalancesDatabase : RoomDatabase() {
@@ -21,77 +18,52 @@ abstract class ChecksAndBalancesDatabase : RoomDatabase() {
     abstract fun transTagDao(): TransactionTagDao
 
     fun insert(account: Account) {
-        dbAction(accountDao(), "insert", account)
+        accountDao().insertAccount(account)
     }
 
-    fun insert(transaction: Transaction) {
-        dbAction(transactionDao(), "insert", transaction)
+    fun insert(transaction: Transaction): Long {
+        return transactionDao().insertTransaction(transaction)
     }
 
-    fun insert(tag: Tag) {
-        dbAction(tagDao(), "insert", tag)
+    fun insert(tag: Tag): Long {
+        return tagDao().insertTag(tag)
     }
 
-    fun insert(transactionId: Int, tagId: Int) {
-        dbAction(transTagDao(), "insert", TransactionTagCrossRef(transactionId, tagId))
+    fun insert(tags: List<Tag>): List<Long> {
+        return tagDao().insertTags(tags)
+    }
+
+    fun insert(transactionTags: List<TransactionTagCrossRef>) {
+        transTagDao().insertTransactionTags(transactionTags)
     }
 
     fun update(account: Account) {
-        dbAction(accountDao(), "update", account)
+        accountDao().updateAccount(account)
     }
 
     fun update(transaction: Transaction) {
-        dbAction(transactionDao(), "update", transaction)
+        transactionDao().updateTransaction(transaction)
     }
 
     fun delete(transactionId: Int, tagId: Int) {
-        dbAction(transTagDao(), "delete", TransactionTagCrossRef(transactionId, tagId))
+        transTagDao().deleteTransactionTag(TransactionTagCrossRef(transactionId, tagId))
+    }
+
+    fun delete(transTags: List<TransactionTagCrossRef>) {
+        transTagDao().deleteTags(transTags);
     }
 
     fun archive(accountId: Int) {
-        dbAction(accountDao(), "archive", accountId)
-        dbAction(transactionDao(), "archiveAccount", accountId)
+        accountDao().archiveAccount(accountId)
+        transactionDao().archiveTransactionsForAccount(accountId)
     }
 
     fun archiveTransaction(transactionId: Int) {
-        dbAction(transactionDao(), "archive", transactionId)
+        transactionDao().archiveTransaction(transactionId)
     }
 
     fun archiveTag(tagId: Int) {
-        dbAction(tagDao(), "archive", tagId)
-    }
-
-    fun deleteTag(transactionId: Int, tagId: Int) {
-        dbAction(transTagDao(), "delete", TransactionTagCrossRef(transactionId, tagId))
-    }
-
-    private fun dbAction(dao: Any, type: String, item: Any) {
-        CoroutineScope(Dispatchers.IO).launch {
-            if (dao is AccountDao) {
-                when (type) {
-                    "insert" -> dao.insertAccount(item as Account)
-                    "update" -> dao.updateAccount(item as Account)
-                    "archive" -> dao.archiveAccount(item as Int)
-                }
-            } else if (dao is TransactionDao) {
-                when (type) {
-                    "insert" -> dao.insertTransaction(item as Transaction)
-                    "update" -> dao.updateTransaction(item as Transaction)
-                    "archive" -> dao.archiveTransaction(item as Int)
-                    "archiveAccount" -> dao.archiveTransactionsForAccount(item as Int)
-                }
-            } else if (dao is TagDao) {
-                when (type) {
-                    "insert" -> dao.insertTag(item as Tag)
-                    "archive" -> dao.archiveTag(item as Int)
-                }
-            } else if (dao is TransactionTagDao) {
-                when (type) {
-                    "insert" -> dao.insertTransactionTag(item as TransactionTagCrossRef)
-                    "delete" -> dao.deleteTransactionTag(item as TransactionTagCrossRef)
-                }
-            }
-        }
+        tagDao().archiveTag(tagId)
     }
 
     companion object {

@@ -6,11 +6,11 @@ import io.github.mattlavallee.checksandbalances.database.entities.Tag
 
 @Dao
 interface TagDao {
-    @androidx.room.Transaction
+    @Transaction
     @Query("SELECT * FROM tags WHERE is_active = 1")
     fun getAllTags(): LiveData<List<Tag>>
 
-    @androidx.room.Transaction
+    @Transaction
     @Query("SELECT * FROM tags WHERE is_Active = 1")
     fun getTags(): List<Tag>
 
@@ -18,8 +18,11 @@ interface TagDao {
     fun archiveTag(tagId: Int)
 
     @Insert
-    fun insertTag(vararg tag: Tag)
+    fun insertTag(tag: Tag): Long
+
+    @Insert
+    fun insertTags(tags: List<Tag>): List<Long>
 
     @Delete
-    fun deleteTag(vararg tag: Tag)
+    fun deleteTag(tag: Tag)
 }

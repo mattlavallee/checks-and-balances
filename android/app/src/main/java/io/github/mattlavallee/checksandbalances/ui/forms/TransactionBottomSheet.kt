@@ -33,6 +33,7 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
     private val tagViewModel: TagViewModel by activityViewModels()
     private val accounts: ArrayList<Account> = ArrayList()
     private val tags: ArrayList<Tag> = ArrayList()
+    private val currentTransactionTags: ArrayList<Tag> = ArrayList()
     private var transactionCalendar: Calendar = Calendar.getInstance()
     private lateinit var binding: LayoutTransactionFormBinding
     private var accountId: Int? = null
@@ -95,28 +96,18 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
             val titleError = this.checkForValidField(title, binding.editTransactionTitleWrapper, "Title", true)
             val amountError = this.checkForValidField(binding.editTransactionAmount.text.toString(), binding.editTransactionAmountWrapper, "Amount", true)
             val tags = binding.editTransactionTags.text
-            val existingTagIds: ArrayList<Int> = ArrayList()
-            val missingTags: ArrayList<String> = ArrayList()
+            var tagsForTransaction = ArrayList<Tag>()
             tags.forEachIndexed { _, str ->
                 val foundTag = this.tags.find { t -> t.name == str }
                 if (foundTag != null) {
-                    existingTagIds.add(foundTag.tagId)
+                    tagsForTransaction.add(Tag(foundTag.tagId, foundTag.name, foundTag.isActive))
                 } else {
-                    missingTags.add(str)
+                    tagsForTransaction.add(Tag(0, str, true))
                 }
             }
 
             if (titleError || amountError) {
                 return@setOnClickListener
-            }
-
-            val tagsForTransaction = ArrayList<Tag>()
-            existingTagIds.forEach { eTagId ->
-                val existingTag = this.tags.find { t -> t.tagId == eTagId }
-                tagsForTransaction.add(Tag(eTagId, existingTag?.name ?: "", existingTag?.isActive ?: true))
-            }
-            missingTags.forEach { tagName ->
-                tagsForTransaction.add(Tag(0, tagName, true))
             }
 
             var amount = binding.editTransactionAmount.text.toString().toDouble()
@@ -132,10 +123,15 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
                     amount,
                     description,
                     transactionCalendar.time.time,
-                    missingTags,
-                    existingTagIds
+                    tagsForTransaction
                 )
             } else {
+                val tagsToDelete = this.currentTransactionTags.filter {
+                    tagsForTransaction.find { t-> t.tagId == it.tagId } == null
+                }
+                tagsForTransaction = ArrayList(tagsForTransaction.filter {
+                    this.currentTransactionTags.find { cTag -> cTag.tagId == it.tagId } == null
+                })
                 transactionViewModel.update(
                     transactionId,
                     accountId,
@@ -143,8 +139,8 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
                     amount,
                     description,
                     transactionCalendar.time.time,
-                    missingTags,
-                    existingTagIds,
+                    tagsForTransaction,
+                    ArrayList(tagsToDelete)
                 )
             }
             inputMethodManager.hideSoftInputFromWindow(transactionView.windowToken, 0)
@@ -198,6 +194,7 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
             val accountIdx = accounts.indexOfFirst { act -> act.id == it.transaction.accountId }
             binding.editTransactionAccountId.setSelection(accountIdx, true)
 
+            it.tags.mapTo(currentTransactionTags) { itTag -> itTag }
             val tagNames = it.tags.map { itTag -> itTag.name }.sorted()
             binding.editTransactionTags.text = tagNames
         })

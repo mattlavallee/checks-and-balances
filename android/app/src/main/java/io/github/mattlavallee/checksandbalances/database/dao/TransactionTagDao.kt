@@ -6,10 +6,16 @@ import io.github.mattlavallee.checksandbalances.database.entities.TransactionTag
 @Dao
 interface TransactionTagDao {
     @Insert
-    fun insertTransactionTag(vararg transTag: TransactionTagCrossRef)
+    fun insertTransactionTag(transTag: TransactionTagCrossRef)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertTransactionTags(transactionTags: List<TransactionTagCrossRef>)
 
     @Delete
-    fun deleteTransactionTag(vararg transTag: TransactionTagCrossRef)
+    fun deleteTransactionTag(transTag: TransactionTagCrossRef)
+
+    @Delete
+    fun deleteTags(transTags: List<TransactionTagCrossRef>)
 
 
     @Transaction

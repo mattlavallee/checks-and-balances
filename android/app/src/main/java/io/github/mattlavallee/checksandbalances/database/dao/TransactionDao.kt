@@ -30,11 +30,11 @@ interface TransactionDao {
     fun archiveTransactionsForAccount(accountId: Int)
 
     @Insert
-    fun insertTransaction(vararg transaction: Transaction)
+    fun insertTransaction(transaction: Transaction): Long
 
     @Update
-    fun updateTransaction(vararg transaction: Transaction)
+    fun updateTransaction(transaction: Transaction): Int
 
     @Delete
-    fun delete(vararg transaction: Transaction)
+    fun delete(transaction: Transaction)
 }

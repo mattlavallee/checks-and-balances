@@ -26,10 +26,10 @@ interface AccountDao {
     fun archiveAccount(accountId: Int)
 
     @Insert
-    fun insertAccount(vararg account: Account)
+    fun insertAccount(account: Account): Long
 
     @Update
-    fun updateAccount(vararg account: Account)
+    fun updateAccount(account: Account): Int
 
     @Delete
     fun delete(account: Account)
