@@ -38,6 +38,7 @@
             android:backgroundTint="@color/colorSecondary"
             android:imeOptions="actionNext"
             android:maxLines="1"
+            android:textSelectHandle="@color/colorPrimaryDark"
             android:textCursorDrawable="@drawable/text_cursor_primary_dark"
             android:inputType="textCapWords">
             <requestFocus />
@@ -65,6 +66,7 @@
             android:imeOptions="actionNext"
             android:inputType="numberDecimal|numberSigned"
             android:maxLines="1"
+            android:textSelectHandle="@color/colorPrimaryDark"
             android:textCursorDrawable="@drawable/text_cursor_primary_dark" />
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.checkbox.MaterialCheckBox
@@ -102,6 +104,7 @@
             android:backgroundTint="@color/colorSecondary"
             android:imeOptions="actionNext"
             android:maxLines="1"
+            android:textSelectHandle="@color/colorPrimaryDark"
             android:textCursorDrawable="@drawable/text_cursor_primary_dark"
             android:inputType="textAutoComplete|textCapSentences|text" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -123,6 +126,8 @@
             android:focusable="true"
             android:clickable="true"
             android:backgroundTint="@color/colorSecondary"
+            android:textSelectHandle="@color/colorPrimaryDark"
+            android:textCursorDrawable="@drawable/text_cursor_primary_dark"
             android:imeOptions="actionNext" />
     </com.google.android.material.textfield.TextInputLayout>
     <com.libaml.android.view.chip.ChipLayout
@@ -134,7 +139,7 @@
         app:hintColor_="@color/colorControlNormal"
         app:chipPadding_="2dp"
         app:chipTextPadding_="2dp"
-        app:textColor_="@color/colorControlNormal"
+        app:textColor_="@color/colorSecondary"
         app:deleteIcon_="@android:drawable/ic_menu_close_clear_cancel"
         app:chipDrawable_="@drawable/chip_drawable"
         app:labelPosition_="left"

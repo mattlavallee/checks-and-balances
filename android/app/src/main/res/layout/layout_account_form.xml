@@ -27,6 +27,7 @@
             android:backgroundTint="@color/colorSecondary"
             android:imeOptions="actionNext"
             android:maxLines="1"
+            android:textSelectHandle="@color/colorPrimaryDark"
             android:textCursorDrawable="@drawable/text_cursor_primary_dark"
             android:inputType="textCapWords">
             <requestFocus />
@@ -51,6 +52,7 @@
             android:backgroundTint="@color/colorSecondary"
             android:imeOptions="actionNext"
             android:maxLines="1"
+            android:textSelectHandle="@color/colorPrimaryDark"
             android:textCursorDrawable="@drawable/text_cursor_primary_dark"
             android:inputType="textCapSentences" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -73,6 +75,7 @@
             android:backgroundTint="@color/colorSecondary"
             android:imeOptions="actionDone"
             android:maxLines="1"
+            android:textSelectHandle="@color/colorPrimaryDark"
             android:textCursorDrawable="@drawable/text_cursor_primary_dark"
             android:inputType="number|numberDecimal|numberSigned" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -82,7 +85,7 @@
         android:layout_height="wrap_content"
         android:text="@string/save_button"
         android:textAlignment="center"
-        android:gravity="right|center_vertical"
+        android:gravity="end|center"
         android:backgroundTint="@color/colorOnSecondary"
         android:theme="@style/RobotoThinButton"
         app:layout_constraintTop_toBottomOf="@id/edit_account_starting_balance_wrapper"
