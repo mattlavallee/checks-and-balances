@@ -18,11 +18,11 @@ class NavigationBottomSheet: BottomSheetDialogFragment() {
         binding = LayoutHomeBottomsheetBinding.bind(homeView)
 
         binding.homeNavigationView.setNavigationItemSelectedListener {
-            val fragmentManager = activity!!.supportFragmentManager
+            val fragmentManager = requireActivity().supportFragmentManager
             when (it.itemId) {
                 R.id.home_create_account_menu_button -> FormDispatcher.launch(fragmentManager, Constants.accountFormTag, null)
                 R.id.home_create_transaction_menu_button -> FormDispatcher.launch(fragmentManager, Constants.transactionFormTag, null)
-                R.id.home_help_feedback_menu_button -> toast(activity!!.applicationContext, "Help me Rhonda")
+                R.id.home_help_feedback_menu_button -> FormDispatcher.launch(fragmentManager, Constants.feedbackTag, null)
             }
 
             super.dismiss()

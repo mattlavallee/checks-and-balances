@@ -6,4 +6,5 @@ object Constants {
     const val accountFormTag = "ACCOUNT_FORM"
     const val transactionFormTag = "TRANSACTION_FORM"
     const val transactionViewTag = "TRANSACTION_FRAGMENT"
+    const val feedbackTag = "FEEDBACK_SHEET"
 }

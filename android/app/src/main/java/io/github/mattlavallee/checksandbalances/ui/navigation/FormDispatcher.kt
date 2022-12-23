@@ -7,6 +7,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.core.Constants
 import io.github.mattlavallee.checksandbalances.ui.forms.AccountBottomSheet
+import io.github.mattlavallee.checksandbalances.ui.forms.FeedbackBottomSheet
 import io.github.mattlavallee.checksandbalances.ui.forms.TransactionBottomSheet
 import io.github.mattlavallee.checksandbalances.ui.transactions.TransactionFragment
 
@@ -34,6 +35,10 @@ class FormDispatcher {
                         .addToBackStack(formType)
                         .commit()
                     return
+                }
+                Constants.feedbackTag -> {
+                    bottomSheetDialog = supportFragmentManager.findFragmentByTag(formType) as FeedbackBottomSheet?
+                        ?: FeedbackBottomSheet()
                 }
             }
 
