@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
@@ -98,15 +99,8 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
         binding.editTransactionTagAutocomplete.doAfterTextChanged { editable ->
             var tagName = editable.toString()
             if (tagName.indexOf(",") >= 0) {
-               tagName = tagName.substringBefore(",")
-                binding.editTransactionSelectedTagGroups.addView(Chip(requireActivity()).apply {
-                    text = tagName
-                    id = 0
-                    isCloseIconVisible = true
-                    setOnCloseIconClickListener {
-                        chipIt -> (chipIt.parent as ChipGroup).removeView(chipIt)
-                    }
-                })
+                tagName = tagName.substringBefore(",")
+                this.addChip(Tag(0, tagName, true))
                 editable?.clear()
             }
         }
@@ -115,32 +109,10 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
             val selectedItem = adapterView.getItemAtPosition(position).toString()
             val tag = this.tags.find { tag -> tag.name == selectedItem }
             if (tag != null) {
-                binding.editTransactionSelectedTagGroups.addView(Chip(requireActivity()).apply {
-                    text = tag.name
-                    id = tag.tagId
-                    isCloseIconVisible = true
-                    setOnCloseIconClickListener {
-                        chipIt -> (chipIt.parent as ChipGroup).removeView(chipIt)
-                    }
-                })
+                this.addChip(tag)
                 binding.editTransactionTagAutocomplete.text.clear()
             }
         }
-
-//        binding.editTransactionTagAutocomplete.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l ->
-//            val selectedItem = adapterView.getItemAtPosition(i).toString()
-//            val tag = this.tags.find { tag -> tag.name == selectedItem }
-//            if (tag != null) {
-//                binding.editTransactionSelectedTagGroups.addView(Chip(requireActivity()).apply {
-//                    text = tag.name
-//                    id = tag.tagId
-//                    isCloseIconVisible = true
-//                    setOnCloseIconClickListener {
-//                        chipIt -> (chipIt.parent as ChipGroup).removeView(chipIt)
-//                    }
-//                })
-//            }
-//        }
 
         binding.editTransactionSaveButton.setOnClickListener {
             val accountId = accounts[binding.editTransactionAccountId.selectedItemPosition].id
@@ -247,21 +219,24 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
             binding.editTransactionAccountId.setSelection(accountIdx, true)
 
             it.tags.mapTo(currentTransactionTags) { itTag -> itTag }
-            this.currentTransactionTags.forEach { t ->
-                val currChip = Chip(requireActivity()).apply {
-                    text = t.name
-                    id = t.tagId
-                    isCloseIconVisible = true
-                    setOnCloseIconClickListener {
-                        chipIt -> (chipIt.parent as ChipGroup).removeView(chipIt)
-                    }
-                }
-                binding.editTransactionSelectedTagGroups.addView(currChip)
-            }
-
-            //val tagNames = it.tags.map { itTag -> itTag.name }.sorted()
-            //binding.editTransactionTags.text = tagNames
+            this.currentTransactionTags.forEach { t -> this.addChip(t) }
         })
+    }
+
+    private fun addChip(tag: Tag) {
+        val chip = Chip(requireActivity()).apply {
+            text = tag.name
+            id = tag.tagId
+            isCloseIconVisible = true
+            setOnCloseIconClickListener {
+                    chipIt -> (chipIt.parent as ChipGroup).removeView(chipIt)
+            }
+        }
+        val existingChips = binding.editTransactionSelectedTagGroups.children
+        val foundChip = existingChips.find { (it as Chip).text == chip.text }
+        if (foundChip == null) {
+            binding.editTransactionSelectedTagGroups.addView(chip)
+        }
     }
 
     private fun checkForValidField(name: String, field: TextInputLayout, fieldName: String, checkForError: Boolean): Boolean {

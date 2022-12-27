@@ -10,7 +10,7 @@ import io.github.mattlavallee.checksandbalances.database.dao.TransactionDao
 import io.github.mattlavallee.checksandbalances.database.dao.TransactionTagDao
 import io.github.mattlavallee.checksandbalances.database.entities.*
 
-@Database(entities = [Account::class, Transaction::class, Tag::class, TransactionTagCrossRef::class], version = 4)
+@Database(entities = [Account::class, Transaction::class, Tag::class, TransactionTagCrossRef::class], version = 1)
 abstract class ChecksAndBalancesDatabase : RoomDatabase() {
     abstract fun accountDao(): AccountDao
     abstract fun transactionDao(): TransactionDao
@@ -75,7 +75,7 @@ abstract class ChecksAndBalancesDatabase : RoomDatabase() {
                     context.applicationContext,
                     ChecksAndBalancesDatabase::class.java,
                     "checks-and-balances"
-                ).fallbackToDestructiveMigration().build()
+                ).build()
             }
 
             return instance as ChecksAndBalancesDatabase
