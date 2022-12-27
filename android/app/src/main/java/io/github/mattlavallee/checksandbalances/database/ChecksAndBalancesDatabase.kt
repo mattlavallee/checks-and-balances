@@ -1,6 +1,7 @@
 package io.github.mattlavallee.checksandbalances.database
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -10,7 +11,14 @@ import io.github.mattlavallee.checksandbalances.database.dao.TransactionDao
 import io.github.mattlavallee.checksandbalances.database.dao.TransactionTagDao
 import io.github.mattlavallee.checksandbalances.database.entities.*
 
-@Database(entities = [Account::class, Transaction::class, Tag::class, TransactionTagCrossRef::class], version = 1)
+@Database(
+    entities = [Account::class, Transaction::class, Tag::class, TransactionTagCrossRef::class],
+    version = 1,
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2)
+    ],
+    exportSchema = true
+)
 abstract class ChecksAndBalancesDatabase : RoomDatabase() {
     abstract fun accountDao(): AccountDao
     abstract fun transactionDao(): TransactionDao
