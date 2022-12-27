@@ -10,10 +10,13 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputLayout
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.database.entities.Account
@@ -76,7 +79,9 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
             itList.mapTo(tags) { Tag(it.tagId, it.name, it.isActive) }.sortBy {it.name}
             val tagNames: ArrayList<String> = ArrayList()
             tags.mapTo(tagNames){it.name}
-            binding.editTransactionTags.adapter = ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, tagNames)
+            binding.editTransactionTagAutocomplete.setAdapter(
+                ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, tagNames)
+            )
         })
 
         binding.editTransactionTitle.addTextChangedListener {
@@ -89,21 +94,68 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
                 it?.delete(0,1)
             }
         }
+
+        binding.editTransactionTagAutocomplete.doAfterTextChanged { editable ->
+            var tagName = editable.toString()
+            if (tagName.indexOf(",") >= 0) {
+               tagName = tagName.substringBefore(",")
+                binding.editTransactionSelectedTagGroups.addView(Chip(requireActivity()).apply {
+                    text = tagName
+                    id = 0
+                    isCloseIconVisible = true
+                    setOnCloseIconClickListener {
+                        chipIt -> (chipIt.parent as ChipGroup).removeView(chipIt)
+                    }
+                })
+                editable?.clear()
+            }
+        }
+
+        binding.editTransactionTagAutocomplete.setOnItemClickListener { adapterView, _, position, _ ->
+            val selectedItem = adapterView.getItemAtPosition(position).toString()
+            val tag = this.tags.find { tag -> tag.name == selectedItem }
+            if (tag != null) {
+                binding.editTransactionSelectedTagGroups.addView(Chip(requireActivity()).apply {
+                    text = tag.name
+                    id = tag.tagId
+                    isCloseIconVisible = true
+                    setOnCloseIconClickListener {
+                        chipIt -> (chipIt.parent as ChipGroup).removeView(chipIt)
+                    }
+                })
+                binding.editTransactionTagAutocomplete.text.clear()
+            }
+        }
+
+//        binding.editTransactionTagAutocomplete.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l ->
+//            val selectedItem = adapterView.getItemAtPosition(i).toString()
+//            val tag = this.tags.find { tag -> tag.name == selectedItem }
+//            if (tag != null) {
+//                binding.editTransactionSelectedTagGroups.addView(Chip(requireActivity()).apply {
+//                    text = tag.name
+//                    id = tag.tagId
+//                    isCloseIconVisible = true
+//                    setOnCloseIconClickListener {
+//                        chipIt -> (chipIt.parent as ChipGroup).removeView(chipIt)
+//                    }
+//                })
+//            }
+//        }
+
         binding.editTransactionSaveButton.setOnClickListener {
             val accountId = accounts[binding.editTransactionAccountId.selectedItemPosition].id
             val title = binding.editTransactionTitle.text.toString()
             val description = binding.editTransactionDescription.text.toString()
             val titleError = this.checkForValidField(title, binding.editTransactionTitleWrapper, "Title", true)
             val amountError = this.checkForValidField(binding.editTransactionAmount.text.toString(), binding.editTransactionAmountWrapper, "Amount", true)
-            val tags = binding.editTransactionTags.text
+
+            val totalChips = binding.editTransactionSelectedTagGroups.childCount
             var tagsForTransaction = ArrayList<Tag>()
-            tags.forEachIndexed { _, str ->
-                val foundTag = this.tags.find { t -> t.name == str }
-                if (foundTag != null) {
-                    tagsForTransaction.add(Tag(foundTag.tagId, foundTag.name, foundTag.isActive))
-                } else {
-                    tagsForTransaction.add(Tag(0, str, true))
-                }
+            var chipIndex = 0
+            while(chipIndex < totalChips) {
+                val currChip: Chip = binding.editTransactionSelectedTagGroups.getChildAt(chipIndex) as Chip
+                tagsForTransaction.add(Tag(currChip.id, currChip.text.toString(), true))
+                chipIndex++
             }
 
             if (titleError || amountError) {
@@ -195,8 +247,20 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
             binding.editTransactionAccountId.setSelection(accountIdx, true)
 
             it.tags.mapTo(currentTransactionTags) { itTag -> itTag }
-            val tagNames = it.tags.map { itTag -> itTag.name }.sorted()
-            binding.editTransactionTags.text = tagNames
+            this.currentTransactionTags.forEach { t ->
+                val currChip = Chip(requireActivity()).apply {
+                    text = t.name
+                    id = t.tagId
+                    isCloseIconVisible = true
+                    setOnCloseIconClickListener {
+                        chipIt -> (chipIt.parent as ChipGroup).removeView(chipIt)
+                    }
+                }
+                binding.editTransactionSelectedTagGroups.addView(currChip)
+            }
+
+            //val tagNames = it.tags.map { itTag -> itTag.name }.sorted()
+            //binding.editTransactionTags.text = tagNames
         })
     }
 

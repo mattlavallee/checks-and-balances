@@ -113,12 +113,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/transaction_datetime_hint"
+        android:theme="@style/RobotoThinTextBox"
         app:hintTextColor="@color/colorOnSecondary"
         app:boxStrokeColor="@color/colorOnSecondary"
         app:layout_constraintTop_toBottomOf="@id/edit_transaction_description_wrapper"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/edit_transaction_tags">
+        app:layout_constraintBottom_toTopOf="@id/edit_transaction_tag_wrapper">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_transaction_datetime"
             android:layout_width="match_parent"
@@ -130,22 +131,37 @@
             android:textCursorDrawable="@drawable/text_cursor_primary_dark"
             android:imeOptions="actionNext" />
     </com.google.android.material.textfield.TextInputLayout>
-    <com.libaml.android.view.chip.ChipLayout
-        android:id="@+id/edit_transaction_tags"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_transaction_tag_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:textSize_="5dp"
-        app:hint_="@string/transaction_tags_hint"
-        app:hintColor_="@color/colorControlNormal"
-        app:chipPadding_="2dp"
-        app:chipTextPadding_="2dp"
-        app:textColor_="@color/colorSecondary"
-        app:deleteIcon_="@android:drawable/ic_menu_close_clear_cancel"
-        app:chipDrawable_="@drawable/chip_drawable"
-        app:labelPosition_="left"
+        android:hint="@string/transaction_tags_hint"
+        android:theme="@style/RobotoThinAutocomplete"
+        app:boxStrokeColor="@color/colorPrimary"
+        app:hintTextColor="@color/colorPrimary"
+        app:endIconMode="none"
         app:layout_constraintTop_toBottomOf="@id/edit_transaction_datetime_wrapper"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent">
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/edit_transaction_tag_autocomplete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:imeOptions="actionDone"
+            android:background="@color/colorSecondary"
+            android:textCursorDrawable="@drawable/text_cursor_primary_dark"
+            app:layout_constraintTop_toBottomOf="@id/edit_transaction_datetime_wrapper"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/edit_transaction_selected_tag_groups"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/edit_transaction_tag_wrapper"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
     <com.google.android.material.button.MaterialButton
         android:id="@+id/edit_transaction_save_button"
         android:layout_width="wrap_content"
@@ -155,7 +171,7 @@
         android:gravity="end|center"
         android:backgroundTint="@color/colorOnSecondary"
         android:theme="@style/RobotoThinButton"
-        app:layout_constraintTop_toBottomOf="@id/edit_transaction_tags"
+        app:layout_constraintTop_toBottomOf="@id/edit_transaction_selected_tag_groups"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

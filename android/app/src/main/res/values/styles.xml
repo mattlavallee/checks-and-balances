@@ -51,6 +51,12 @@
         <item name="boxStrokeColor">@color/colorPrimaryDark</item>
     </style>
 
+    <style name="RobotoThinAutocomplete" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="hintTextColor">@color/colorPrimaryDark</item>
+        <item name="boxStrokeColor">@color/colorPrimaryDark</item>
+    </style>
+
     <style name="RobotoThinButton" parent="Widget.MaterialComponents.Button">
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="fontFamily">sans-serif-light</item>
