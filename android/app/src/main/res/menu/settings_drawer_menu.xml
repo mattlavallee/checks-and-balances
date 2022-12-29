@@ -9,6 +9,14 @@
             tools:ignore="MenuTitle"
             app:actionLayout="@layout/layout_menu_item_sort_by" />
         <item
+            android:id="@+id/settings_positive_color"
+            tools:ignore="MenuTitle"
+            app:actionLayout="@layout/layout_menu_item_positive_color" />
+        <item
+            android:id="@+id/settings_negative_color"
+            tools:ignore="MenuTitle"
+            app:actionLayout="@layout/layout_menu_item_negative_color" />
+        <item
             android:id="@+id/settings_theme"
             tools:ignore="MenuTitle"
             app:actionLayout="@layout/layout_menu_item_theme" />

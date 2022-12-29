@@ -11,11 +11,17 @@ class Preferences(activity: Activity) {
     private val themeKey = "theme"
     private val accountSortField = "accountSort"
     private val transactionSortField = "transactionSort"
+    private val defaultNegativeColor = "#f44336"
 
     val preferences: SharedPreferences
 
     init {
         preferences = activity.getSharedPreferences(prefKey, Context.MODE_PRIVATE)
+    }
+
+    private fun getDefaultPositiveColor(): String {
+        val theme = this.getTheme()
+        return if (theme == AppCompatDelegate.MODE_NIGHT_NO) "#737373" else "#bfbfbf"
     }
 
     fun getTheme(): Int {
@@ -47,6 +53,26 @@ class Preferences(activity: Activity) {
     fun setTransactionSortField(sortField: Int) {
         with(preferences.edit()) {
             putInt(transactionSortField, sortField)
+            apply()
+        }
+    }
+
+    fun getPositiveColor(): String {
+        val defaultPositive = this.getDefaultPositiveColor()
+        return preferences.getString(Constants.positiveColorKey, defaultPositive) ?: defaultPositive
+    }
+
+    fun getNegativeColor(): String {
+        return preferences.getString(Constants.negativeColorKey, defaultNegativeColor) ?: defaultNegativeColor
+    }
+
+    fun setColor(colorKey: String, color: String) {
+        var savedColor: String? = color;
+        if (savedColor?.lowercase() == defaultNegativeColor || savedColor?.lowercase() == this.getDefaultPositiveColor()) {
+            savedColor = null
+        }
+        with(preferences.edit()) {
+            putString(colorKey, savedColor)
             apply()
         }
     }

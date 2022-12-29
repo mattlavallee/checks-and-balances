@@ -7,4 +7,7 @@ object Constants {
     const val transactionFormTag = "TRANSACTION_FORM"
     const val transactionViewTag = "TRANSACTION_FRAGMENT"
     const val feedbackTag = "FEEDBACK_SHEET"
+
+    const val positiveColorKey = "positiveColor"
+    const val negativeColorKey = "negativeColor"
 }

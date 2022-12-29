@@ -1,5 +1,6 @@
 package io.github.mattlavallee.checksandbalances.core.adapters
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textview.MaterialTextView
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.core.AccountSortFields
+import io.github.mattlavallee.checksandbalances.core.Preferences
 import io.github.mattlavallee.checksandbalances.database.entities.Account
 import java.text.NumberFormat
 import java.util.*
@@ -17,6 +19,7 @@ import kotlin.collections.ArrayList
 
 typealias Callback = (Int) -> Unit
 class AccountAdapter(
+    private val preferences: Preferences,
     val onEdit: Callback,
     val onDelete: Callback,
     val onDrill: Callback): RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
@@ -74,6 +77,11 @@ class AccountAdapter(
         currencyFormat.maximumFractionDigits = 2
         currencyFormat.currency = Currency.getInstance("USD")
         holder.accountTotal.text = currencyFormat.format(account.startingBalance)
+        if (account.startingBalance != 0.0) {
+            val color =
+                if (account.startingBalance >= 0) preferences.getPositiveColor() else preferences.getNegativeColor()
+            holder.accountTotal.setTextColor(Color.parseColor(color))
+        }
 
         holder.accountOverflow.tag = account.id
         holder.accountOverflow.setOnClickListener {

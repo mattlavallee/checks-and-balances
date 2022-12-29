@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                 val currFragment = if (stackCount > 0) supportFragmentManager.getBackStackEntryAt(stackCount - 1) else null
                 val isTransactionFragment = currFragment?.name == Constants.transactionViewTag
                 settingsBottomSheetMenu.setIsTransactionViewVisible(isTransactionFragment)
-                settingsBottomSheetMenu.setSortByDisplayName()
+                settingsBottomSheetMenu.setMenuDisplayText()
                 settingsBottomSheetMenu.show(supportFragmentManager, Constants.settingsMenuTag)
             }
             true

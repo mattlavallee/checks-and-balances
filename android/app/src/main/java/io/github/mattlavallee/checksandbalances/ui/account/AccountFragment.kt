@@ -22,10 +22,12 @@ class AccountFragment: Fragment() {
     private val accountViewModel: AccountViewModel by activityViewModels()
     private lateinit var binding: FragmentAccountBinding
     private lateinit var preferences: Preferences
-    private var accountAdapter: AccountAdapter = AccountAdapter(::onEditAccount, ::onArchiveAccount, ::onDrillIntoAccount)
+    private lateinit var accountAdapter: AccountAdapter
     private val listener: SharedPreferences.OnSharedPreferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener{_, key ->
         if (key == "accountSort") {
             accountAdapter.setSortField(preferences.getAccountSortField())
+        } else if (key == "positiveColor" || key == "negativeColor") {
+            accountAdapter.notifyDataSetChanged()
         }
     }
 
@@ -37,6 +39,7 @@ class AccountFragment: Fragment() {
         val root = inflater.inflate(R.layout.fragment_account, container, false)
         binding = FragmentAccountBinding.bind(root)
         preferences = Preferences(requireActivity())
+        accountAdapter = AccountAdapter(preferences, ::onEditAccount, ::onArchiveAccount, ::onDrillIntoAccount)
 
         accountViewModel.getAllAccountsWithSum().observe(viewLifecycleOwner, Observer {itList ->
             val accounts: ArrayList<Account> = ArrayList()

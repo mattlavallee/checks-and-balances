@@ -28,10 +28,12 @@ class TransactionFragment: Fragment() {
     private lateinit var binding: FragmentTransactionBinding
     private lateinit var preferences: Preferences
     private var accountId: Int? = null
-    private var transactionAdapter: TransactionAdapter = TransactionAdapter(::onEditTransaction, ::onArchiveTransaction)
+    private lateinit var transactionAdapter: TransactionAdapter
     private val listener: SharedPreferences.OnSharedPreferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener {_, key ->
         if (key == "transactionSort") {
             transactionAdapter.setSortField(preferences.getTransactionSortField())
+        } else if (key == "positiveColor" || key == "negativeColor") {
+            transactionAdapter.notifyDataSetChanged()
         }
     }
 
@@ -47,6 +49,7 @@ class TransactionFragment: Fragment() {
         val root = inflater.inflate(R.layout.fragment_transaction, container, false)
         binding = FragmentTransactionBinding.bind(root)
         preferences = Preferences(requireActivity())
+        transactionAdapter = TransactionAdapter(preferences, ::onEditTransaction, ::onArchiveTransaction)
         currencyFormat.maximumFractionDigits = 2
         currencyFormat.currency = Currency.getInstance("USD")
 

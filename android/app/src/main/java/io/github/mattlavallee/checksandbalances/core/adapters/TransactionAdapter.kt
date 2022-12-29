@@ -1,11 +1,13 @@
 package io.github.mattlavallee.checksandbalances.core.adapters
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import io.github.mattlavallee.checksandbalances.R
+import io.github.mattlavallee.checksandbalances.core.Preferences
 import io.github.mattlavallee.checksandbalances.core.TransactionSortFields
 import io.github.mattlavallee.checksandbalances.database.entities.TransactionWithTags
 import io.github.mattlavallee.checksandbalances.databinding.RecyclerTransactionRowBinding
@@ -15,6 +17,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class TransactionAdapter(
+    private val preferences: Preferences,
     val onEdit: Callback,
     val onDelete: Callback): RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
     private var transactions: ArrayList<TransactionWithTags> = ArrayList()
@@ -77,6 +80,10 @@ class TransactionAdapter(
         currencyFormat.maximumFractionDigits = 2
         currencyFormat.currency = Currency.getInstance("USD")
         holder.binding.transactionCardViewAmount.text = currencyFormat.format(transWithTags.transaction.amount)
+        if (transWithTags.transaction.amount != 0.0) {
+            val color = if (transWithTags.transaction.amount >= 0) preferences.getPositiveColor() else preferences.getNegativeColor()
+            holder.binding.transactionCardViewAmount.setTextColor(Color.parseColor(color))
+        }
 
         holder.binding.transactionCardViewDateDescription.text = holder.itemView.context.getString(
             R.string.transaction_display_datetime_description,

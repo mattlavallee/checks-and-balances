@@ -9,4 +9,7 @@
     <color name="colorMenuItemNormal">#FFFFFF</color>
     <color name="colorIconTint">#BFBFBF</color>
     <color name="fragmentBackground">#121212</color>
+
+    <color name="positiveButtonTextColor">@color/colorControlNormal</color>
+    <color name="negativeButtonTextColor">@color/colorControlNormal</color>
 </resources>

@@ -13,4 +13,11 @@
         android:key="transactionSort"
         android:title="Transaction Sort Field"
         android:summary="Field to sort Transactions by" />
+    <Preference
+        android:key="positiveColor"
+        android:title="Positive Display Color"
+        android:summary="Color to display positive values in" />
+    <Preference android:key="negativeColor"
+        android:title="Negative Display Color"
+        android:summary="Color to display negative values in" />
 </androidx.preference.PreferenceScreen>
