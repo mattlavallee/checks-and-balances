@@ -3,6 +3,7 @@
 
     <string name="home_create_account">Add Account</string>
     <string name="home_create_transaction">Add Transaction</string>
+    <string name="home_delete_transactions">Archive Transactions</string>
     <string name="home_feedback">Help &amp; Feedback</string>
 
     <string name="fragment_account_title">Accounts Overview</string>

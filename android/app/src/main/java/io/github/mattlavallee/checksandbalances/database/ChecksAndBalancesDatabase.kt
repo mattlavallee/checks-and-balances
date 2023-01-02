@@ -70,6 +70,10 @@ abstract class ChecksAndBalancesDatabase : RoomDatabase() {
         transactionDao().archiveTransaction(transactionId)
     }
 
+    fun archiveTransactions(accountId: Int) {
+        transactionDao().archiveTransactionsForAccount(accountId)
+    }
+
     fun archiveTag(tagId: Int) {
         tagDao().archiveTag(tagId)
     }

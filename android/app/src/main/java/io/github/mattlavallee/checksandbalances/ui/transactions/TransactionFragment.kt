@@ -88,6 +88,10 @@ class TransactionFragment: Fragment() {
         FormDispatcher.launch(requireActivity().supportFragmentManager, Constants.transactionFormTag, bundle)
     }
 
+    fun deleteTransactions() {
+        transactionViewModel.archiveAll(accountId!!)
+    }
+
     private fun onArchiveTransaction(transactionId: Int) {
         transactionViewModel.archive(transactionId)
     }

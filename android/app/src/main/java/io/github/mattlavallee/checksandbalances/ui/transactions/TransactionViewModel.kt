@@ -77,6 +77,14 @@ class TransactionViewModel(application: Application): AndroidViewModel(applicati
     }
 
     fun archive(id: Int) {
-        repository.archiveTransaction(id)
+        Thread {
+            repository.archiveTransaction(id)
+        }.start()
+    }
+
+    fun archiveAll(accountId: Int) {
+        Thread {
+            repository.archiveTransactions(accountId)
+        }.start()
     }
 }

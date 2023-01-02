@@ -31,7 +31,7 @@ class FormDispatcher {
                         fragment.arguments = bundle
                     }
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.nav_host_fragment, fragment)
+                        .replace(R.id.nav_host_fragment, fragment, formType)
                         .addToBackStack(formType)
                         .commit()
                     return
