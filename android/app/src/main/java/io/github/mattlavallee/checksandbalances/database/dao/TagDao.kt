@@ -3,12 +3,17 @@ package io.github.mattlavallee.checksandbalances.database.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import io.github.mattlavallee.checksandbalances.database.entities.Tag
+import io.github.mattlavallee.checksandbalances.database.entities.TagWithTransactions
 
 @Dao
 interface TagDao {
     @Transaction
     @Query("SELECT * FROM tags WHERE is_active = 1")
     fun getAllTags(): LiveData<List<Tag>>
+
+    @Transaction
+    @Query("SELECT * FROM tags WHERE is_active = 1")
+    fun getAllTagsWithTransactions(): LiveData<List<TagWithTransactions>>
 
     @Transaction
     @Query("SELECT * FROM tags WHERE is_Active = 1")

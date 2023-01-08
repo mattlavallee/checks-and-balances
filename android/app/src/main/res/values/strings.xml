@@ -4,9 +4,12 @@
     <string name="home_create_account">Add Account</string>
     <string name="home_create_transaction">Add Transaction</string>
     <string name="home_delete_transactions">Archive Transactions</string>
+    <string name="home_manage_tags">Manage Tags</string>
     <string name="home_feedback">Help &amp; Feedback</string>
 
     <string name="fragment_account_title">Accounts Overview</string>
+
+    <string name="fragment_manage_tags_title">Manage Tags</string>
 
     <string name="settings_sort_by">Sort By</string>
     <string name="settings_switch_theme">Theme</string>
@@ -48,6 +51,8 @@
     </string-array>
 
     <string name="account_and_balance">%1$s %2$s</string>
+
+    <string name="manage_tags_label">%s (%d)</string>
 
     <string name="feedback_feedback">
         <![CDATA[Thanks for using my app!<br />I am an individual developer creating this app in my free time. I welcome any feedback that you may have. If something does not work as expected or if there is something missing that you would like added, please contact me at<br /><a href=\"mailto:matt.lavallee.dev@gmail.com\">matt.lavallee.dev@gmail.com</a>]]>

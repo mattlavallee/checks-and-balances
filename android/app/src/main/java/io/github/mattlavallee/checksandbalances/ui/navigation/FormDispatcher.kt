@@ -9,6 +9,7 @@ import io.github.mattlavallee.checksandbalances.core.Constants
 import io.github.mattlavallee.checksandbalances.ui.forms.AccountBottomSheet
 import io.github.mattlavallee.checksandbalances.ui.forms.FeedbackBottomSheet
 import io.github.mattlavallee.checksandbalances.ui.forms.TransactionBottomSheet
+import io.github.mattlavallee.checksandbalances.ui.tags.ManageTagsFragment
 import io.github.mattlavallee.checksandbalances.ui.transactions.TransactionFragment
 
 class FormDispatcher {
@@ -28,6 +29,18 @@ class FormDispatcher {
                     var fragment: Fragment? = supportFragmentManager.findFragmentByTag(formType) as TransactionFragment?
                     if (fragment == null) {
                         fragment = TransactionFragment()
+                        fragment.arguments = bundle
+                    }
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.nav_host_fragment, fragment, formType)
+                        .addToBackStack(formType)
+                        .commit()
+                    return
+                }
+                Constants.manageTagsViewTag -> {
+                    var fragment: Fragment? = supportFragmentManager.findFragmentByTag(formType) as ManageTagsFragment?
+                    if (fragment == null) {
+                        fragment = ManageTagsFragment()
                         fragment.arguments = bundle
                     }
                     supportFragmentManager.beginTransaction()

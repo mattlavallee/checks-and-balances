@@ -58,7 +58,7 @@ abstract class ChecksAndBalancesDatabase : RoomDatabase() {
     }
 
     fun delete(transTags: List<TransactionTagCrossRef>) {
-        transTagDao().deleteTags(transTags);
+        transTagDao().deleteTags(transTags)
     }
 
     fun archive(accountId: Int) {
@@ -76,6 +76,7 @@ abstract class ChecksAndBalancesDatabase : RoomDatabase() {
 
     fun archiveTag(tagId: Int) {
         tagDao().archiveTag(tagId)
+        transTagDao().removeByTagId(tagId)
     }
 
     companion object {

@@ -17,6 +17,9 @@ interface TransactionTagDao {
     @Delete
     fun deleteTags(transTags: List<TransactionTagCrossRef>)
 
+    @Transaction
+    @Query("DELETE FROM transactionTags WHERE tagId = :tagId")
+    fun removeByTagId(tagId: Int)
 
     @Transaction
     @Query("SELECT * FROM transactionTags WHERE transactionId = :transactionId")
