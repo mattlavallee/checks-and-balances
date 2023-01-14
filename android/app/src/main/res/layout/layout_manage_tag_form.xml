@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    android:background="@color/colorSecondary"
+    android:tag="MANAGE_TAGS_FORM">
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/edit_tag_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit Tag"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/edit_tag_name_wrapper"/>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_tag_name_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/edit_tag_title"
+        app:hintTextColor="@color/colorOnSecondary"
+        app:boxStrokeColor="@color/colorOnSecondary"
+        app:layout_constraintTop_toBottomOf="@id/edit_tag_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/edit_tag_save_button">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_tag_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:backgroundTint="@color/colorSecondary"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
+            android:textSelectHandle="@color/colorPrimaryDark"
+            android:textCursorDrawable="@drawable/text_cursor_primary_dark"
+            android:inputType="text">
+            <requestFocus />
+        </com.google.android.material.textfield.TextInputEditText>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/edit_tag_save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save_button"
+        android:textAlignment="center"
+        android:gravity="end|center"
+        android:backgroundTint="@color/colorOnSecondary"
+        android:theme="@style/RobotoThinButton"
+        app:layout_constraintTop_toBottomOf="@id/edit_tag_name_wrapper"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

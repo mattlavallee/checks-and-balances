@@ -53,6 +53,10 @@ abstract class ChecksAndBalancesDatabase : RoomDatabase() {
         transactionDao().updateTransaction(transaction)
     }
 
+    fun update(tag: Tag) {
+        tagDao().updateTag(tag)
+    }
+
     fun delete(transactionId: Int, tagId: Int) {
         transTagDao().deleteTransactionTag(TransactionTagCrossRef(transactionId, tagId))
     }

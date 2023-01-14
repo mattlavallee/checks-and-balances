@@ -54,6 +54,8 @@
 
     <string name="manage_tags_label">%s (%d)</string>
 
+    <string name="edit_tag_title">Edit Tag</string>
+
     <string name="feedback_feedback">
         <![CDATA[Thanks for using my app!<br />I am an individual developer creating this app in my free time. I welcome any feedback that you may have. If something does not work as expected or if there is something missing that you would like added, please contact me at<br /><a href=\"mailto:matt.lavallee.dev@gmail.com\">matt.lavallee.dev@gmail.com</a>]]>
     </string>

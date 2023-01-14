@@ -16,6 +16,10 @@ interface TagDao {
     fun getAllTagsWithTransactions(): LiveData<List<TagWithTransactions>>
 
     @Transaction
+    @Query("SELECT * FROM tags WHERE tagId = :tagId")
+    fun getTagById(tagId: Int): LiveData<Tag>
+
+    @Transaction
     @Query("SELECT * FROM tags WHERE is_Active = 1")
     fun getTags(): List<Tag>
 
@@ -27,6 +31,9 @@ interface TagDao {
 
     @Insert
     fun insertTags(tags: List<Tag>): List<Long>
+
+    @Update
+    fun updateTag(tag: Tag): Int
 
     @Delete
     fun deleteTag(tag: Tag)

@@ -18,9 +18,19 @@ class TagViewModel(application: Application): AndroidViewModel(application) {
         return repository.tagDao().getAllTagsWithTransactions()
     }
 
+    fun getTagById(tagId: Int): LiveData<Tag> {
+        return repository.tagDao().getTagById(tagId)
+    }
+
     fun save(id: Int, name: String) {
         Thread {
             repository.insert(Tag(id, name, true))
+        }.start()
+    }
+
+    fun update(id: Int, name: String, isActive: Boolean) {
+        Thread {
+            repository.update(Tag(id, name, isActive))
         }.start()
     }
 

@@ -9,7 +9,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.chip.Chip
 import io.github.mattlavallee.checksandbalances.R
+import io.github.mattlavallee.checksandbalances.core.Constants
 import io.github.mattlavallee.checksandbalances.databinding.FragmentManageTagsBinding
+import io.github.mattlavallee.checksandbalances.ui.navigation.FormDispatcher
 
 
 class ManageTagsFragment: Fragment() {
@@ -41,7 +43,9 @@ class ManageTagsFragment: Fragment() {
     }
 
     private fun editTag(tagId: Int) {
-        //TODO: Implement me
+        val bundle = Bundle()
+        bundle.putInt("tagId", tagId)
+        FormDispatcher.launch(requireActivity().supportFragmentManager, Constants.manageTagsFormTag, bundle)
     }
 
     private fun deleteTag(tagId: Int) {
