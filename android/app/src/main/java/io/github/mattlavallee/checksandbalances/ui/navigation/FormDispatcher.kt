@@ -28,40 +28,13 @@ class FormDispatcher {
                         ?: TransactionBottomSheet()
                 }
                 Constants.accountViewTag -> {
-                    var fragment: Fragment? = supportFragmentManager.findFragmentByTag(formType) as AccountFragment?
-                    if (fragment == null) {
-                        fragment = AccountFragment()
-                        fragment.arguments = bundle
-                    }
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.nav_host_fragment, fragment, formType)
-                        .addToBackStack(formType)
-                        .commit()
-                    return
+                    return launchFragment(supportFragmentManager, formType, bundle)
                 }
                 Constants.transactionViewTag -> {
-                    var fragment: Fragment? = supportFragmentManager.findFragmentByTag(formType) as TransactionFragment?
-                    if (fragment == null) {
-                        fragment = TransactionFragment()
-                        fragment.arguments = bundle
-                    }
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.nav_host_fragment, fragment, formType)
-                        .addToBackStack(formType)
-                        .commit()
-                    return
+                    return launchFragment(supportFragmentManager, formType, bundle)
                 }
                 Constants.manageTagsViewTag -> {
-                    var fragment: Fragment? = supportFragmentManager.findFragmentByTag(formType) as ManageTagsFragment?
-                    if (fragment == null) {
-                        fragment = ManageTagsFragment()
-                        fragment.arguments = bundle
-                    }
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.nav_host_fragment, fragment, formType)
-                        .addToBackStack(formType)
-                        .commit()
-                    return
+                    return launchFragment(supportFragmentManager, formType, bundle)
                 }
                 Constants.manageTagsFormTag -> {
                     bottomSheetDialog = supportFragmentManager.findFragmentByTag(formType) as ManageTagBottomSheet?
@@ -75,6 +48,18 @@ class FormDispatcher {
 
             bottomSheetDialog?.arguments = bundle
             bottomSheetDialog?.show(supportFragmentManager, formType)
+        }
+
+        private fun launchFragment(supportFragmentManager: FragmentManager, formType: String, bundle: Bundle?) {
+            var fragment: Fragment? = supportFragmentManager.findFragmentByTag(formType)
+            if (fragment == null) {
+                fragment = if (formType == Constants.accountViewTag) AccountFragment() else if (formType == Constants.transactionViewTag) TransactionFragment() else ManageTagsFragment()
+                fragment.arguments = bundle;
+            }
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment, fragment, formType)
+                .addToBackStack(formType)
+                .commit()
         }
     }
 }
