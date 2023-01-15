@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.core.Constants
+import io.github.mattlavallee.checksandbalances.ui.account.AccountFragment
 import io.github.mattlavallee.checksandbalances.ui.forms.AccountBottomSheet
 import io.github.mattlavallee.checksandbalances.ui.forms.FeedbackBottomSheet
 import io.github.mattlavallee.checksandbalances.ui.forms.ManageTagBottomSheet
@@ -25,6 +26,18 @@ class FormDispatcher {
                 Constants.transactionFormTag -> {
                     bottomSheetDialog = supportFragmentManager.findFragmentByTag(formType) as TransactionBottomSheet?
                         ?: TransactionBottomSheet()
+                }
+                Constants.accountViewTag -> {
+                    var fragment: Fragment? = supportFragmentManager.findFragmentByTag(formType) as AccountFragment?
+                    if (fragment == null) {
+                        fragment = AccountFragment()
+                        fragment.arguments = bundle
+                    }
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.nav_host_fragment, fragment, formType)
+                        .addToBackStack(formType)
+                        .commit()
+                    return
                 }
                 Constants.transactionViewTag -> {
                     var fragment: Fragment? = supportFragmentManager.findFragmentByTag(formType) as TransactionFragment?

@@ -14,6 +14,10 @@
         android:title="@string/home_delete_transactions" />
     <group android:id="@+id/home_utilities_group" android:checkableBehavior="none">
         <item
+            android:id="@+id/home_account_overview_menu_button"
+            android:icon="@drawable/ic_account_24dp"
+            android:title="@string/home_account_overview" />
+        <item
             android:id="@+id/home_manage_tags_menu_button"
             android:icon="@drawable/ic_tag_14"
             android:title="@string/home_manage_tags" />

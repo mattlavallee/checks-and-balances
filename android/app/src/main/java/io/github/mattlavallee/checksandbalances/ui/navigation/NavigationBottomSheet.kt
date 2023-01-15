@@ -24,6 +24,7 @@ class NavigationBottomSheet: BottomSheetDialogFragment() {
                 R.id.home_create_account_menu_button -> FormDispatcher.launch(fragmentManager, Constants.accountFormTag, null)
                 R.id.home_create_transaction_menu_button -> FormDispatcher.launch(fragmentManager, Constants.transactionFormTag, null)
                 R.id.home_delete_all_transactions_menu_button -> transFragment?.deleteTransactions()
+                R.id.home_account_overview_menu_button -> FormDispatcher.launch(fragmentManager, Constants.accountViewTag, null)
                 R.id.home_manage_tags_menu_button -> FormDispatcher.launch(fragmentManager, Constants.manageTagsViewTag, null)
                 R.id.home_help_feedback_menu_button -> FormDispatcher.launch(fragmentManager, Constants.feedbackTag, null)
             }
