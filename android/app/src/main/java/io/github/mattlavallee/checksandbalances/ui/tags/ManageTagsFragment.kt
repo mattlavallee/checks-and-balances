@@ -25,8 +25,9 @@ class ManageTagsFragment: Fragment() {
         tagViewModel.getAllTagsWithTransactions().observe(viewLifecycleOwner, Observer { itList ->
             binding.manageTagsGroup.removeAllViews()
             itList.forEach {
+                val activeTransactions = it.transactions.count { t -> t.isActive }
                 val chip = Chip(requireActivity()).apply {
-                    text = getString(R.string.manage_tags_label, it.tag.name, it.transactions.size)
+                    text = getString(R.string.manage_tags_label, it.tag.name, activeTransactions)
                     id = it.tag.tagId
                     isCloseIconVisible = true
                     setOnCloseIconClickListener { chipIt ->
