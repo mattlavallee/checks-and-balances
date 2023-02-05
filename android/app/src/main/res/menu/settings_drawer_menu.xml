@@ -21,4 +21,8 @@
             tools:ignore="MenuTitle"
             app:actionLayout="@layout/layout_menu_item_theme" />
     </group>
+    <group android:checkableBehavior="none">
+        <item android:id="@+id/settings_archive_transactions"
+            android:title="@string/home_delete_transactions" />
+    </group>
 </menu>

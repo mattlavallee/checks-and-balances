@@ -10,6 +10,7 @@ import android.view.*
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.fragment.app.FragmentManager
 import com.github.dhaval2404.colorpicker.MaterialColorPickerDialog
 import com.github.dhaval2404.colorpicker.model.ColorShape
 import com.github.dhaval2404.colorpicker.model.ColorSwatch
@@ -21,6 +22,7 @@ import io.github.mattlavallee.checksandbalances.core.Constants
 import io.github.mattlavallee.checksandbalances.core.Preferences
 import io.github.mattlavallee.checksandbalances.core.TransactionSortFields
 import io.github.mattlavallee.checksandbalances.databinding.LayoutSettingsBottomsheetBinding
+import io.github.mattlavallee.checksandbalances.ui.transactions.TransactionFragment
 
 class SettingsBottomSheet: BottomSheetDialogFragment() {
     private lateinit var appPreferences: Preferences
@@ -33,6 +35,8 @@ class SettingsBottomSheet: BottomSheetDialogFragment() {
         appPreferences = Preferences(requireActivity())
 
         this.setMenuDisplayText()
+
+        val transFragment = this.setArchiveTransactionState(requireActivity().supportFragmentManager)
 
         binding.settingsNavigationView.setNavigationItemSelectedListener {
             if (it.itemId == R.id.settings_theme) {
@@ -86,6 +90,11 @@ class SettingsBottomSheet: BottomSheetDialogFragment() {
                             this.setPositiveNegativeDisplayName()
                         }
                         .show()
+                }
+            } else if (it.itemId == R.id.settings_archive_transactions) {
+                activity?.let {
+                    transFragment?.deleteTransactions()
+                    super.dismiss()
                 }
             }
             true
@@ -148,5 +157,17 @@ class SettingsBottomSheet: BottomSheetDialogFragment() {
 
         AppCompatDelegate.setDefaultNightMode(newTheme)
         appPreferences.setTheme(newTheme)
+    }
+
+    private fun setArchiveTransactionState(fragManager: FragmentManager): TransactionFragment? {
+        val stackCount = fragManager.backStackEntryCount
+        val currStackEntry = if (stackCount > 0) fragManager.getBackStackEntryAt(stackCount - 1) else null
+
+        val isTransactionFragment = currStackEntry?.name == Constants.transactionViewTag
+        val deleteTransOpt = binding.settingsNavigationView.menu.getItem(4)
+        deleteTransOpt.isEnabled = isTransactionFragment
+
+        val activeFragment = fragManager.findFragmentByTag(currStackEntry?.name)
+        return if (activeFragment == null || !isTransactionFragment) null else activeFragment as TransactionFragment
     }
 }
