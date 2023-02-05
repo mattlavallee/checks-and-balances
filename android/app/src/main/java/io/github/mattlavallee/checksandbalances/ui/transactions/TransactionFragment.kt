@@ -39,6 +39,7 @@ class TransactionFragment: Fragment() {
 
     private var accountName: String = ""
     private var totalBalance: Double = 0.0
+    private var accountStartingBalance: Double = 0.0
     private val currencyFormat = NumberFormat.getCurrencyInstance()
 
     override fun onCreateView(
@@ -57,7 +58,8 @@ class TransactionFragment: Fragment() {
         accountViewModel.activeAccountId.value = accountId
         transactionViewModel.getAccount(accountId!!).observe(viewLifecycleOwner, Observer {
             this.accountName = it.name
-            binding.transactionAccountName.text = getString(R.string.account_and_balance, this.accountName, currencyFormat.format(this.totalBalance))
+            this.accountStartingBalance = it.startingBalance
+            binding.transactionAccountName.text = getString(R.string.account_and_balance, this.accountName, currencyFormat.format(this.accountStartingBalance + this.totalBalance))
         })
         transactionViewModel.getTransactionsForAccount(accountId!!).observe(viewLifecycleOwner, Observer { itList ->
             val transactions: ArrayList<TransactionWithTags> = ArrayList()
@@ -70,7 +72,7 @@ class TransactionFragment: Fragment() {
             this.totalBalance = 0.0
             transactions.forEach { this.totalBalance += it.transaction.amount }
 
-            binding.transactionAccountName.text = getString(R.string.account_and_balance, this.accountName, currencyFormat.format(this.totalBalance))
+            binding.transactionAccountName.text = getString(R.string.account_and_balance, this.accountName, currencyFormat.format(this.accountStartingBalance + this.totalBalance))
         })
 
         binding.transactionRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
