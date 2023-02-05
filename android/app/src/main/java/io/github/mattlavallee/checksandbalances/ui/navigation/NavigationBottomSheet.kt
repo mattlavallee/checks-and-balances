@@ -2,17 +2,27 @@ package io.github.mattlavallee.checksandbalances.ui.navigation
 
 import android.os.Bundle
 import android.view.*
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.core.Constants
+import io.github.mattlavallee.checksandbalances.database.entities.Account
 import io.github.mattlavallee.checksandbalances.databinding.LayoutHomeBottomsheetBinding
+import io.github.mattlavallee.checksandbalances.ui.account.AccountViewModel
 
 class NavigationBottomSheet: BottomSheetDialogFragment() {
     private lateinit var binding: LayoutHomeBottomsheetBinding
+    private val accountViewModel: AccountViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val homeView = inflater.inflate(R.layout.layout_home_bottomsheet, container, false)
         binding = LayoutHomeBottomsheetBinding.bind(homeView)
+
+        accountViewModel.getAllAccounts().observe(viewLifecycleOwner, Observer {
+            val addTransactionItem = binding.homeNavigationView.menu.getItem(1)
+            addTransactionItem.isVisible = it.isNotEmpty()
+        })
 
         binding.homeNavigationView.setNavigationItemSelectedListener {
             val fragmentManager = requireActivity().supportFragmentManager

@@ -40,6 +40,10 @@ class AccountViewModel(application: Application): AndroidViewModel(application) 
     }
 
     fun archive(id: Int) {
+        if (this.activeAccountId.value == id) {
+            this.activeAccountId.value = null
+        }
+
         Thread {
             repository.archive(id)
         }.start()
