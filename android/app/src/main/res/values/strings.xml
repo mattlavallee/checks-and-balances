@@ -9,6 +9,7 @@
     <string name="home_feedback">Help &amp; Feedback</string>
 
     <string name="fragment_account_title">Accounts Overview</string>
+    <string name="fragment_account_empty_message">To get started, use the + button below or left menu to add an account</string>
 
     <string name="fragment_manage_tags_title">Manage Tags</string>
 
@@ -25,6 +26,7 @@
     <string name="account_description_hint">Description (Optional)</string>
     <string name="account_initial_balance">Starting Balance (Optional)</string>
     <string name="account_prompt">Select an Account</string>
+    <string name="transaction_empty_message">To add a transaction, use the + button below or the left menu</string>
 
     <string name="transaction_title_hint">Title</string>
     <string name="transaction_amount_hint">Amount</string>

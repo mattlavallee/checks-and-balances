@@ -1,6 +1,7 @@
 package io.github.mattlavallee.checksandbalances.ui.transactions
 
 import android.content.SharedPreferences
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -56,6 +57,13 @@ class TransactionFragment: Fragment() {
 
         accountId = arguments?.getInt("accountId")
         accountViewModel.activeAccountId.value = accountId
+
+        val width = Resources.getSystem().displayMetrics.widthPixels
+        val layoutParams = binding.transactionSplashLogo.layoutParams
+        layoutParams.width = (width / 2)
+        layoutParams.height = (width / 2)
+        binding.transactionSplashLogo.layoutParams = layoutParams
+
         transactionViewModel.getAccount(accountId!!).observe(viewLifecycleOwner, Observer {
             this.accountName = it.name
             this.accountStartingBalance = it.startingBalance
@@ -73,6 +81,9 @@ class TransactionFragment: Fragment() {
             transactions.forEach { this.totalBalance += it.transaction.amount }
 
             binding.transactionAccountName.text = getString(R.string.account_and_balance, this.accountName, currencyFormat.format(this.accountStartingBalance + this.totalBalance))
+
+            val emptyMessageVisibility = if (itList.isNotEmpty()) View.GONE else View.VISIBLE
+            binding.transactionEmptyContainer.visibility = emptyMessageVisibility
         })
 
         binding.transactionRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)

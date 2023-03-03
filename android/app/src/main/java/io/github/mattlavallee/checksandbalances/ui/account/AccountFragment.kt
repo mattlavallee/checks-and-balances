@@ -1,6 +1,7 @@
 package io.github.mattlavallee.checksandbalances.ui.account
 
 import android.content.SharedPreferences
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import io.github.mattlavallee.checksandbalances.core.adapters.AccountAdapter
 import io.github.mattlavallee.checksandbalances.database.entities.Account
 import io.github.mattlavallee.checksandbalances.databinding.FragmentAccountBinding
 import io.github.mattlavallee.checksandbalances.ui.navigation.FormDispatcher
+import kotlin.math.roundToInt
 
 class AccountFragment: Fragment() {
     private val accountViewModel: AccountViewModel by activityViewModels()
@@ -41,6 +43,12 @@ class AccountFragment: Fragment() {
         preferences = Preferences(requireActivity())
         accountAdapter = AccountAdapter(preferences, ::onEditAccount, ::onArchiveAccount, ::onDrillIntoAccount)
 
+        val width = Resources.getSystem().displayMetrics.widthPixels
+        val layoutParams = binding.accountSplashLogo.layoutParams
+        layoutParams.width = (width / 2)
+        layoutParams.height = (width / 2)
+        binding.accountSplashLogo.layoutParams = layoutParams
+
         accountViewModel.getAllAccountsWithSum().observe(viewLifecycleOwner, Observer {itList ->
             val accounts: ArrayList<Account> = ArrayList()
             itList.mapTo(accounts) { it ->
@@ -49,6 +57,9 @@ class AccountFragment: Fragment() {
             }
             accountAdapter.setData(accounts)
             accountAdapter.setSortField(preferences.getAccountSortField())
+
+            val emptyMessageVisibility = if (itList.isNotEmpty()) View.GONE else View.VISIBLE
+            binding.accountEmptyContainer.visibility = emptyMessageVisibility
         })
 
         binding.accountRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
