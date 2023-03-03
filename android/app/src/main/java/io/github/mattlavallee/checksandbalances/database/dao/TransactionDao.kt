@@ -29,6 +29,9 @@ interface TransactionDao {
     @Query("UPDATE transactions SET is_active = 0 where account_id = :accountId")
     fun archiveTransactionsForAccount(accountId: Int)
 
+    @Query("DELETE FROM transactions WHERE transactionId = :transactionId")
+    fun deleteTransaction(transactionId: Int)
+
     @Insert
     fun insertTransaction(transaction: Transaction): Long
 

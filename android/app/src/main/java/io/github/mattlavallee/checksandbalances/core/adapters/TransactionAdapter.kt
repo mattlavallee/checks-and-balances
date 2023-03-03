@@ -19,6 +19,7 @@ import kotlin.collections.ArrayList
 class TransactionAdapter(
     private val preferences: Preferences,
     val onEdit: Callback,
+    val onArchive: Callback,
     val onDelete: Callback): RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
     private var transactions: ArrayList<TransactionWithTags> = ArrayList()
     private val dateFormat = SimpleDateFormat("MMM dd yyyy", Locale.US)
@@ -104,6 +105,8 @@ class TransactionAdapter(
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 if (menuItem.itemId == R.id.action_popup_edit) {
                     this.onEdit(transactionId)
+                } else if (menuItem.itemId == R.id.action_popup_archive) {
+                    this.onArchive(transactionId)
                 } else if (menuItem.itemId == R.id.action_popup_delete) {
                     this.onDelete(transactionId)
                 }

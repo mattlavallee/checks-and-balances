@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.core.view.removeItemAt
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
@@ -89,10 +90,11 @@ class AccountAdapter(
             val accountId: Int = it.tag as Int
 
             popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
+            popupMenu.menu.removeItemAt(2)
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 if (menuItem.itemId == R.id.action_popup_edit) {
                     this.onEdit(accountId)
-                } else if (menuItem.itemId == R.id.action_popup_delete) {
+                } else if (menuItem.itemId == R.id.action_popup_archive) {
                     this.onDelete(accountId)
                 }
 

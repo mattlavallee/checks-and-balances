@@ -87,4 +87,10 @@ class TransactionViewModel(application: Application): AndroidViewModel(applicati
             repository.archiveTransactions(accountId)
         }.start()
     }
+
+    fun delete(id: Int) {
+        Thread {
+            repository.delete(id)
+        }.start();
+    }
 }

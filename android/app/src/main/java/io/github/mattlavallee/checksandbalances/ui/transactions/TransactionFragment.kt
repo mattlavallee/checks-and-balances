@@ -51,7 +51,7 @@ class TransactionFragment: Fragment() {
         val root = inflater.inflate(R.layout.fragment_transaction, container, false)
         binding = FragmentTransactionBinding.bind(root)
         preferences = Preferences(requireActivity())
-        transactionAdapter = TransactionAdapter(preferences, ::onEditTransaction, ::onArchiveTransaction)
+        transactionAdapter = TransactionAdapter(preferences, ::onEditTransaction, ::onArchiveTransaction, ::onDeleteTransaction)
         currencyFormat.maximumFractionDigits = 2
         currencyFormat.currency = Currency.getInstance("USD")
 
@@ -107,6 +107,10 @@ class TransactionFragment: Fragment() {
 
     private fun onArchiveTransaction(transactionId: Int) {
         transactionViewModel.archive(transactionId)
+    }
+
+    private fun onDeleteTransaction(transactionId: Int) {
+        transactionViewModel.delete(transactionId)
     }
 
     override fun onResume() {
