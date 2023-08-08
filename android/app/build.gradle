@@ -7,8 +7,8 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 33
     defaultConfig {
+        compileSdk 33
         applicationId "io.github.mattlavallee.checksandbalances"
         minSdkVersion 23
         targetSdkVersion 33
