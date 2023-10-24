@@ -10,7 +10,7 @@ positive and negative balances with.
 Accounts are the top level grouping of your transactions. They can be a direct association to any 
 credit or checking account you may have (Note: there is no auto sync of information from your 
 banking institutes; transactions must be inserted manually) or general categories, such as "Party 
-Planning" or "Christmas Shopping". You are free o use accounts in whichever manner best fits your 
+Planning" or "Christmas Shopping". You are free to use accounts in whichever manner best fits your 
 needs to sort through and track your day-to-day expenses.
 
 ### Transactions
@@ -52,7 +52,7 @@ Archive All Transactions is a setting available when tapping in to an Account. I
 that will let you archive all existing transactions rather than needing to go through the settings 
 menu for each individual transaction.
 
-Manage tags is an action that will let you view and manage all tags that you have ever created. This 
+Manage Tags is an action that will let you view and manage all tags that you have ever created. This 
 screen will give you an overview of all your tags (perhaps there was a typo, or two similarly named 
 tags for the same type of transaction). You will see how many transactions are currently associated 
 with each tag and will have the ability to delete any tags that you no longer want.
