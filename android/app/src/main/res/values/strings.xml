@@ -63,6 +63,6 @@
         <![CDATA[Thanks for using my app!<br />I am an individual developer creating this app in my free time. I welcome any feedback that you may have. If something does not work as expected or if there is something missing that you would like added, please contact me at<br /><a href=\"mailto:matt.lavallee.dev@gmail.com\">matt.lavallee.dev@gmail.com</a>]]>
     </string>
     <string name="feedback_credits">
-        <![CDATA[App icon created by <a href=\"https://www.flaticon.com/authors/srip\">srip - Flaticon</a>]]>
+        <![CDATA[App icon created by <a href=\"https://www.flaticon.com/authors/srip\">srip - Flaticon</a>. Play Store banner created at <a href=\"https://hotpot.ai/\">Hotpot.ai</a>]]>
     </string>
 </resources>
