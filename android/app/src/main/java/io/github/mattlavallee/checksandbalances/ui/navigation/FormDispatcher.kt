@@ -54,8 +54,8 @@ class FormDispatcher {
             var fragment: Fragment? = supportFragmentManager.findFragmentByTag(formType)
             if (fragment == null) {
                 fragment = if (formType == Constants.accountViewTag) AccountFragment() else if (formType == Constants.transactionViewTag) TransactionFragment() else ManageTagsFragment()
-                fragment.arguments = bundle;
             }
+            fragment.arguments = bundle
             supportFragmentManager.beginTransaction()
                 .replace(R.id.nav_host_fragment, fragment, formType)
                 .addToBackStack(formType)
