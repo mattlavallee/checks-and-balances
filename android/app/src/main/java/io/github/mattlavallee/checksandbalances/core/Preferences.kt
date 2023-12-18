@@ -7,11 +7,14 @@ import androidx.appcompat.app.AppCompatDelegate
 
 class Preferences(activity: Activity) {
     private val prefKey = "io.github.mattlavallee.checksandbalances.settings"
-    private val defaultTheme = AppCompatDelegate.MODE_NIGHT_NO
+    private val defaultTheme = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
     private val themeKey = "theme"
     private val accountSortField = "accountSort"
     private val transactionSortField = "transactionSort"
     private val defaultNegativeColor = "#f44336"
+
+    private val defaultLightPositiveColor = "#737373"
+    private val defaultDarkPositiveColor = "#bfbfbf"
 
     val preferences: SharedPreferences
 
@@ -21,7 +24,7 @@ class Preferences(activity: Activity) {
 
     private fun getDefaultPositiveColor(): String {
         val theme = this.getTheme()
-        return if (theme == AppCompatDelegate.MODE_NIGHT_NO) "#737373" else "#bfbfbf"
+        return if (theme == AppCompatDelegate.MODE_NIGHT_NO) this.defaultLightPositiveColor else this.defaultDarkPositiveColor
     }
 
     fun getTheme(): Int {
@@ -63,12 +66,19 @@ class Preferences(activity: Activity) {
     }
 
     fun getNegativeColor(): String {
-        return preferences.getString(Constants.negativeColorKey, defaultNegativeColor) ?: defaultNegativeColor
+        val theme = this.getTheme()
+        val negColor = preferences.getString(Constants.negativeColorKey, defaultNegativeColor) ?: defaultNegativeColor
+        if (negColor == this.defaultDarkPositiveColor && theme == AppCompatDelegate.MODE_NIGHT_NO) {
+            return this.defaultLightPositiveColor
+        } else if (negColor == this.defaultLightPositiveColor && theme == AppCompatDelegate.MODE_NIGHT_YES) {
+            return this.defaultDarkPositiveColor
+        }
+        return negColor
     }
 
     fun setColor(colorKey: String, color: String) {
         var savedColor: String? = color;
-        if (savedColor?.lowercase() == defaultNegativeColor || savedColor?.lowercase() == this.getDefaultPositiveColor()) {
+        if (colorKey == Constants.positiveColorKey && savedColor?.lowercase() == this.getDefaultPositiveColor()) {
             savedColor = null
         }
         with(preferences.edit()) {
