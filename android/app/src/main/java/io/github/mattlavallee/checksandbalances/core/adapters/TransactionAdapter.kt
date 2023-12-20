@@ -7,12 +7,11 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import io.github.mattlavallee.checksandbalances.R
+import io.github.mattlavallee.checksandbalances.core.FormatUtils
 import io.github.mattlavallee.checksandbalances.core.Preferences
 import io.github.mattlavallee.checksandbalances.core.TransactionSortFields
 import io.github.mattlavallee.checksandbalances.database.entities.TransactionWithTags
 import io.github.mattlavallee.checksandbalances.databinding.RecyclerTransactionRowBinding
-import java.text.NumberFormat
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -22,7 +21,6 @@ class TransactionAdapter(
     val onArchive: Callback,
     val onDelete: Callback): RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
     private var transactions: ArrayList<TransactionWithTags> = ArrayList()
-    private val dateFormat = SimpleDateFormat("MMM dd yyyy", Locale.US)
 
     inner class TransactionViewHolder(val binding: RecyclerTransactionRowBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -77,10 +75,7 @@ class TransactionAdapter(
         val transWithTags = transactions[position]
         holder.binding.transactionCardViewTitle.text = transWithTags.transaction.title
         holder.binding.transactionCardViewTitle.tag = transWithTags.transaction.transactionId
-        val currencyFormat = NumberFormat.getCurrencyInstance()
-        currencyFormat.maximumFractionDigits = 2
-        currencyFormat.currency = Currency.getInstance("USD")
-        holder.binding.transactionCardViewAmount.text = currencyFormat.format(transWithTags.transaction.amount)
+        holder.binding.transactionCardViewAmount.text = FormatUtils.currencyFormat().format(transWithTags.transaction.amount)
         if (transWithTags.transaction.amount != 0.0) {
             val color = if (transWithTags.transaction.amount >= 0) preferences.getPositiveColor() else preferences.getNegativeColor()
             holder.binding.transactionCardViewAmount.setTextColor(Color.parseColor(color))
@@ -88,7 +83,7 @@ class TransactionAdapter(
 
         holder.binding.transactionCardViewDateDescription.text = holder.itemView.context.getString(
             R.string.transaction_display_datetime_description,
-            dateFormat.format(transWithTags.transaction.dateTimeModified),
+            FormatUtils.dateFormat().format(transWithTags.transaction.dateTimeModified),
             transWithTags.transaction.description
         )
         holder.binding.transactionCardView.tag = transWithTags.transaction.transactionId

@@ -60,11 +60,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorSecondary"
-            android:digits="0123456789.-"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:imeOptions="actionNext"
             android:inputType="numberDecimal|numberSigned"
+            android:digits="0123456789.,-"
             android:maxLines="1"
             android:textSelectHandle="@color/colorPrimaryDark"
             android:textCursorDrawable="@null" />
