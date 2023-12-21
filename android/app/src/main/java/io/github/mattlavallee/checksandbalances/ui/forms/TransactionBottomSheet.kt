@@ -20,6 +20,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputLayout
 import io.github.mattlavallee.checksandbalances.R
+import io.github.mattlavallee.checksandbalances.core.FormatUtils
 import io.github.mattlavallee.checksandbalances.database.entities.Account
 import io.github.mattlavallee.checksandbalances.database.entities.Tag
 import io.github.mattlavallee.checksandbalances.databinding.LayoutTransactionFormBinding
@@ -27,7 +28,6 @@ import io.github.mattlavallee.checksandbalances.ui.account.AccountViewModel
 import io.github.mattlavallee.checksandbalances.ui.tags.TagViewModel
 import io.github.mattlavallee.checksandbalances.ui.transactions.TransactionViewModel
 import java.text.DecimalFormat
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -134,7 +134,7 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
                 return@setOnClickListener
             }
 
-            var amount = binding.editTransactionAmount.text.toString().toDouble()
+            var amount = binding.editTransactionAmount.text.toString().replace(",", ".").toDouble()
             if (binding.editTransactionAmountDeduction.isChecked) {
                 amount *= -1
             }
@@ -179,7 +179,6 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
     }
 
     private fun initializeDateTimePicker(dateTime: Long?) {
-        val dateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.US)
         transactionCalendar = Calendar.getInstance()
         if (dateTime != null) {
             transactionCalendar.timeInMillis = dateTime
@@ -188,10 +187,10 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
             transactionCalendar.set(Calendar.YEAR, year)
             transactionCalendar.set(Calendar.MONTH, monthOfYear)
             transactionCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            binding.editTransactionDatetime.setText(dateFormat.format(transactionCalendar.time))
+            binding.editTransactionDatetime.setText(FormatUtils.dateFormat().format(transactionCalendar.time))
         }
 
-        binding.editTransactionDatetime.setText(dateFormat.format(transactionCalendar.time))
+        binding.editTransactionDatetime.setText(FormatUtils.dateFormat().format(transactionCalendar.time))
         binding.editTransactionDatetime.setOnClickListener {
             val dialog = DatePickerDialog(
                 requireContext(),
@@ -243,7 +242,7 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
         val hasError = if (fieldName == "Title") {
             name.isEmpty()
         } else {
-            name.toDoubleOrNull() == null
+            name.replace(",", ".").toDoubleOrNull() == null
         }
 
         if (hasError && checkForError) {

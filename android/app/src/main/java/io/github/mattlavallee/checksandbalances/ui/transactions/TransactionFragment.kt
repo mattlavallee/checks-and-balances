@@ -13,14 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.core.Constants
+import io.github.mattlavallee.checksandbalances.core.FormatUtils
 import io.github.mattlavallee.checksandbalances.core.Preferences
 import io.github.mattlavallee.checksandbalances.core.adapters.TransactionAdapter
 import io.github.mattlavallee.checksandbalances.database.entities.TransactionWithTags
 import io.github.mattlavallee.checksandbalances.databinding.FragmentTransactionBinding
 import io.github.mattlavallee.checksandbalances.ui.account.AccountViewModel
 import io.github.mattlavallee.checksandbalances.ui.navigation.FormDispatcher
-import java.text.NumberFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 class TransactionFragment: Fragment() {
@@ -41,7 +40,6 @@ class TransactionFragment: Fragment() {
     private var accountName: String = ""
     private var totalBalance: Double = 0.0
     private var accountStartingBalance: Double = 0.0
-    private val currencyFormat = NumberFormat.getCurrencyInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,8 +50,6 @@ class TransactionFragment: Fragment() {
         binding = FragmentTransactionBinding.bind(root)
         preferences = Preferences(requireActivity())
         transactionAdapter = TransactionAdapter(preferences, ::onEditTransaction, ::onArchiveTransaction, ::onDeleteTransaction)
-        currencyFormat.maximumFractionDigits = 2
-        currencyFormat.currency = Currency.getInstance("USD")
 
         accountId = arguments?.getInt("accountId")
         accountViewModel.activeAccountId.value = accountId
@@ -67,7 +63,7 @@ class TransactionFragment: Fragment() {
         transactionViewModel.getAccount(accountId!!).observe(viewLifecycleOwner, Observer {
             this.accountName = it.name
             this.accountStartingBalance = it.startingBalance
-            binding.transactionAccountName.text = getString(R.string.account_and_balance, this.accountName, currencyFormat.format(this.accountStartingBalance + this.totalBalance))
+            binding.transactionAccountName.text = getString(R.string.account_and_balance, this.accountName, FormatUtils.currencyFormat().format(this.accountStartingBalance + this.totalBalance))
         })
         transactionViewModel.getTransactionsForAccount(accountId!!).observe(viewLifecycleOwner, Observer { itList ->
             val transactions: ArrayList<TransactionWithTags> = ArrayList()
@@ -80,7 +76,7 @@ class TransactionFragment: Fragment() {
             this.totalBalance = 0.0
             transactions.forEach { this.totalBalance += it.transaction.amount }
 
-            binding.transactionAccountName.text = getString(R.string.account_and_balance, this.accountName, currencyFormat.format(this.accountStartingBalance + this.totalBalance))
+            binding.transactionAccountName.text = getString(R.string.account_and_balance, this.accountName, FormatUtils.currencyFormat().format(this.accountStartingBalance + this.totalBalance))
 
             val emptyMessageVisibility = if (itList.isNotEmpty()) View.GONE else View.VISIBLE
             binding.transactionEmptyContainer.visibility = emptyMessageVisibility
