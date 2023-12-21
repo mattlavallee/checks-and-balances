@@ -47,7 +47,7 @@ class AccountAdapter(
                     else -> -1
                 }
             } else {
-                //TODO: this should be total balance, not starting balance
+                // TODO: this would read better if this class was rewritten with AccountWithSums
                 when {
                     a1.startingBalance > a2.startingBalance -> 1
                     a1.startingBalance == a2.startingBalance -> 0
