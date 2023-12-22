@@ -5,6 +5,6 @@ enum class AccountSortFields(val id: Int) {
     Balance(1);
 
     companion object {
-        fun fromInt(id: Int): AccountSortFields = values().find { value -> value.id == id } ?: Name
+        fun fromInt(id: Int): AccountSortFields = entries.find { value -> value.id == id } ?: Name
     }
 }

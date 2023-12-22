@@ -55,7 +55,7 @@ class AccountAdapter(
                 }
             }
         }
-        this.notifyDataSetChanged()
+        this.notifyItemRangeChanged(0, this.itemCount)
     }
 
     fun setData(data: ArrayList<Account>) {

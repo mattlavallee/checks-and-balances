@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.github.mattlavallee.checksandbalances.R
@@ -33,7 +32,7 @@ class TransactionFragment: Fragment() {
         if (key == "transactionSort") {
             transactionAdapter.setSortField(preferences.getTransactionSortField())
         } else if (key == "positiveColor" || key == "negativeColor") {
-            transactionAdapter.notifyDataSetChanged()
+            transactionAdapter.notifyItemRangeChanged(0, transactionAdapter.itemCount)
         }
     }
 
@@ -60,12 +59,12 @@ class TransactionFragment: Fragment() {
         layoutParams.height = (width / 2)
         binding.transactionSplashLogo.layoutParams = layoutParams
 
-        transactionViewModel.getAccount(accountId!!).observe(viewLifecycleOwner, Observer {
+        transactionViewModel.getAccount(accountId!!).observe(viewLifecycleOwner) {
             this.accountName = it.name
             this.accountStartingBalance = it.startingBalance
             binding.transactionAccountName.text = getString(R.string.account_and_balance, this.accountName, FormatUtils.currencyFormat().format(this.accountStartingBalance + this.totalBalance))
-        })
-        transactionViewModel.getTransactionsForAccount(accountId!!).observe(viewLifecycleOwner, Observer { itList ->
+        }
+        transactionViewModel.getTransactionsForAccount(accountId!!).observe(viewLifecycleOwner) { itList ->
             val transactions: ArrayList<TransactionWithTags> = ArrayList()
             itList.mapTo(transactions) {
                 TransactionWithTags(it.transaction, it.tags)
@@ -80,7 +79,7 @@ class TransactionFragment: Fragment() {
 
             val emptyMessageVisibility = if (itList.isNotEmpty()) View.GONE else View.VISIBLE
             binding.transactionEmptyContainer.visibility = emptyMessageVisibility
-        })
+        }
 
         binding.transactionRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         binding.transactionRecyclerView.setHasFixedSize(true)

@@ -12,7 +12,6 @@ import io.github.mattlavallee.checksandbalances.core.Preferences
 import io.github.mattlavallee.checksandbalances.core.TransactionSortFields
 import io.github.mattlavallee.checksandbalances.database.entities.TransactionWithTags
 import io.github.mattlavallee.checksandbalances.databinding.RecyclerTransactionRowBinding
-import java.util.*
 import kotlin.collections.ArrayList
 
 class TransactionAdapter(
@@ -32,35 +31,40 @@ class TransactionAdapter(
     fun setSortField(sortType: Int) {
         val sortField = TransactionSortFields.fromInt(sortType)
         transactions.sortWith { t1, t2 ->
-            if (sortField == TransactionSortFields.Amount) {
-                when {
-                    t1.transaction.amount > t2.transaction.amount -> 1
-                    t1.transaction.amount == t2.transaction.amount -> 0
-                    else -> -1
+            when (sortField) {
+                TransactionSortFields.Amount -> {
+                    when {
+                        t1.transaction.amount > t2.transaction.amount -> 1
+                        t1.transaction.amount == t2.transaction.amount -> 0
+                        else -> -1
+                    }
                 }
-            } else if (sortField == TransactionSortFields.Description) {
-                val t1desc = t1.transaction.description ?: ""
-                val t2desc = t2.transaction.description ?: ""
-                when {
-                    t1desc > t2desc -> 1
-                    t1desc == t2desc -> 0
-                    else -> -1
+                TransactionSortFields.Description -> {
+                    val t1desc = t1.transaction.description ?: ""
+                    val t2desc = t2.transaction.description ?: ""
+                    when {
+                        t1desc > t2desc -> 1
+                        t1desc == t2desc -> 0
+                        else -> -1
+                    }
                 }
-            } else if (sortField == TransactionSortFields.Date) {
-                when {
-                    t1.transaction.dateTimeModified > t2.transaction.dateTimeModified -> 1
-                    t1.transaction.dateTimeModified == t2.transaction.dateTimeModified -> 0
-                    else -> -1
+                TransactionSortFields.Date -> {
+                    when {
+                        t1.transaction.dateTimeModified > t2.transaction.dateTimeModified -> 1
+                        t1.transaction.dateTimeModified == t2.transaction.dateTimeModified -> 0
+                        else -> -1
+                    }
                 }
-            } else {
-                when {
-                    t1.transaction.title > t2.transaction.title -> 1
-                    t1.transaction.title == t2.transaction.title -> 0
-                    else -> -1
+                else -> {
+                    when {
+                        t1.transaction.title > t2.transaction.title -> 1
+                        t1.transaction.title == t2.transaction.title -> 0
+                        else -> -1
+                    }
                 }
             }
         }
-        this.notifyDataSetChanged()
+        this.notifyItemRangeChanged(0, this.itemCount)
     }
 
     fun setData(data: ArrayList<TransactionWithTags>) {
@@ -98,12 +102,16 @@ class TransactionAdapter(
 
             popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener { menuItem ->
-                if (menuItem.itemId == R.id.action_popup_edit) {
-                    this.onEdit(transactionId)
-                } else if (menuItem.itemId == R.id.action_popup_archive) {
-                    this.onArchive(transactionId)
-                } else if (menuItem.itemId == R.id.action_popup_delete) {
-                    this.onDelete(transactionId)
+                when (menuItem.itemId) {
+                    R.id.action_popup_edit -> {
+                        this.onEdit(transactionId)
+                    }
+                    R.id.action_popup_archive -> {
+                        this.onArchive(transactionId)
+                    }
+                    R.id.action_popup_delete -> {
+                        this.onDelete(transactionId)
+                    }
                 }
 
                 false

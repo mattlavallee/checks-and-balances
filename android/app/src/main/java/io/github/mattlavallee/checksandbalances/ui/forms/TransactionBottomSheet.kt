@@ -14,7 +14,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -62,7 +61,7 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
         inputMethodManager.showSoftInput(binding.editTransactionTitle, 0)
         this.initializeDateTimePicker(null)
 
-        accountViewModel.getAllAccounts().observe(viewLifecycleOwner, Observer {itList ->
+        accountViewModel.getAllAccounts().observe(viewLifecycleOwner) {itList ->
             val accountNames: ArrayList<String> = ArrayList()
             itList.mapTo(accounts) { Account(it.id, it.name, it.description?: "", it.startingBalance, it.isActive) }
                 .sortBy { it.name }
@@ -74,16 +73,16 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
                 index = accounts.indexOfFirst { act -> act.id == accountId }
             }
             binding.editTransactionAccountId.setSelection(index, true)
-        })
+        }
 
-        tagViewModel.getAllTags().observe(viewLifecycleOwner, Observer {itList ->
+        tagViewModel.getAllTags().observe(viewLifecycleOwner) {itList ->
             itList.mapTo(tags) { Tag(it.tagId, it.name, it.isActive) }.sortBy {it.name}
             val tagNames: ArrayList<String> = ArrayList()
             tags.mapTo(tagNames){it.name}
             binding.editTransactionTagAutocomplete.setAdapter(
                 ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, tagNames)
             )
-        })
+        }
 
         binding.editTransactionTitle.addTextChangedListener {
             this.checkForValidField(it.toString(), binding.editTransactionTitleWrapper, "Title",false)
@@ -207,7 +206,7 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
     }
 
     private fun populateForm(transactionId: Int) {
-        transactionViewModel.getTransaction(transactionId).observe(viewLifecycleOwner, Observer {
+        transactionViewModel.getTransaction(transactionId).observe(viewLifecycleOwner) {
             binding.editTransactionTitle.setText(it.transaction.title)
             binding.editTransactionDescription.setText(it.transaction.description)
             binding.editTransactionAmount.setText(DecimalFormat("0.00").format(it.transaction.amount))
@@ -219,7 +218,7 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
 
             it.tags.mapTo(currentTransactionTags) { itTag -> itTag }
             this.currentTransactionTags.forEach { t -> this.addChip(t) }
-        })
+        }
     }
 
     private fun addChip(tag: Tag) {
