@@ -1,6 +1,5 @@
 package io.github.mattlavallee.checksandbalances.ui.navigation
 
-import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
@@ -13,7 +12,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.FragmentManager
 import com.github.dhaval2404.colorpicker.MaterialColorPickerDialog
 import com.github.dhaval2404.colorpicker.model.ColorShape
-import com.github.dhaval2404.colorpicker.model.ColorSwatch
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textview.MaterialTextView
 import io.github.mattlavallee.checksandbalances.R
@@ -39,62 +37,68 @@ class SettingsBottomSheet: BottomSheetDialogFragment() {
         val transFragment = this.setArchiveTransactionState(requireActivity().supportFragmentManager)
 
         binding.settingsNavigationView.setNavigationItemSelectedListener {
-            if (it.itemId == R.id.settings_theme) {
-                this.setAndSaveTheme()
-                super.dismiss()
-            } else if (it.itemId == R.id.settings_sort) {
-                activity?.let { itActivity ->
-                    val itemsArray = if (this.isTransactionViewVisible) R.array.app_settings_transaction_sortType else R.array.app_settings_account_sortType
-                    AlertDialog.Builder(itActivity)
-                        .setTitle("Sort By")
-                        .setItems(itemsArray, DialogInterface.OnClickListener { dialog, which ->
-                            if (this.isTransactionViewVisible) {
-                                appPreferences.setTransactionSortField(which)
-                            } else {
-                                appPreferences.setAccountSortField(which)
-                            }
-                            dialog.dismiss()
-                            super.dismiss()
-                        })
-                        .create()
-                        .show()
-                }
-            } else if (it.itemId == R.id.settings_positive_color) {
-                activity?.let { itActivity ->
-                    val positiveColor = appPreferences.getPositiveColor()
-                    MaterialColorPickerDialog
-                        .Builder(itActivity)
-                        .setTitle("Positive Color")
-                        .setColorShape(ColorShape.CIRCLE)
-                        .setColorRes(resources.getIntArray(R.array.color_palette))
-                        .setDefaultColor(positiveColor)
-                        .setTickColorPerCard(true)
-                        .setColorListener { _, colorHex ->
-                            appPreferences.setColor(Constants.positiveColorKey, colorHex)
-                            this.setPositiveNegativeDisplayName()
-                        }
-                        .show()
-                }
-            } else if (it.itemId == R.id.settings_negative_color) {
-                activity?.let { itActivity ->
-                    val negativeColor = appPreferences.getNegativeColor()
-                    MaterialColorPickerDialog
-                        .Builder(itActivity)
-                        .setTitle("Negative Color")
-                        .setColorShape(ColorShape.CIRCLE)
-                        .setColorRes(resources.getIntArray(R.array.color_palette))
-                        .setDefaultColor(negativeColor)
-                        .setTickColorPerCard(true)
-                        .setColorListener { _, colorHex ->
-                            appPreferences.setColor(Constants.negativeColorKey, colorHex)
-                            this.setPositiveNegativeDisplayName()
-                        }
-                        .show()
-                }
-            } else if (it.itemId == R.id.settings_archive_transactions) {
-                activity?.let {
-                    transFragment?.deleteTransactions()
+            when (it.itemId) {
+                R.id.settings_theme -> {
+                    this.setAndSaveTheme()
                     super.dismiss()
+                }
+                R.id.settings_sort -> {
+                    activity?.let { itActivity ->
+                        val itemsArray = if (this.isTransactionViewVisible) R.array.app_settings_transaction_sortType else R.array.app_settings_account_sortType
+                        AlertDialog.Builder(itActivity)
+                            .setTitle("Sort By")
+                            .setItems(itemsArray) { dialog, which ->
+                                if (this.isTransactionViewVisible) {
+                                    appPreferences.setTransactionSortField(which)
+                                } else {
+                                    appPreferences.setAccountSortField(which)
+                                }
+                                dialog.dismiss()
+                                super.dismiss()
+                            }
+                            .create()
+                            .show()
+                    }
+                }
+                R.id.settings_positive_color -> {
+                    activity?.let { itActivity ->
+                        val positiveColor = appPreferences.getPositiveColor()
+                        MaterialColorPickerDialog
+                            .Builder(itActivity)
+                            .setTitle("Positive Color")
+                            .setColorShape(ColorShape.CIRCLE)
+                            .setColorRes(resources.getIntArray(R.array.color_palette))
+                            .setDefaultColor(positiveColor)
+                            .setTickColorPerCard(true)
+                            .setColorListener { _, colorHex ->
+                                appPreferences.setColor(Constants.positiveColorKey, colorHex)
+                                this.setPositiveNegativeDisplayName()
+                            }
+                            .show()
+                    }
+                }
+                R.id.settings_negative_color -> {
+                    activity?.let { itActivity ->
+                        val negativeColor = appPreferences.getNegativeColor()
+                        MaterialColorPickerDialog
+                            .Builder(itActivity)
+                            .setTitle("Negative Color")
+                            .setColorShape(ColorShape.CIRCLE)
+                            .setColorRes(resources.getIntArray(R.array.color_palette))
+                            .setDefaultColor(negativeColor)
+                            .setTickColorPerCard(true)
+                            .setColorListener { _, colorHex ->
+                                appPreferences.setColor(Constants.negativeColorKey, colorHex)
+                                this.setPositiveNegativeDisplayName()
+                            }
+                            .show()
+                    }
+                }
+                R.id.settings_archive_transactions -> {
+                    activity?.let {
+                        transFragment?.deleteTransactions()
+                        super.dismiss()
+                    }
                 }
             }
             true

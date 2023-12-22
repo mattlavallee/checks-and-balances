@@ -9,7 +9,6 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputLayout
 import io.github.mattlavallee.checksandbalances.R
@@ -77,8 +76,8 @@ class ManageTagBottomSheet: BottomSheetDialogFragment() {
     }
 
     private fun populateForm(tagId: Int) {
-        tagViewModel.getTagById(tagId).observe(viewLifecycleOwner, Observer {
+        tagViewModel.getTagById(tagId).observe(viewLifecycleOwner) {
             binding.editTagName.setText(it.name)
-        })
+        }
     }
 }

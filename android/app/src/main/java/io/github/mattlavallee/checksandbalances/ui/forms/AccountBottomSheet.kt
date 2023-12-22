@@ -9,7 +9,6 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputLayout
 import io.github.mattlavallee.checksandbalances.R
@@ -86,10 +85,10 @@ class AccountBottomSheet: BottomSheetDialogFragment() {
     }
 
     private fun populateForm(accountId: Int) {
-        accountViewModel.getAccountById(accountId).observe(viewLifecycleOwner, Observer {
+        accountViewModel.getAccountById(accountId).observe(viewLifecycleOwner) {
             binding.editAccountName.setText(it.name)
             binding.editAccountDescription.setText(it.description)
             binding.editAccountInitialBalance.setText(DecimalFormat("#.00").format(it.startingBalance))
-        })
+        }
     }
 }

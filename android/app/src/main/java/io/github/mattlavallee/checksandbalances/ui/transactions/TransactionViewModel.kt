@@ -91,6 +91,6 @@ class TransactionViewModel(application: Application): AndroidViewModel(applicati
     fun delete(id: Int) {
         Thread {
             repository.delete(id)
-        }.start();
+        }.start()
     }
 }
