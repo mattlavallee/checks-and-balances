@@ -77,7 +77,7 @@ class Preferences(activity: Activity) {
     }
 
     fun setColor(colorKey: String, color: String) {
-        var savedColor: String? = color;
+        var savedColor: String? = color
         if (colorKey == Constants.positiveColorKey && savedColor?.lowercase() == this.getDefaultPositiveColor()) {
             savedColor = null
         }

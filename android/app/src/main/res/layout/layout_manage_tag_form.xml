@@ -20,7 +20,6 @@
         android:id="@+id/edit_tag_name_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/edit_tag_title"
         app:hintTextColor="@color/colorOnSecondary"
         app:boxStrokeColor="@color/colorOnSecondary"
         app:layout_constraintTop_toBottomOf="@id/edit_tag_title"

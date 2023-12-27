@@ -7,6 +7,6 @@ enum class TransactionSortFields(val id: Int) {
     Date(3);
 
     companion object {
-        fun fromInt(id: Int): TransactionSortFields = values().find { value -> value.id == id } ?: Date
+        fun fromInt(id: Int): TransactionSortFields = entries.find { value -> value.id == id } ?: Date
     }
 }

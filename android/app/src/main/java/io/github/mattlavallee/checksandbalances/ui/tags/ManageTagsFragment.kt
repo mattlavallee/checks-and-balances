@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import com.google.android.material.chip.Chip
 import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.core.Constants
@@ -22,9 +21,9 @@ class ManageTagsFragment: Fragment() {
         val root = inflater.inflate(R.layout.fragment_manage_tags, container, false)
         binding = FragmentManageTagsBinding.bind(root)
 
-        tagViewModel.getAllTagsWithTransactions().observe(viewLifecycleOwner, Observer { itList ->
+        tagViewModel.getAllTagsWithTransactions().observe(viewLifecycleOwner) { itList ->
             binding.manageTagsGroup.removeAllViews()
-            itList.forEach {
+            itList.sortedBy { it.tag.name.lowercase() }.forEach {
                 val activeTransactions = it.transactions.count { t -> t.isActive }
                 val chip = Chip(requireActivity()).apply {
                     text = getString(R.string.manage_tags_label, it.tag.name, activeTransactions)
@@ -39,7 +38,7 @@ class ManageTagsFragment: Fragment() {
                 }
                 binding.manageTagsGroup.addView(chip)
             }
-        })
+        }
         return root
     }
 
