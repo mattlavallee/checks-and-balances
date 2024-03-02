@@ -67,7 +67,7 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
                 .sortBy { it.name }
 
             accounts.mapTo(accountNames) { it.name }
-            binding.editTransactionAccountId.adapter = ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, accountNames)
+            binding.editTransactionAccountId.adapter = ArrayAdapter(requireContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, accountNames)
             var index = 0
             if (accountId != null) {
                 index = accounts.indexOfFirst { act -> act.id == accountId }
@@ -80,7 +80,7 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
             val tagNames: ArrayList<String> = ArrayList()
             tags.mapTo(tagNames){it.name}
             binding.editTransactionTagAutocomplete.setAdapter(
-                ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, tagNames)
+                ArrayAdapter(requireContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, tagNames)
             )
         }
 
