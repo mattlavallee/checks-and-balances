@@ -13,9 +13,12 @@ import io.github.mattlavallee.checksandbalances.ui.account.AccountViewModel
 import io.github.mattlavallee.checksandbalances.ui.navigation.FormDispatcher
 import io.github.mattlavallee.checksandbalances.ui.navigation.NavigationBottomSheet
 import io.github.mattlavallee.checksandbalances.ui.navigation.SettingsBottomSheet
+import io.github.mattlavallee.checksandbalances.ui.transactions.TransactionViewModel
+import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
     private val accountViewModel: AccountViewModel by viewModels()
+    private val transactionViewModel: TransactionViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +57,11 @@ class MainActivity : AppCompatActivity() {
         accountViewModel.getAllAccounts().observe(this, Observer {itList ->
             accountCount = itList.size
         })
+
+
+        val sixMonthsAgo = Calendar.getInstance()
+        sixMonthsAgo.add(Calendar.DAY_OF_YEAR, -185);
+        transactionViewModel.autoCleanup(sixMonthsAgo.timeInMillis)
 
         binding.fab.setOnClickListener {
             val tag: String = if (accountCount > 0) Constants.transactionFormTag else Constants.accountFormTag

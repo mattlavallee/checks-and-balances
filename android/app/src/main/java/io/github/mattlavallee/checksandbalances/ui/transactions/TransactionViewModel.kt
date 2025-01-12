@@ -93,4 +93,10 @@ class TransactionViewModel(application: Application): AndroidViewModel(applicati
             repository.delete(id)
         }.start()
     }
+
+    fun autoCleanup(timestamp: Long) {
+        Thread {
+            repository.autoCleanup(timestamp)
+        }.start()
+    }
 }

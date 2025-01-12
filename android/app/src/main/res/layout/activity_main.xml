@@ -45,6 +45,6 @@
         app:navigationContentDescription="Home"
         app:navigationIcon="?attr/navigationIcon"
         app:popupTheme="@style/Theme.MaterialComponents.DayNight"
-        app:theme="@style/Theme.MaterialComponents.DayNight" />
+        android:theme="@style/Theme.MaterialComponents.DayNight" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

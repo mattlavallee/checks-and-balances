@@ -1,6 +1,7 @@
 package io.github.mattlavallee.checksandbalances.database
 
 import android.content.Context
+import android.util.Log
 import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
@@ -85,6 +86,12 @@ abstract class ChecksAndBalancesDatabase : RoomDatabase() {
     fun archiveTag(tagId: Int) {
         tagDao().archiveTag(tagId)
         transTagDao().removeByTagId(tagId)
+    }
+
+    fun autoCleanup(sixMonthsAgo: Long) {
+        Log.i("CAB", "AUTO CLEANUP TIME")
+        val result = transactionDao().autoCleanup(sixMonthsAgo)
+        Log.i("CAB", "DELETED " + result.toString() + " transactions")
     }
 
     companion object {

@@ -32,6 +32,10 @@ interface TransactionDao {
     @Query("DELETE FROM transactions WHERE transactionId = :transactionId")
     fun deleteTransaction(transactionId: Int)
 
+    @androidx.room.Transaction
+    @Query("DELETE FROM transactions WHERE is_active = 0 AND date_time_modified <= :sixMonthsAgo")
+    fun autoCleanup(sixMonthsAgo: Long): Int
+
     @Insert
     fun insertTransaction(transaction: Transaction): Long
 
