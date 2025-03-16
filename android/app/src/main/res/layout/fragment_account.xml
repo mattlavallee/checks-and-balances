@@ -5,6 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:tag="ACCOUNT_FRAGMENT">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/app_logo_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal"
+        android:paddingBottom="10sp"
+        app:layout_constraintVertical_chainStyle="spread"
+        app:layout_constraintBottom_toTopOf="@id/text_account"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/app_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textSize="24sp"
+            android:paddingStart="20sp"
+            android:paddingEnd="20sp"
+            android:text="@string/app_name" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_account"
         android:layout_width="match_parent"
@@ -12,14 +33,15 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:paddingLeft="5dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:textAlignment="viewStart"
         android:textSize="20sp"
         android:text="@string/fragment_account_title"
         app:layout_constraintVertical_chainStyle="spread"
         app:layout_constraintBottom_toTopOf="@id/account_recycler_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/app_logo_container"
+        app:layout_constraintTop_toTopOf="@id/app_logo_container" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/account_recycler_view"

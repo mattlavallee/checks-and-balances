@@ -20,13 +20,6 @@ android {
         archivesBaseName = "${applicationId}-v${versionName}(${versionCode})"
         setProperty("archivesBaseName", "${applicationId}-v${versionName}(${versionCode})")
 
-        kapt {
-            arguments {
-                arg("room.schemaLocation", "$projectDir/schemas".toString())
-                arg("room.incremental", "true")
-            }
-        }
-
         ksp {
             arg("room.schemaLocation", "$projectDir/schemas")
             arg("room.incremental", "true")
