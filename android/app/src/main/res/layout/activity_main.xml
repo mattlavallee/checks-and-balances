@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/coordinatorLayout"
+    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="@dimen/activity_vertical_margin">
@@ -27,6 +28,7 @@
         android:tint="@color/colorOnSecondary"
         android:scaleType="center"
         android:elevation="6dp"
+        android:contentDescription="@string/fab_description"
         app:borderWidth="0dp"
         app:backgroundTint="@color/colorSecondary"
         app:maxImageSize="32dp"

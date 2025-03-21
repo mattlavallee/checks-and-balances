@@ -37,6 +37,7 @@
     <string name="transaction_tags_hint">Tags</string>
 
     <string name="save_button">Save</string>
+    <string name="fab_description">Add Button</string>
 
     <string name="vertical_ellipsis">&#8942;</string>
 
