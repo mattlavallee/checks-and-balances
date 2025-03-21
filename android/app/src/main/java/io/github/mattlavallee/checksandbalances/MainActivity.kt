@@ -5,6 +5,7 @@ import android.view.Menu
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.updatePadding
 import androidx.lifecycle.Observer
 import io.github.mattlavallee.checksandbalances.core.Constants
 import io.github.mattlavallee.checksandbalances.core.Preferences
@@ -73,6 +74,11 @@ class MainActivity : AppCompatActivity() {
             }
 
             FormDispatcher.launch(supportFragmentManager, tag, bundle)
+        }
+
+        binding.navHostFragment.setOnApplyWindowInsetsListener { view, windowInsets ->
+            view.updatePadding(top = windowInsets.systemWindowInsetTop, bottom = windowInsets.systemWindowInsetBottom)
+            windowInsets
         }
     }
 
