@@ -2,6 +2,7 @@ package io.github.mattlavallee.checksandbalances
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.WindowInsets
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -77,7 +78,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.navHostFragment.setOnApplyWindowInsetsListener { view, windowInsets ->
-            view.updatePadding(top = windowInsets.systemWindowInsetTop, bottom = windowInsets.systemWindowInsetBottom)
+            val insets = windowInsets.getInsets(WindowInsets.Type.systemBars())
+            view.updatePadding(top = insets.top, bottom = insets.bottom)
             windowInsets
         }
     }
