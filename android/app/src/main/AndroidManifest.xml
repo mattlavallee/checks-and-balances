@@ -8,6 +8,7 @@
         android:roundIcon="@mipmap/ic_cab_launcher_round"
         android:supportsRtl="true"
         android:windowSoftInputMode="adjustResize"
+        android:appCategory="productivity"
         android:theme="@style/ChecksAndBalances">
         <activity
             android:name=".MainActivity"

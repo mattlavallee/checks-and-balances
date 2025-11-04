@@ -10,6 +10,7 @@ object Constants {
     const val feedbackTag = "FEEDBACK_SHEET"
     const val manageTagsViewTag = "MANAGE_TAGS_FRAGMENT"
     const val manageTagsFormTag = "MANAGE_TAGS_FORM"
+    const val utilitiesViewTag = "UTILITIES_FRAGMENT"
 
     const val positiveColorKey = "positiveColor"
     const val negativeColorKey = "negativeColor"

@@ -13,6 +13,7 @@ import io.github.mattlavallee.checksandbalances.ui.forms.ManageTagBottomSheet
 import io.github.mattlavallee.checksandbalances.ui.forms.TransactionBottomSheet
 import io.github.mattlavallee.checksandbalances.ui.tags.ManageTagsFragment
 import io.github.mattlavallee.checksandbalances.ui.transactions.TransactionFragment
+import io.github.mattlavallee.checksandbalances.ui.utilities.UtilityFragment
 
 class FormDispatcher {
     companion object{
@@ -36,6 +37,9 @@ class FormDispatcher {
                 Constants.manageTagsViewTag -> {
                     return launchFragment(supportFragmentManager, formType, bundle)
                 }
+                Constants.utilitiesViewTag -> {
+                    return launchFragment(supportFragmentManager, formType, bundle)
+                }
                 Constants.manageTagsFormTag -> {
                     bottomSheetDialog = supportFragmentManager.findFragmentByTag(formType) as ManageTagBottomSheet?
                         ?: ManageTagBottomSheet()
@@ -53,7 +57,7 @@ class FormDispatcher {
         private fun launchFragment(supportFragmentManager: FragmentManager, formType: String, bundle: Bundle?) {
             var fragment: Fragment? = supportFragmentManager.findFragmentByTag(formType)
             if (fragment == null) {
-                fragment = if (formType == Constants.accountViewTag) AccountFragment() else if (formType == Constants.transactionViewTag) TransactionFragment() else ManageTagsFragment()
+                fragment = if (formType == Constants.accountViewTag) AccountFragment() else if (formType == Constants.transactionViewTag) TransactionFragment() else UtilityFragment()
             }
             fragment.arguments = bundle
             supportFragmentManager.beginTransaction()
