@@ -8,6 +8,7 @@ import io.github.mattlavallee.checksandbalances.R
 import io.github.mattlavallee.checksandbalances.core.Constants
 import io.github.mattlavallee.checksandbalances.databinding.LayoutHomeBottomsheetBinding
 import io.github.mattlavallee.checksandbalances.ui.account.AccountViewModel
+import androidx.core.view.get
 
 class NavigationBottomSheet: BottomSheetDialogFragment() {
     private lateinit var binding: LayoutHomeBottomsheetBinding
@@ -18,7 +19,7 @@ class NavigationBottomSheet: BottomSheetDialogFragment() {
         binding = LayoutHomeBottomsheetBinding.bind(homeView)
 
         accountViewModel.getAllAccounts().observe(viewLifecycleOwner) {
-            val addTransactionItem = binding.homeNavigationView.menu.getItem(1)
+            val addTransactionItem = binding.homeNavigationView.menu[1]
             addTransactionItem.isVisible = it.isNotEmpty()
         }
 
@@ -28,7 +29,7 @@ class NavigationBottomSheet: BottomSheetDialogFragment() {
                 R.id.home_create_account_menu_button -> FormDispatcher.launch(fragmentManager, Constants.accountFormTag, null)
                 R.id.home_create_transaction_menu_button -> FormDispatcher.launch(fragmentManager, Constants.transactionFormTag, null)
                 R.id.home_account_overview_menu_button -> FormDispatcher.launch(fragmentManager, Constants.accountViewTag, null)
-                R.id.home_manage_tags_menu_button -> FormDispatcher.launch(fragmentManager, Constants.manageTagsViewTag, null)
+                R.id.home_utilities_menu_button -> FormDispatcher.launch(fragmentManager, Constants.utilitiesViewTag, null)
                 R.id.home_help_feedback_menu_button -> FormDispatcher.launch(fragmentManager, Constants.feedbackTag, null)
             }
 
